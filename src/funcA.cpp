@@ -1,7 +1,6 @@
 #include "../include/funcA.hpp"
 funcA::funcA() {}
-funcA::funcA(int x): val(x) {}
-
+funcA::funcA(int x) : val(x) {}
 
 funcA::~funcA() {}
 
