@@ -15,6 +15,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 endif()
 
 # include_directories(./include)
+find_package(Boost)
 
 include_directories(./include)
  
