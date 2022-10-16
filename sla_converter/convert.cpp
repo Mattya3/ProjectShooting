@@ -4,10 +4,13 @@ using namespace std;
 
 int main() {
     string str;
-    cin >> str;
+
     string s1,s2;
-    s1=str;
+
+    cout << "空白混入パスはだめ"<<endl;
     cout << "input :";
+    cin >> str;
+    s1=str;
     for(auto &&e : s1) {
         if(e == '\\'){
             e='/';

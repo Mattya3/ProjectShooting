@@ -1,5 +1,22 @@
-ゲーム制作フロー
+# プロジェクト-シューティング
 
+- [予定](#予定)
+```mermaid
+gantt
+dateFormat  YYYY-MM-DD
+axisFormat  %m/%d
+title シューティングゲーム制作フロー
+
+section 松尾
+企画検討 : active, task1, 2022-10-15,2022-10-20
+仕様書作成      :  task2, after task1, 6d
+プロトタイプ作成: task3, after task2, 7d 
+section 岩渕
+企画検討 : active, task1, 2022-10-15,2022-10-20
+C++GUI選定 : active, task_select, 2022-10-15,2022-10-20
+プロトタイプ作成: task3, after task2, 7d 
+```
+## ゲーム制作フロー
 1. 企画・検討
 ・パワーポイント5枚程度でゲームの説明
 
@@ -24,3 +41,11 @@
 
 7. 完成(終了)
 ・必要に応じてルールブックの作成
+
+## 検討GUI
+* Qt: Javaで言うSwingみたいなGUIライブラリ、フレームワーク。C++だけで作ることができる。
+* JS + WASM: WebAssemblyによりC++コードをWeb上で実行できるようになる。描画はJavaScriptが担当する。
+* openGLが良いと思う
+多分非Unix環境ではQtとWASMはインストールが難しそう。WSLがWindowsに入りそうなら良いんだけど
+
+https://onlinegdb.com/kGYo98t65
