@@ -10,11 +10,17 @@ title シューティングゲーム制作フロー
 section 松尾
 企画検討 : active, task1, 2022-10-15,2022-10-20
 仕様書作成      :  task2, after task1, 6d
-プロトタイプ作成: task3, after task2, 7d 
+プロトタイプ作成: task3, after task2, 7d
+デザイン修正: task4, after task3, 7d
+完成版作成: task5, after task4, 7d
+
 section 岩渕
 企画検討 : active, task1, 2022-10-15,2022-10-20
 C++GUI選定 : active, task_select, 2022-10-15,2022-10-20
+仕様書作成      :  task2, after task1, 6d
 プロトタイプ作成: task3, after task2, 7d 
+デザイン修正: task4, after task3, 7d
+完成版作成: task5, after task4, 7d
 ```
 ## ゲーム制作フロー
 1. 企画・検討
