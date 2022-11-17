@@ -2,7 +2,7 @@
 // Shift+Alt+fで形を整える
 // ctrl+sでセーブ
 #include <bits/stdc++.h>
-#include <gl/glut.h>
+#include "../include/GL/glut.h"
 using namespace std;
 int mouse_click_state = 0;
 static int displayFlag = 0;

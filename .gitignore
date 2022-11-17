@@ -1,5 +1,7 @@
 .vscode/
 build/
 include/bits/
+include/GL
+include/GLFW
 a.out
 a.exe
