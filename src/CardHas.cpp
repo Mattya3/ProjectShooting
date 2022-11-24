@@ -15,7 +15,6 @@ public:
             cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
         }
         getline(files, line);
-        int cardNum = stoi(line);//カード数を代入
         for(int i = 0; i < hasFlag.size(); i++){//各カードに対してリストに入れるかのループ処理
             if(hasFlag.at(i)){//カードを所持している
                 getline(files, line);
@@ -34,27 +33,25 @@ public:
     vector<Card> callCardSets(void){//セットカードのリストをvectorで返す関数
         vector<int> CardSets = writeCardSets();//セットしたカードIDをvectorで保持
         vector<Card> cards;//帰り値用, カードのリスト
-        vector<string> splitString;//ファイル読み込み時の文字列を分割して入れる変数
-        string line;//ファイル読み込み時の文字列をそのまま入れる変数
+        string text, data;//ファイル読み込み時の文字列をそのまま入れる変数
         Card nowCard;//代入用変数
         int i = 0, j = 0;//ループ処理用変数
         ifstream files("../data/CardData");//ファイル読み込み
         if(files.fail()){
             cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
         }
-        getline(files, line);
-        int cardNum = stoi(line);//カード数を代入
-        while(i < CardSets.size()){
-            if(CardSets.at(i) == j){
-                getline(files, line);
-                nowCard.putCardText(line);//テキストデータを代入
-                getline(files, line);
-                nowCard.putCardData(line);//数値データを代入
+        getline(files, text);//一行目のカード数を記入
+        getline(files, text);//No.0のテキストの記入
+        getline(files, data);//No.0のデータの記入
+        while(i < CardSets.size()){//セットカードリストを作成するループ処理
+            if(CardSets.at(i) == j){//セットカードリストに存在する
+                nowCard.putCardText(text);//テキストデータを代入
+                nowCard.putCardData(data);//数値データを代入
                 cards.push_back(nowCard);//カードをリストに入れる
                 i++;
-            }else{
-                getline(files, line);
-                getline(files, line);
+            }else{//セットカードリストに存在しない
+                getline(files, text);//各No.のテキストの記入
+                getline(files, data);//各No.のデータの記入
                 j++;
             }
         }
