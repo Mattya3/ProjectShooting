@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Card{
+class Card{//カードデータを保存する関数
 public:
     string cardName;
     string cardExplain;
@@ -9,8 +9,8 @@ public:
     int typeB;
     int needEXP;
     int upNum;
-    int uped1;
-    int uped2;
+    int uped1 = 0;
+    int uped2 = 0;
 
     vector<string> split(string str, char separator){
         vector<string> output;
