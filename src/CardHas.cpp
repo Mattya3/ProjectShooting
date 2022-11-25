@@ -48,7 +48,27 @@ public:
     }
 
     void writeHasCard(int ID){
-        
+        string line1;//変更する所持カードリストの保持用
+        string line2;//変更しないセットカードの保持用
+        ifstream file1("../data/SaveData");//ファイル読み込み
+        if(file1.fail()){
+            cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        }
+        getline(file1, line1);
+        getline(file1, line2);
+        vector<string> cards = split(line1, ' ');
+        line1 = cards.at(0);
+        for(int i = 1; i < cards.size(); i++){
+            if(i == ID) line1 += " 1";
+            else line1 = line1 + " " + cards.at(i);
+        }
+        ofstream file2("../data/SaveData", ios::out);//ファイル読み込み
+        if(file2.fail()){
+            cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        }
+        file2 << line1 << endl;
+        file2 << line2 << endl;
+        file2.close();
     }
 
     vector<string> split(string str, char separator){//strをseparatorで分割する関数
