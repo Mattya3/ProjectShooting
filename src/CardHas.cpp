@@ -5,7 +5,7 @@ using namespace std;
 class CardHas{
 public:
     vector<Card> callCardLineup(void){//所持カードのリストをvectorで返す関数
-        vector<bool> hasFlag = writeHasCard();//所持しているかどうかをvectorで保持
+        vector<bool> hasFlag = readHasCard();//所持しているかどうかをvectorで保持
         vector<Card> cards;//帰り値用, カードのリスト
         vector<string> splitString;//ファイル読み込み時の文字列を分割して入れる変数
         string line;//ファイル読み込み時の文字列をそのまま入れる変数
@@ -30,35 +30,7 @@ public:
         return cards;
     }
 
-    vector<Card> callCardSets(void){//セットカードのリストをvectorで返す関数
-        vector<int> CardSets = writeCardSets();//セットしたカードIDをvectorで保持
-        vector<Card> cards;//帰り値用, カードのリスト
-        string text, data;//ファイル読み込み時の文字列をそのまま入れる変数
-        Card nowCard;//代入用変数
-        int i = 0, j = 0;//ループ処理用変数
-        ifstream files("../data/CardData");//ファイル読み込み
-        if(files.fail()){
-            cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
-        }
-        getline(files, text);//一行目のカード数を記入
-        getline(files, text);//No.0のテキストの記入
-        getline(files, data);//No.0のデータの記入
-        while(i < CardSets.size()){//セットカードリストを作成するループ処理
-            if(CardSets.at(i) == j){//セットカードリストに存在する
-                nowCard.putCardText(text);//テキストデータを代入
-                nowCard.putCardData(data);//数値データを代入
-                cards.push_back(nowCard);//カードをリストに入れる
-                i++;
-            }else{//セットカードリストに存在しない
-                getline(files, text);//各No.のテキストの記入
-                getline(files, data);//各No.のデータの記入
-                j++;
-            }
-        }
-        return cards;
-    }
-
-    vector<bool> writeHasCard(void){//カードを所持しているかのフラグのリストをvectorで返す関数
+    vector<bool> readHasCard(void){//カードを所持しているかのフラグのリストをvectorで返す関数
         vector<bool> output;//帰り値用, カードフラグのリスト
         vector<string> puts;//ファイル読み込み時の文字列を分割して入れる変数
         string line;//ファイル読み込み時の文字列をそのまま入れる変数
@@ -75,22 +47,8 @@ public:
         return output;
     }
 
-    vector<int> writeCardSets(void){//セットカードのIDのリストをvectorで返す関数
-        vector<int> output;//帰り値用, セットしたカードIDのリスト
-        vector<string> puts;//ファイル読み込み時の文字列を分割して入れる変数
-        string line;//ファイル読み込み時の文字列をそのまま入れる変数
-        ifstream files("../data/SaveData");//ファイル読み込み
-        if(files.fail()){
-            cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
-        }
-        getline(files, line);
-        getline(files, line);
-        puts = split(line, ' ');//putsに分割後を入れる
-        for(int i = 0; i < puts.size(); i++){//セットカードに対してリストを作成するループ処理
-            output.push_back(stoi(puts.at(i)));
-        }
-        sort(output.begin(), output.end());//セットカードを昇順にソート
-        return output;
+    void writeHasCard(int ID){
+        
     }
 
     vector<string> split(string str, char separator){//strをseparatorで分割する関数
