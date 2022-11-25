@@ -1,134 +1,206 @@
-// #include "../include/funcA.hpp"
 #define GL_SILENCE_DEPRECATION 1
-#include <funcA.hpp>
-
+// #include <funcA.hpp>
+#include <GLFW/glfw3.h>
 #include <bits/stdc++.h>
 using namespace std;
-// #ifdef COMPILE__AT__MAC__OS
-#include <OpenGL/OpenGL.h>
-#include <glu.h>
-#include <gl.h>
-#include <OpenGL.h>
-#include <GLFW/glfw3.h>
-// #endif
+using pdd = pair<double, double>;
+using square = pair<pdd, pdd>;
+constexpr int WINDOW_width = 640, WINDOW_height = 480;
+inline void to_canonical_xy(double &x, double &y) {
+    x /= WINDOW_width / 2;
+    y /= WINDOW_height / 2;
+    y = 1 - y;
+    x = x - 1;
+}
+// square example = {{sx,sy}, {gx, gy}}; 左下、右上
+enum class scene {
+    title,
+    select_card,
+    battle,
+};
+scene scene_id = scene::title;
 
-const GLfloat lightPosition1[4] = {0.0f,3.0f, 5.0f, 1.0f};
-const GLfloat green[] = { 0.0, 1.0, 0.0, 1.0 };
-const GLfloat lightPosition2[4] = {5.0f,3.0f, 0.0f, 1.0f};
-const GLfloat red[] = { 1.0, 0.0, 0.0, 1.0 };
+class Button {
+  private:
+    double sx, sy, xlen, ylen;
+    double r, g, b;
+    function<void(void)> func;
+    bool is_btn_lightup = false;
 
-const GLfloat teapotAmbient[4] = {0.3f,0.5f, 0.0f, 1.0f};
-const GLfloat teapotDiffuse[4] = {1.0f,1.0f, 0.3f, 1.0f};
-const GLfloat teapotSpecular[4] = {1.0f,1.0f, 1.0f, 1.0f};
-const GLfloat teapotShininess[4] = {20.0f};
+  public:
+    void set_action(function<void(void)> f) { func = f; }
+    void action_when_pushed() {
+        func();
+        is_btn_lightup = !is_btn_lightup;
+    }
+    inline bool valid_push_location(double x, double y) {
+        return (sx <= x && x <= sx + xlen && sy <= y && y <= sy + ylen);
+    }
+    void button_view() {
+        if(is_btn_lightup) {
+            glBegin(GL_POLYGON);
+        } else {
+            glBegin(GL_LINE_LOOP);
+        }
+        glColor3d(1.0, 0.0, 0.0);
+        glVertex2d(sx, sy);
+        glVertex2d(sx + xlen, sy);
+        glVertex2d(sx + xlen, sy + ylen);
+        glVertex2d(sx, sy + ylen);
+        glEnd();
+    }
+    Button(double sx, double sy, double xlen, double ylen);
+    ~Button();
+};
 
-void setup(void) {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
+Button::Button(double sx, double sy, double xlen, double ylen)
+    : sx(sx), sy(sy), xlen(xlen), ylen(ylen) {}
 
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition1);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, red);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, red);
-    glLightfv(GL_LIGHT1, GL_POSITION, lightPosition2);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, green);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, teapotAmbient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, teapotDiffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, teapotSpecular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, teapotShininess);
+Button::~Button() {}
+
+class Scene {
+  private:
+  protected:
+    vector<Button> btns;
+
+  public:
+    virtual void mouse_button_callback(GLFWwindow *pwin, int button, int action,
+                                       int mods) {}
+    virtual void add_button() {}
+};
+class Title_scene : public Scene {
+  private:
+  public:
+    void mouse_button_callback(GLFWwindow *pwin, int button, int action,
+                               int mods) {
+        double mousex, mousey;
+        glfwGetCursorPos(pwin, &mousex, &mousey);
+        to_canonical_xy(mousex, mousey);
+        for(auto &&btn : btns) {
+            if(btn.valid_push_location(mousex, mousey)) {
+                btn.action_when_pushed();
+            } else {
+                cout << "no valid"
+                     << "\n";
+                cout << mousex << ',' << mousey << "\n";
+            }
+        }
+    }
+    void add_button(Button btn) { btns.push_back(btn); }
+    void show_component() {
+        for(auto &&e : btns) {
+            e.button_view();
+        }
+    }
+    Title_scene();
+    ~Title_scene();
+};
+
+Title_scene::Title_scene() {}
+
+Title_scene::~Title_scene() {}
+void mouse_button_callback(GLFWwindow *pwin, int button, int action, int mods) {
+
+    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+        scene_id = scene::battle;
+    }
+    if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
+        scene_id = scene::title;
+    }
 }
 
-void draw(void) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // glutSolidTeapot(0.5);
-    glFlush();
+// GLFWにおいてコールバック関数としてインスタンスメソッドを登録できない
+// 間に静的関数をかませることで解決できる。
+// add_scene_instanceの後に
+static Scene *sc_ptr;
+class register_callback_resolver {
+  private:
+    static void mouse_func(GLFWwindow *pwin, int button, int action, int mods) {
+        sc_ptr->mouse_button_callback(pwin, button, action, mods);
+    }
+
+  public:
+    static void init(Scene &sc, GLFWwindow *pwin) {
+        sc_ptr = &sc;
+        glfwSetMouseButtonCallback(pwin, mouse_func);
+    }
+};
+
+void draw_grid(square rect, int nx, int ny, double x_interval,
+               double y_interval) {
+    double sx = rect.first.first + x_interval,
+           sy = rect.first.second + y_interval;
+    double xlen =
+        ((rect.second.first - rect.first.first) - (nx + 1) * x_interval) / nx;
+    double ylen =
+        ((rect.second.second - rect.first.second) - (ny + 1) * y_interval) / ny;
+    for(int i = 0; i < ny; i++) {
+        for(int j = 0; j < nx; j++) {
+            glBegin(GL_LINE_LOOP);
+            glVertex2d(sx, sy);
+            glVertex2d(sx + xlen, sy);
+            glVertex2d(sx + xlen, sy + ylen);
+            glVertex2d(sx, sy + ylen);
+            glEnd();
+            sx += xlen + x_interval;
+        }
+        sx = rect.first.first + x_interval;
+        sy += ylen + y_interval;
+    }
 }
 
+int main() {
 
-void resize(int width, int height) {
-    glViewport(0, 0, width, height);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0,
-                   (double)width/height,
-                   0.1,
-                   100.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluLookAt(-0.5, 2.1, 2.0,
-              0.0, 0.0, 0.0,
-              0.0, 4.0, 0.0);
-}
-void display(void){
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    // glutWireTeapot(0.5);
-    glFlush();
-}
+    GLFWwindow *window1, *window2;
 
+    // ライブラリglfw の初期化
+    if(!glfwInit())
+        return -1;
 
-// int main(int argc, char * argv[]) {
-//     // // insert code here...
-//     // glutInit(&argc, argv);
-//     // glutInitWindowSize(600,600);
-//     // glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_DEPTH);
-//     // glutCreateWindow("Wire_teapot");
-//     // glutReshapeFunc(resize);
-//     // glutDisplayFunc(draw);
-//     setup();
-//     glutMainLoop();
-//     cout << 1 << "\n";
-//     return 0;
-// }
-static void glfwError(int id, const char* description)
-{
-  std::cout << description << std::endl;
-}
+    // ウィンドウを作成
+    window1 = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    // window2 = glfwCreateWindow(400, 400, "window 2", NULL, NULL);
+    if(!window1) {
+        glfwTerminate();
+        return -1;
+    }
+    // glfwSetMouseButtonCallback(window1, mouse_button_callback);
+    square cards = square(pdd(-1, -0.5), pdd(1.0, 1.0));
+    // 作成したウィンドウを，OpenGLの描画関数のターゲットにする
+    glfwMakeContextCurrent(window1);
 
-int main(){
-  glfwSetErrorCallback(&glfwError);
-  glfwInit();
-  // GLFWを初期化する
-  if (glfwInit() == GL_FALSE) {
-	// 初期化に失敗
-    cerr << "Can't initialize GLFW" << endl;
+    Button b(-0.5, -0.5, 0.3, 0.3);
+    b.set_action([&]() { draw_grid(cards, 3, 3, 0.1, 0.1); });
+    Title_scene ts;
+    ts.add_button(b);
+
+    register_callback_resolver::init(ts, window1);
+    // 描画のループ
+    while(!glfwWindowShouldClose(window1)) {
+        // 画面を塗りつぶす
+        glClear(GL_COLOR_BUFFER_BIT);
+        switch(scene_id) {
+        case scene::title:
+            draw_grid(cards, 4, 2, 0.05, 0.1);
+            ts.show_component();
+            break;
+        case scene::battle:
+            draw_grid(cards, 4, 6, 0.05, 0.05);
+            break;
+        case scene::select_card:
+            draw_grid(cards, 4, 2, 0.05, 0.1);
+            break;
+        default:
+            break;
+        }
+
+        // 上記描画した図形を表画面のバッファにスワップする
+        glfwSwapBuffers(window1);
+
+        // 受け取ったイベント（キーボードやマウス入力）を処理する
+        glfwPollEvents();
+    }
+
     glfwTerminate();
-    return 1;
-  }
-  // Setup GLFW window properties
-  // OpenGLのバージョン指定 4.1
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-  // 古い機能を削除したプロファイルを使用するか
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-  // OpenGLのプロファイルを指定する
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  
-  GLFWwindow* mainWindow = glfwCreateWindow(640,480,"Sample Window", NULL, NULL);
-  if(mainWindow == NULL){
-    // ウィンドウの作成に失敗
-    cerr << "Can't create GLFW window" << endl;
-    glfwTerminate();
-    return 1;
-  }
-  // ウィンドウをOpenGLの処理対象にする
-  glfwMakeContextCurrent(mainWindow);
-  // 背景色を指定
-  // 引数は 0～1のfloat型で r g b a を指定する。今回は不透明の赤100%
-  glClearColor(1.0f,0.0f,0.0f,1.0f);
-  // ウィンドウが閉じるまでループする
-  while(glfwWindowShouldClose(mainWindow) == GL_FALSE){
-    // ウィンドウを消去する
-    glClear(GL_COLOR_BUFFER_BIT);
-    // 
-    //  ここで描画処理
-    //
-    // カラーバッファを入れ替える
-    glfwSwapBuffers(mainWindow);
-    
-    // イベントを取り出す (ユーザーのインプットイベントなどなどを取り扱います。)
-    glfwPollEvents();
-  } 
+    return 0;
 }
