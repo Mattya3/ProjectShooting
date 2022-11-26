@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 #include "StructureData.cpp"
+#include "ChangeStructureView.cpp"
+
 using namespace std;
 
 class ChangeStructure{

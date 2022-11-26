@@ -3,6 +3,6 @@ using namespace std;
 
 class ChangeStructureView{
 public:
-    ChangeStructureView(void){
+    ChangeStructureView(ChangeStructure X){
     }    
 };
