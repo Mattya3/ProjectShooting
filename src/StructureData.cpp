@@ -20,7 +20,7 @@ public:
         while(i < CardSets.size()){//セットカードリストを作成するループ処理
             if(CardSets.at(i) == j){//セットカードリストに存在する
                 nowCard.putCardText(text);//テキストデータを代入
-                nowCard.putCardData(data);//数値データを代入
+                nowCard.putCardData(i, data);//数値データを代入
                 cards.push_back(nowCard);//カードをリストに入れる
                 i++;
             }else{//セットカードリストに存在しない

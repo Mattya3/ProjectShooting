@@ -5,6 +5,7 @@ class Card{//カードデータを保存する関数
 public:
     string cardName;//カード名
     string cardExplain;//カード説明文
+    int id;//識別用
     int typeA;//強化種類1(自機or弾)
     int typeB;//強化種類2()
     int needEXP;//必要経験量
@@ -26,7 +27,8 @@ public:
         cardExplain = splitString.at(1);
     }
 
-    void putCardData(string line){//数値データを保管する関数
+    void putCardData(int no, string line){//数値データを保管する関数
+        id = no;
         vector<string> splitString = split(line, ' ');//入力内容を分割
         typeA = stoi(splitString.at(0));
         typeB = stoi(splitString.at(1));

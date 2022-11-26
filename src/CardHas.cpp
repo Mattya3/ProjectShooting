@@ -20,7 +20,7 @@ public:
                 getline(files, line);
                 nowCard.putCardText(line);//テキストデータを代入
                 getline(files, line);
-                nowCard.putCardData(line);//数値データを代入
+                nowCard.putCardData(i, line);//数値データを代入
                 cards.push_back(nowCard);//カードをリストに入れる
             }else{//カードを所持していない
                 getline(files, line);
