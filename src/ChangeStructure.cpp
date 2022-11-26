@@ -2,9 +2,11 @@
 #include "StructureData.cpp"
 using namespace std;
 
-class CardHas{
+class ChangeStructure{
 public:
-    
+    ChangeStructure(void){
+        ChangeStructureView view();
+    }    
 
 
     void legisterStructure(vector<int> list){
