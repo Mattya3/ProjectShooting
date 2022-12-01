@@ -1,17 +1,13 @@
-#define GL_SILENCE_DEPRECATION 1
 // #include <funcA.hpp>
 #include <GLFW/glfw3.h>
 #include <bits/stdc++.h>
+#include <scenes/all_scene.hpp>
+
 using namespace std;
 using pdd = pair<double, double>;
 using square = pair<pdd, pdd>;
-constexpr int WINDOW_width = 640, WINDOW_height = 480;
-inline void to_canonical_xy(double &x, double &y) {
-    x /= WINDOW_width / 2;
-    y /= WINDOW_height / 2;
-    y = 1 - y;
-    x = x - 1;
-}
+const int WINDOW_width = 800, WINDOW_height = 700;
+
 // square example = {{sx,sy}, {gx, gy}}; 左下、右上
 enum class scene {
     title,
@@ -20,98 +16,10 @@ enum class scene {
 };
 scene scene_id = scene::title;
 
-class Button {
-  private:
-    double sx, sy, xlen, ylen;
-    double r, g, b;
-    function<void(void)> func;
-    bool is_btn_lightup = false;
-
-  public:
-    void set_action(function<void(void)> f) { func = f; }
-    void action_when_pushed() {
-        func();
-        is_btn_lightup = !is_btn_lightup;
-    }
-    inline bool valid_push_location(double x, double y) {
-        return (sx <= x && x <= sx + xlen && sy <= y && y <= sy + ylen);
-    }
-    void button_view() {
-        if(is_btn_lightup) {
-            glBegin(GL_POLYGON);
-        } else {
-            glBegin(GL_LINE_LOOP);
-        }
-        glColor3d(1.0, 0.0, 0.0);
-        glVertex2d(sx, sy);
-        glVertex2d(sx + xlen, sy);
-        glVertex2d(sx + xlen, sy + ylen);
-        glVertex2d(sx, sy + ylen);
-        glEnd();
-    }
-    Button(double sx, double sy, double xlen, double ylen);
-    ~Button();
-};
-
-Button::Button(double sx, double sy, double xlen, double ylen)
-    : sx(sx), sy(sy), xlen(xlen), ylen(ylen) {}
-
-Button::~Button() {}
-
-class Scene {
-  private:
-  protected:
-    vector<Button> btns;
-
-  public:
-    virtual void mouse_button_callback(GLFWwindow *pwin, int button, int action,
-                                       int mods) {}
-    virtual void add_button() {}
-};
-class Title_scene : public Scene {
-  private:
-  public:
-    void mouse_button_callback(GLFWwindow *pwin, int button, int action,
-                               int mods) {
-        double mousex, mousey;
-        glfwGetCursorPos(pwin, &mousex, &mousey);
-        to_canonical_xy(mousex, mousey);
-        for(auto &&btn : btns) {
-            if(btn.valid_push_location(mousex, mousey)) {
-                btn.action_when_pushed();
-            } else {
-                cout << "no valid"
-                     << "\n";
-                cout << mousex << ',' << mousey << "\n";
-            }
-        }
-    }
-    void add_button(Button btn) { btns.push_back(btn); }
-    void show_component() {
-        for(auto &&e : btns) {
-            e.button_view();
-        }
-    }
-    Title_scene();
-    ~Title_scene();
-};
-
-Title_scene::Title_scene() {}
-
-Title_scene::~Title_scene() {}
-void mouse_button_callback(GLFWwindow *pwin, int button, int action, int mods) {
-
-    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-        scene_id = scene::battle;
-    }
-    if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
-        scene_id = scene::title;
-    }
-}
 
 // GLFWにおいてコールバック関数としてインスタンスメソッドを登録できない
 // 間に静的関数をかませることで解決できる。
-// add_scene_instanceの後に
+// シーンの各種マウスキー入力監視関数をコールバック登録する
 static Scene *sc_ptr;
 class register_callback_resolver {
   private:
@@ -125,30 +33,6 @@ class register_callback_resolver {
         glfwSetMouseButtonCallback(pwin, mouse_func);
     }
 };
-
-void draw_grid(square rect, int nx, int ny, double x_interval,
-               double y_interval) {
-    double sx = rect.first.first + x_interval,
-           sy = rect.first.second + y_interval;
-    double xlen =
-        ((rect.second.first - rect.first.first) - (nx + 1) * x_interval) / nx;
-    double ylen =
-        ((rect.second.second - rect.first.second) - (ny + 1) * y_interval) / ny;
-    for(int i = 0; i < ny; i++) {
-        for(int j = 0; j < nx; j++) {
-            glBegin(GL_LINE_LOOP);
-            glVertex2d(sx, sy);
-            glVertex2d(sx + xlen, sy);
-            glVertex2d(sx + xlen, sy + ylen);
-            glVertex2d(sx, sy + ylen);
-            glEnd();
-            sx += xlen + x_interval;
-        }
-        sx = rect.first.first + x_interval;
-        sy += ylen + y_interval;
-    }
-}
-
 int main() {
 
     GLFWwindow *window1, *window2;
@@ -170,21 +54,24 @@ int main() {
     glfwMakeContextCurrent(window1);
 
     Button b(-0.5, -0.5, 0.3, 0.3);
-    b.set_action([&]() { draw_grid(cards, 3, 3, 0.1, 0.1); });
+    
     Title_scene ts;
     ts.add_button(b);
-
     register_callback_resolver::init(ts, window1);
     // 描画のループ
+    ChangeStructureView csv;
+
     while(!glfwWindowShouldClose(window1)) {
         // 画面を塗りつぶす
         glClear(GL_COLOR_BUFFER_BIT);
+
         switch(scene_id) {
         case scene::title:
             draw_grid(cards, 4, 2, 0.05, 0.1);
             ts.show_component();
             break;
         case scene::battle:
+            glColor3d(0.0,0.0,1.0);
             draw_grid(cards, 4, 6, 0.05, 0.05);
             break;
         case scene::select_card:

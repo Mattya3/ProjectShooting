@@ -13,16 +13,17 @@ int main() {
         return -1;
 
     // ウィンドウを作成
-    window1 = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window1 = glfwCreateWindow(WINDOW_width, WINDOW_height, "Hello World", NULL,
+                               NULL);
     if(!window1) {
         glfwTerminate();
         return -1;
     }
     glfwMakeContextCurrent(window1);
-    
+
     // 描画テスト関数 start (x,y)からそのどこまで伸ばすかを指定する。
     // 左下が原点(0,0)とする
-    // 座標系は x=[0,800] , y=[0,700] 
+    // 座標系は x=[0,800] , y=[0,700]
     auto show = [](double sx, double sy, double xlen, double ylen,
                    string color) {
         sx /= WINDOW_width / 2;
@@ -51,12 +52,18 @@ int main() {
     while(!glfwWindowShouldClose(window1)) {
         // 画面を塗りつぶす
         glClear(GL_COLOR_BUFFER_BIT);
-        show(20, 20, 500.0, 660.0,"red");
-        show(540, 50, 200, 100,"blue");
-        show(540, 190, 200, 100,"blue");
-        show(540, 330, 200, 100,"blue");
+        // show(20, 20, 500.0, 660.0, "red");
+        // show(540, 50, 200, 100, "blue");
+        // show(540, 190, 200, 100, "blue");
+        // show(540, 330, 200, 100, "blue");
+        show(50, 200, 200, 300, "red");
+        show(60, 340, 180, 100, "green");
 
-
+        show(300, 200, 200, 300, "red");
+        show(310, 340, 180, 100, "green");
+        
+        show(550, 200, 200, 300, "red");
+        show(560, 340, 180, 100, "green");
 
         // 上記描画した図形を表画面のバッファにスワップする
         glfwSwapBuffers(window1);
