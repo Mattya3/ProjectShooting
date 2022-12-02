@@ -8,3 +8,4 @@ a.exe
 *.exe
 *.out
 com.sh
+Makefile
