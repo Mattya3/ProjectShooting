@@ -1,5 +1,6 @@
 #pragma once
-extern const int WINDOW_width, WINDOW_height;
+const int WINDOW_width = 800, WINDOW_height = 700;
+
 using pdd = pair<double, double>;
 using square = pair<pdd, pdd>;
 inline void to_canonical_xy(double &x, double &y) {
