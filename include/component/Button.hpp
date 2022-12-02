@@ -10,13 +10,14 @@ class Button {
     bool is_btn_lightup = false;
 
   public:
-    void action_when_pushed() {
+    inline void action_when_pushed() {
         is_btn_lightup = !is_btn_lightup;
+        cout << "hello" << "\n";
     }
     inline bool valid_push_location(double x, double y) {
         return (sx <= x && x <= sx + xlen && sy <= y && y <= sy + ylen);
     }
-    void button_view() {
+    inline void button_view() {
         if(is_btn_lightup) {
             glBegin(GL_POLYGON);
         } else {
@@ -29,6 +30,6 @@ class Button {
         glVertex2d(sx, sy + ylen);
         glEnd();
     }
-    Button(double sx, double sy, double xlen, double ylen);
-    ~Button();
+    Button(double sx, double sy, double xlen, double ylen){}
+    ~Button(){}
 };

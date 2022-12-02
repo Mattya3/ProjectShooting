@@ -1,8 +1,7 @@
 #pragma once
-#include <component/Button.hpp>
 #include <scenes/Scene.hpp>
 
-class ChangeStructureView : Scene {
+class ChangeStructureView :public Scene {
   private:
   public:
     void add_button(Button btn);
