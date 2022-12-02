@@ -18,6 +18,9 @@ public:
         ChangeStructureView view(this);
     }
 
+    void ChangeStructureCard(int point, Card data){
+        this->list.at(point) = data;
+    }
 
     void legisterStructure(void){
         vector<int> no(3);

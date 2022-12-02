@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "CardHas.cpp"
+#include "CardHas.hpp"
 using namespace std;
 
 class StructureData{
