@@ -13,17 +13,19 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
     message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there. You may need to remove CMakeCache.txt. ")
 endif()
 
-
-
 include_directories(./include)
-include_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers)
-include_directories(/opt/homebrew/Cellar/glfw/3.3.8/include)
-include_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Versions/A/Headers/)
-include_directories(/opt/homebrew/Cellar/libpng/1.6.39/include)
 
-link_directories(/opt/homebrew/Cellar/libpng/1.6.39/lib)
-link_directories(/opt/homebrew/Cellar/glfw/3.3.8/lib) 
-link_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries)
+if(APPLE)
+    include_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers)
+    include_directories(/opt/homebrew/Cellar/glfw/3.3.8/include)
+    include_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Versions/A/Headers/)
+    include_directories(/opt/homebrew/Cellar/libpng/1.6.39/include)
+
+    link_directories(/opt/homebrew/Cellar/libpng/1.6.39/lib)
+    link_directories(/opt/homebrew/Cellar/glfw/3.3.8/lib)
+    link_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries)
+endif()
+
 find_package(OpenGL REQUIRED)
 set(LIBS glfw GL GLU)
 
@@ -37,8 +39,9 @@ add_subdirectory(src)
 
 add_executable(main main.cpp)
 
-target_link_libraries(main "-framework OpenGL" glfw)
-target_link_libraries(main "-framework GLUT")
+if(APPLE)
+    target_link_libraries(main "-framework OpenGL" glfw)
+    target_link_libraries(main "-framework GLUT")
+endif()
 target_link_libraries(main component)
 target_link_libraries(main scene)
-
