@@ -1,6 +1,8 @@
 
 #include <bits/stdc++.h>
 #include "../include/CardHas.hpp"
+#include <filesystem>
+using std::filesystem::current_path;
 using namespace std;
 
 vector<Card> CardHas::callCardLineup(void){//所持カードのリストをvectorで返す関数
@@ -9,7 +11,7 @@ vector<Card> CardHas::callCardLineup(void){//所持カードのリストをvecto
     vector<string> splitString;//ファイル読み込み時の文字列を分割して入れる変数
     string line;//ファイル読み込み時の文字列をそのまま入れる変数
     Card nowCard;//代入用変数
-    ifstream files("../data/CardData");//ファイル読み込み
+    ifstream files((current_path() / filesystem::path("data/CardData")).c_str());//ファイル読み込み
     if(files.fail()){
         cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
     }
@@ -33,7 +35,7 @@ vector<bool> CardHas::readHasCard(void){//カードを所持しているかの�
     vector<bool> output;//帰り値用, カードフラグのリスト
     vector<string> puts;//ファイル読み込み時の文字列を分割して入れる変数
     string line;//ファイル読み込み時の文字列をそのまま入れる変数
-    ifstream files("../data/SaveData");//ファイル読み込み
+    ifstream files((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(files.fail()){
         cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
     }
@@ -49,7 +51,7 @@ vector<bool> CardHas::readHasCard(void){//カードを所持しているかの�
 void CardHas::writeHasCard(int ID){
     string line1;//変更する所持カードリストの保持用
     string line2;//変更しないセットカードの保持用
-    ifstream file1("../data/SaveData");//ファイル読み込み
+    ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(file1.fail()){
         cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
     }
@@ -61,7 +63,7 @@ void CardHas::writeHasCard(int ID){
         if(i == ID) line1 += " 1";
         else line1 = line1 + " " + cards.at(i);
     }
-    ofstream file2("../data/SaveData", ios::out);//ファイル読み込み
+    ofstream file2((current_path() / filesystem::path("data/SaveData")).c_str(), ios::out);//ファイル読み込み
     if(file2.fail()){
         cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
     }
