@@ -1,12 +1,7 @@
+/*
 #pragma once
-#include <bits/stdc++.h>
-#include <GLFW/glfw3.h>
 
-using namespace std;
-extern const int WINDOW_width, WINDOW_height;
-
-extern sceneNumber scene_id;
-
+const int WINDOW_width = 800, WINDOW_height = 700;
 
 using pdd = pair<double, double>;
 using square = pair<pdd, pdd>;
@@ -34,3 +29,4 @@ inline void draw_grid(square rect, int nx, int ny, double x_interval,
         sy += ylen + y_interval;
     }
 }
+*/
