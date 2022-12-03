@@ -1,4 +1,6 @@
+/*
 #pragma once
+
 const int WINDOW_width = 800, WINDOW_height = 700;
 
 using pdd = pair<double, double>;
@@ -33,4 +35,4 @@ inline void draw_grid(square rect, int nx, int ny, double x_interval,
         sy += ylen + y_interval;
     }
 }
-
+*/

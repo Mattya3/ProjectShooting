@@ -1,8 +1,9 @@
+
 #include <bits/stdc++.h>
-#include "CardHas.hpp"
+#include "../include/CardHas.hpp"
 using namespace std;
 
-vector<Card> callCardLineup(void){//所持カードのリストをvectorで返す関数
+vector<Card> CardHas::callCardLineup(void){//所持カードのリストをvectorで返す関数
     vector<bool> hasFlag = readHasCard();//所持しているかどうかをvectorで保持
     vector<Card> cards;//帰り値用, カードのリスト
     vector<string> splitString;//ファイル読み込み時の文字列を分割して入れる変数
@@ -28,7 +29,7 @@ vector<Card> callCardLineup(void){//所持カードのリストをvectorで返�
     return cards;
 }
 
-vector<bool> readHasCard(void){//カードを所持しているかのフラグのリストをvectorで返す関数
+vector<bool> CardHas::readHasCard(void){//カードを所持しているかのフラグのリストをvectorで返す関数
     vector<bool> output;//帰り値用, カードフラグのリスト
     vector<string> puts;//ファイル読み込み時の文字列を分割して入れる変数
     string line;//ファイル読み込み時の文字列をそのまま入れる変数
@@ -45,7 +46,7 @@ vector<bool> readHasCard(void){//カードを所持しているかのフラグ�
     return output;
 }
 
-void writeHasCard(int ID){
+void CardHas::writeHasCard(int ID){
     string line1;//変更する所持カードリストの保持用
     string line2;//変更しないセットカードの保持用
     ifstream file1("../data/SaveData");//ファイル読み込み
@@ -69,7 +70,7 @@ void writeHasCard(int ID){
     file2.close();
 }
 
-vector<string> split(string str, char separator){//strをseparatorで分割する関数
+vector<string> CardHas::split(string str, char separator){//strをseparatorで分割する関数
     vector<string> output;//帰り値用, 分割後の文字列のリスト
     stringstream getString(str);//分割後の一時保存用の変数
     string x;//分割後の一時保存用の変数

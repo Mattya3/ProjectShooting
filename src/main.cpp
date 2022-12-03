@@ -1,6 +1,7 @@
 // #include "../include/funcA.hpp"
 // Shift+Alt+fで形を整える
 // ctrl+sでセーブ
+/*
 #include <bits/stdc++.h>
 #include "../include/GL/glut.h"
 using namespace std;
@@ -50,3 +51,4 @@ int main(int argc, char *argv[]) {
 	glutMainLoop();	// メインループへ
 	return 0;
 }
+*/
