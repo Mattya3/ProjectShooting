@@ -1,13 +1,12 @@
 file(GLOB LIST "*.cpp")
 
-add_library(component
+add_library(setting
     SHARED
-    ${LIST}
+    utility.cpp
 )
 
-message(STATUS "!!! this is ${LIST}")
 # greetingライブラリのインクルードディレクトリを教えてあげる
 # PROJECT_SOURCE_DIRはこのプロジェクトのルートディレクトリの絶対パス
-target_include_directories(component
-    PUBLIC ${PROJECT_SOURCE_DIR}/include/component
+target_include_directories(setting
+    PUBLIC ${PROJECT_SOURCE_DIR}/include
 )

@@ -4,7 +4,9 @@ add_library(scene
     SHARED
     ${LIST}
 )
-
+include_directories(${PROJECT_SOURCE_DIR}/include/component)
+target_link_libraries(scene component)
+#  ライブラリ同士が依存している場合は上記を書く。
 # greetingライブラリのインクルードディレクトリを教えてあげる
 # PROJECT_SOURCE_DIRはこのプロジェクトのルートディレクトリの絶対パス
 target_include_directories(scene

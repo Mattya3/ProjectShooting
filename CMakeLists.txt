@@ -29,15 +29,15 @@ message(STATUS ${OPENGL_glu_LIBRARY} ${OPENGL_gl_LIBRARY})
 
 link_libraries(${OPENGL_glu_LIBRARY} ${OPENGL_gl_LIBRARY})
 link_libraries(glfw)
-# add_subdirectory(src)
-add_subdirectory(src/scene)
-add_subdirectory(src/component)
 
-link_libraries(${OPENGL})
+add_subdirectory(src/component)
+add_subdirectory(src/scene)
+add_subdirectory(src)
+
 add_executable(main main.cpp)
 
-target_link_libraries(main component)
-target_link_libraries(main scene)
 target_link_libraries(main "-framework OpenGL" glfw)
 target_link_libraries(main "-framework GLUT")
+target_link_libraries(main component)
+target_link_libraries(main scene)
 
