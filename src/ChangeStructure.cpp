@@ -2,7 +2,6 @@
 #include "../include/ChangeStructure.hpp"
 
 using namespace std;
-
 ChangeStructure::ChangeStructure(void){
     CardHas has;
     list = has.callCardLineup();

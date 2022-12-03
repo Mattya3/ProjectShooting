@@ -29,6 +29,7 @@ class Title_scene : public Scene {
             e->button_view();
         }
     }
-    Title_scene();
+    void render(GLFWwindow *window1);
+    Title_scene(GLFWwindow *window1);
     ~Title_scene();
 };

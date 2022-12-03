@@ -7,6 +7,7 @@ class ChangeStructureView :public Scene {
     void add_button(Button *btn);
     void show_component();
     void mouse_button_callback(GLFWwindow *pwin, int button, int action, int mods);
-    ChangeStructureView(/* args */);
+    void render(GLFWwindow *window1);
+    ChangeStructureView(GLFWwindow *window1);
     ~ChangeStructureView();
 };
