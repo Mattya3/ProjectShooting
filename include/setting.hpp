@@ -13,5 +13,6 @@ class Setting {
         y = 1 - y;
         x = x - 1;
     }
+    
 
 };

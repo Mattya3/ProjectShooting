@@ -1,44 +1,21 @@
+#include <scenes/Title_Scene.hpp>
+
+
 #include <component/Image.hpp>
 #include <filesystem>
-#include <scenes/Title_Scene.hpp>
+#include <scenes/ChangeStructureView.hpp>
+#include <scenes/ResolverCallbackFunc.hpp>
+#include <component/NextSceneButton.hpp>
 using std::filesystem::current_path;
 Title_scene::Title_scene(GLFWwindow *window1) {
+    register_callback_resolver::init(*this, window1);
+
     PngTexture pt(
         (current_path() / filesystem::path("img/ic_launcher.png")).c_str(), 1);
+    PngTexture meImg(
+        (current_path() / filesystem::path("img/battle/me.png")).c_str(), 2);
 
-    class btnap : public Button {
-        using Button::Button;
-
-      private:
-        bool btn_enable = true;
-
-      public:
-        bool next_scene = false;
-        void action_when_pushed() {
-            if(btn_enable) {
-                is_btn_lightup = !is_btn_lightup;
-                next_scene = true;
-                btn_enable = false;
-                button_view();
-            } else {
-                cout << "now false" << endl;
-            }
-        }
-        void button_view() {
-            if(is_btn_lightup) {
-                glBegin(GL_POLYGON);
-            } else {
-                glBegin(GL_LINE_LOOP);
-            }
-            glColor3d(0.0, 1.0, 1.0);
-            glVertex2d(sx, sy);
-            glVertex2d(sx + xlen, sy);
-            glVertex2d(sx + xlen, sy + ylen);
-            glVertex2d(sx, sy + ylen);
-            glEnd();
-        }
-    };
-    btnap *b = new btnap(-0.2, -0.2, 0.4, 0.4);
+    NextSceneButton *b = new NextSceneButton(-0.2, -0.2, 0.4, 0.4);
     add_button(b);
 
     while(!glfwWindowShouldClose(window1)) {
@@ -61,10 +38,16 @@ Title_scene::Title_scene(GLFWwindow *window1) {
         glTexCoord2d(0.0, 0.0);
         glVertex3d(-1.0, 1.0, 0.0);
         glEnd();
+        show_component();
+        glDisable(GL_TEXTURE_2D);
 
         glfwSwapBuffers(window1);
         glfwPollEvents();
+        if(b->next_scene) {
+            break;
+        }
     }
+    ChangeStructureView csv(window1);
 }
 void Title_scene::render(GLFWwindow *window1) {}
 Title_scene::~Title_scene() {}

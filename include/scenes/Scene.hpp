@@ -12,4 +12,5 @@ class Scene {
                                        int mods) {}
     virtual void add_button(Button *btn){}
     virtual void render(){}
+      
 };

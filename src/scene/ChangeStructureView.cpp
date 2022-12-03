@@ -1,22 +1,13 @@
 #include <scenes/ChangeStructureView.hpp>
+
+#include <component/NextSceneButton.hpp>
 #include <scenes/Title_Scene.hpp>
+#include <scenes/ResolverCallbackFunc.hpp>
+
 float g_angle = 0.0;
 // GLFWにおいてコールバック関数としてインスタンスメソッドを登録できない
 // 間に静的関数をかませることで解決する。
 // シーンの各種マウスキー入力監視関数をコールバック登録する
-static Scene *sc_ptr;
-class register_callback_resolver {
-  private:
-    static void mouse_func(GLFWwindow *pwin, int button, int action, int mods) {
-        sc_ptr->mouse_button_callback(pwin, button, action, mods);
-    }
-
-  public:
-    static void init(Scene &sc, GLFWwindow *pwin) {
-        sc_ptr = &sc;
-        glfwSetMouseButtonCallback(pwin, mouse_func);
-    }
-};
 
 void f() {
     static const GLfloat vtx3[] = {
@@ -39,56 +30,22 @@ void f() {
 
     glDisableClientState(GL_VERTEX_ARRAY);
 }
+
+
 ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
+
     register_callback_resolver::init(*this, window1);
+
     Button *b = new Button(-0.5, -0.5, 0.3, 0.3);
     Button *b2 = new Button(0.2, 0.2, 0.2, 0.2);
     add_button(b);
     add_button(b2);
-    class btnap : public Button {
-        using Button::Button;
 
-      private:
-        bool btn_enable = true;
-
-      public:
-        bool next_scene = false;
-        void action_when_pushed() {
-            if(btn_enable) {
-                is_btn_lightup = !is_btn_lightup;
-                next_scene = true;
-                btn_enable = false;
-                button_view();
-            } else {
-                cout << "now false" << endl;
-            }
-        }
-        void button_view() {
-            if(is_btn_lightup) {
-                glBegin(GL_POLYGON);
-            } else {
-                glBegin(GL_LINE_LOOP);
-            }
-            glColor3d(0.0, 1.0, 1.0);
-            glVertex2d(sx, sy);
-            glVertex2d(sx + xlen, sy);
-            glVertex2d(sx + xlen, sy + ylen);
-            glVertex2d(sx, sy + ylen);
-            glEnd();
-        }
-    };
-    btnap *bb = new btnap(-0.5, 0.2, 0.3, 0.3);
+    NextSceneButton *bb = new NextSceneButton(-0.5, 0.2, 0.3, 0.3);
     add_button(bb);
 
-    render(window1);
     while(!glfwWindowShouldClose(window1)) {
-        // 初期化
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        show_component();
-        g_angle += 0.05;
-        f();
-
+        render();
         glfwSwapBuffers(window1);
         glfwPollEvents();
 
@@ -99,7 +56,14 @@ ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
     Title_scene ts(window1);
 }
 
-void ChangeStructureView::render(GLFWwindow *window1) {}
+void ChangeStructureView::render() {
+    // 初期化
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    show_component();
+    g_angle += 0.05;
+    f();
+}
 void ChangeStructureView::mouse_button_callback(GLFWwindow *pwin, int button,
                                                 int action, int mods) {
     double mousex, mousey;

@@ -1,10 +1,12 @@
 #include <GLFW/glfw3.h>
 #include <OpenGL/glu.h>
+#include <bits/stdc++.h>
 #include <component/Image.hpp>
 #include <png.h>
 #include <stdexcept>
-#include <bits/stdc++.h>
 using namespace std;
+
+
 PngTexture::PngTexture(const std::string &fname, unsigned int tid) {
     filename = fname;
     id = tid;
