@@ -47,17 +47,10 @@ double BulletPoint::search(){
 
 void BulletPoint::move(){
     double per = search();
-    if (per >= 0){
-        //処理が違う
-        position.first += cos(angle) * (1 - hormingPower) + cos(per) * hormingPower;
-        position.second -= sin(angle) * (1 - hormingPower) + sin(per) * hormingPower;
+    if (per >= 0) angle = acos(cos(angle) * (1 - hormingPower) + cos(per) * hormingPower);
+    position.first += cos(angle);
+    position.second -= sin(angle);
         //範囲超え、未記載
-    }
-    else{
-        position.first += cos(angle);
-        position.second -= sin(angle);
-        //範囲超え、未記載
-    }
 }
 
 void BulletPoint::timer(){

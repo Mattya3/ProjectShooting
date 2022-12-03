@@ -5,7 +5,7 @@ void NormalPoint::setting(int hp, int large, int get, int vec, int stop){
     maxHP = hp;
     size = large;
     exp = get;
-    vect = vec;
+    velocity = vec;
     stopShoot = stop;
 }
 
@@ -22,9 +22,9 @@ void NormalPoint::setBulletData(BulletPoint bullets){
 }
 
 void NormalPoint::move(){
-    position.first += cos(angle);
+    position.first += velocity * cos(angle);
     //範囲超え、未記載
-    position.second -= sin(angle);
+    position.second -= velocity * sin(angle);
     //範囲超え、未記載
 }
 

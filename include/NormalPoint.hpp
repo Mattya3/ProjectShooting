@@ -16,7 +16,7 @@ public:
     pair<double, double> position;
     int size;
     int exp;
-    int vect;
+    int velocity;
     int stopShoot;
     int shootpenalty;
     double angle = 0;//ラジアン表記, ただし0未満では停止する

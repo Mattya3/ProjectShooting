@@ -7,7 +7,7 @@
 // pair<double, double> position;
 // int size;
 // int exp;
-// int vect;
+// int velocity;
 // int stopShoot;
 // int shootpenalty;
 // double angle = 0;//ラジアン表記, ただし0未満では停止する
@@ -31,7 +31,7 @@ int HeroPoint::levelUp(int target){
     if (list.at(target).typeA == 0){
         switch (list.at(target).typeA){
             case 0:
-                vect = changedNum;
+                velocity = changedNum;
                 break;
             case 1:
                 size = changedNum;
@@ -40,7 +40,7 @@ int HeroPoint::levelUp(int target){
     }else{
         switch (list.at(target).typeA){
             case 0:
-                bullet.vect = changedNum;
+                bullet.velocity = changedNum;
                 break;
             case 1:
                 bullet.size = changedNum;
@@ -49,10 +49,10 @@ int HeroPoint::levelUp(int target){
                 bullet.attack = changedNum;
                 break;
             case 3:
-                bullet.attack = changedNum;
+                bullet.canReflect = changedNum;
                 break;
             case 4:
-                bullet.canReflect = changedNum;
+                stopShoot = changedNum;
                 break;
             case 5:
                 shootNum = changedNum / 100;
@@ -80,7 +80,7 @@ void HeroPoint::timer(){
 //     maxHP = hp;
 //     size = large;
 //     exp = get;
-//     vector = vec;
+//     velocity = vec;
 // }
 
 // void setFirstSituation(pair<double, double> z){
