@@ -4,23 +4,12 @@
 
 using namespace std;
 extern const int WINDOW_width, WINDOW_height;
-enum class sceneNumber {
-    title,
-    select_card,
-    battle,
-};
 
 extern sceneNumber scene_id;
 
 
 using pdd = pair<double, double>;
 using square = pair<pdd, pdd>;
-inline void to_canonical_xy(double &x, double &y) {
-    x /= WINDOW_width / 2;
-    y /= WINDOW_height / 2;
-    y = 1 - y;
-    x = x - 1;
-}
 
 inline void draw_grid(square rect, int nx, int ny, double x_interval,
                       double y_interval) {
