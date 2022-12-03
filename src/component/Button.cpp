@@ -1,10 +1,7 @@
 #include <component/Button.hpp>
 
 void Button:: action_when_pushed() {
-    // if(btn_enable) {
     is_btn_lightup = !is_btn_lightup;
-    //     thread t([&](){scene_id=sceneNumber::title;});
-    // }
 }
 bool Button::valid_push_location(double x, double y) {
     return (sx <= x && x <= sx + xlen && sy <= y && y <= sy + ylen);

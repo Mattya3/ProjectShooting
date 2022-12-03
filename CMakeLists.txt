@@ -43,5 +43,8 @@ if(APPLE)
     target_link_libraries(main "-framework OpenGL" glfw)
     target_link_libraries(main "-framework GLUT")
 endif()
+
+target_link_libraries(main Setting)
 target_link_libraries(main component)
 target_link_libraries(main scene)
+
