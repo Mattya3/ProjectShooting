@@ -1,6 +1,10 @@
+#include <bits/stdc++.h>
+#include <component/Image.hpp>
+#include <filesystem>
 #include <scenes/all_scene.hpp>
 
 using namespace std;
+using std::filesystem::current_path;
 sceneNumber scene_id = sceneNumber::title;
 
 // GLFWにおいてコールバック関数としてインスタンスメソッドを登録できない
@@ -20,9 +24,8 @@ class register_callback_resolver {
     }
 };
 
-
-
 int main() {
+    Setting::scene_id=sceneNumber::title;
     GLFWwindow *window1, *window2;
     if(!glfwInit())
         return -1;
@@ -50,30 +53,10 @@ int main() {
       public:
         void action_when_pushed() {
             if(btn_enable) {
-                auto func = [&](std::promise<double> p, double x) {
-                    try {
-                        p.set_value(x);
-                        this_thread::sleep_for(chrono::milliseconds(2000));
-
-                        scene_id = sceneNumber::title;
-
-                    } catch(...) { p.set_exception(std::current_exception()); }
-                };
-                promise<double> p;
-                future<double> f = p.get_future();
-
-                double x = 3.14159;
-                thread th(func, std::move(p), x);
-                /* 自スレッドでの処理 */;
+                scene_id = sceneNumber::title;
                 is_btn_lightup = !is_btn_lightup;
                 btn_enable = false;
                 button_view();
-
-                try {
-                    double result = f.get();
-                } catch(...) {}
-                th.join();
-
             } else {
                 cout << "now false" << endl;
             }
@@ -98,7 +81,6 @@ int main() {
     ts.add_button(b);
     register_callback_resolver::init(ts, window1);
 
-    // 描画のループ
     ChangeStructureView csv;
     scene_id = sceneNumber::select_card;
     register_callback_resolver::init(csv, window1);
@@ -106,13 +88,32 @@ int main() {
     csv.add_button(b2);
     csv.add_button(bb);
 
+    // glGenTextures(1, &g_texID);
+    // setupTexture( g_texID, "img/out1.ppm", 256, 256);
+    PngTexture pt(
+        (current_path() / filesystem::path("img/ic_launcher.png")).c_str(), 1);
     while(!glfwWindowShouldClose(window1)) {
         // 初期化
         glClear(GL_COLOR_BUFFER_BIT);
 
         switch(scene_id) {
         case sceneNumber::title:
-            ts.show_component();
+            // ts.show_component();
+            /* テクスチャマッピング開始 */
+            glEnable(GL_TEXTURE_2D);
+
+            /* １枚の４角形を描く */
+            glNormal3d(0.0, 0.0, 1.0);
+            glBegin(GL_QUADS);
+            glTexCoord2d(0.0, 1.0);
+            glVertex3d(-1.0, -1.0, 0.0);
+            glTexCoord2d(1.0, 1.0);
+            glVertex3d(1.0, -1.0, 0.0);
+            glTexCoord2d(1.0, 0.0);
+            glVertex3d(1.0, 1.0, 0.0);
+            glTexCoord2d(0.0, 0.0);
+            glVertex3d(-1.0, 1.0, 0.0);
+            glEnd();
             break;
         case sceneNumber::battle:
             glColor3d(0.0, 0.0, 1.0);

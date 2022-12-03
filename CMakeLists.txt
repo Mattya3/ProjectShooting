@@ -19,16 +19,17 @@ include_directories(./include)
 include_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers)
 include_directories(/opt/homebrew/Cellar/glfw/3.3.8/include)
 include_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Versions/A/Headers/)
+include_directories(/opt/homebrew/Cellar/libpng/1.6.39/include)
+
+link_directories(/opt/homebrew/Cellar/libpng/1.6.39/lib)
 link_directories(/opt/homebrew/Cellar/glfw/3.3.8/lib) 
 link_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries)
 find_package(OpenGL REQUIRED)
 set(LIBS glfw GL GLU)
 
-message(STATUS ${OPENGL_LIBRARIES})
-message(STATUS ${OPENGL_glu_LIBRARY} ${OPENGL_gl_LIBRARY})
-
 link_libraries(${OPENGL_glu_LIBRARY} ${OPENGL_gl_LIBRARY})
 link_libraries(glfw)
+link_libraries(png)
 
 add_subdirectory(src/component)
 add_subdirectory(src/scene)

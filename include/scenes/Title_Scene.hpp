@@ -8,7 +8,7 @@ class Title_scene : public Scene {
                                int mods) {
         double mousex, mousey;
         glfwGetCursorPos(pwin, &mousex, &mousey);
-        to_canonical_xy(mousex, mousey);
+        Setting::to_canonical_xy(mousex, mousey);
         for(auto &&btn : btns) {
             if(btn->valid_push_location(mousex, mousey)) {
                 btn->action_when_pushed();

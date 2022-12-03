@@ -1,4 +1,5 @@
 #pragma once
+#include <Setting.hpp>
 #include <component/Button.hpp>
 #include <utility.hpp>
 
