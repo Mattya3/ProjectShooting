@@ -1,19 +1,9 @@
-/*
-#pragma once
 
-const int WINDOW_width = 800, WINDOW_height = 700;
 
 using pdd = pair<double, double>;
 using square = pair<pdd, pdd>;
-inline void to_canonical_xy(double &x, double &y) {
-    x /= WINDOW_width / 2;
-    y /= WINDOW_height / 2;
-    y = 1 - y;
-    x = x - 1;
-}
-
 inline void draw_grid(square rect, int nx, int ny, double x_interval,
-               double y_interval) {
+                      double y_interval) {
     double sx = rect.first.first + x_interval,
            sy = rect.first.second + y_interval;
     double xlen =
@@ -35,4 +25,3 @@ inline void draw_grid(square rect, int nx, int ny, double x_interval,
         sy += ylen + y_interval;
     }
 }
-*/

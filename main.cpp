@@ -1,21 +1,11 @@
-// #include <funcA.hpp>
-#include <GLFW/glfw3.h>
 #include <bits/stdc++.h>
+#include <component/Image.hpp>
+#include <filesystem>
 #include <scenes/all_scene.hpp>
 
 using namespace std;
-using pdd = pair<double, double>;
-using square = pair<pdd, pdd>;
-extern const int WINDOW_width, WINDOW_height;
-
-// square example = {{sx,sy}, {gx, gy}}; 左下、右上
-enum class scene {
-    title,
-    select_card,
-    battle,
-};
-scene scene_id = scene::title;
-
+using std::filesystem::current_path;
+sceneNumber scene_id = sceneNumber::title;
 
 // GLFWにおいてコールバック関数としてインスタンスメソッドを登録できない
 // 間に静的関数をかませることで解決できる。
@@ -35,58 +25,107 @@ class register_callback_resolver {
 };
 
 int main() {
-
+    Setting::scene_id=sceneNumber::title;
     GLFWwindow *window1, *window2;
-
-    // ライブラリglfw の初期化
     if(!glfwInit())
         return -1;
 
-    // ウィンドウを作成
-    window1 = glfwCreateWindow(WINDOW_width,WINDOW_height, "Hello World", NULL, NULL);
+    // ウィンドウ作成
+    window1 = glfwCreateWindow(WINDOW_width, WINDOW_height, "Hello World", NULL,
+                               NULL);
     // window2 = glfwCreateWindow(400, 400, "window 2", NULL, NULL);
+
     if(!window1) {
         glfwTerminate();
         return -1;
     }
-    // glfwSetMouseButtonCallback(window1, mouse_button_callback);
-    square cards = square(pdd(-1, -0.5), pdd(1.0, 1.0));
     // 作成したウィンドウを，OpenGLの描画関数のターゲットにする
     glfwMakeContextCurrent(window1);
 
-    Button b(-0.5, -0.5, 0.3, 0.3);
-    class tmp_button:public Button{
+    Button *b = new Button(-0.5, -0.5, 0.3, 0.3);
+    Button *b2 = new Button(0.2, 0.2, 0.2, 0.2);
+    class btnap : public Button {
+        using Button::Button;
 
+      private:
+        bool btn_enable = true;
+
+      public:
+        void action_when_pushed() {
+            if(btn_enable) {
+                scene_id = sceneNumber::title;
+                is_btn_lightup = !is_btn_lightup;
+                btn_enable = false;
+                button_view();
+            } else {
+                cout << "now false" << endl;
+            }
+        }
+        void button_view() {
+            if(is_btn_lightup) {
+                glBegin(GL_POLYGON);
+            } else {
+                glBegin(GL_LINE_LOOP);
+            }
+            glColor3d(0.0, 1.0, 1.0);
+            glVertex2d(sx, sy);
+            glVertex2d(sx + xlen, sy);
+            glVertex2d(sx + xlen, sy + ylen);
+            glVertex2d(sx, sy + ylen);
+            glEnd();
+        }
     };
+    btnap *bb = new btnap(-0.5, 0.2, 0.3, 0.3);
+
     Title_scene ts;
     ts.add_button(b);
     register_callback_resolver::init(ts, window1);
-    // 描画のループ
+
     ChangeStructureView csv;
-    scene_id=scene::select_card;
+    scene_id = sceneNumber::select_card;
     register_callback_resolver::init(csv, window1);
+    csv.add_button(b);
+    csv.add_button(b2);
+    csv.add_button(bb);
+
+    // glGenTextures(1, &g_texID);
+    // setupTexture( g_texID, "img/out1.ppm", 256, 256);
+    PngTexture pt(
+        (current_path() / filesystem::path("img/ic_launcher.png")).c_str(), 1);
     while(!glfwWindowShouldClose(window1)) {
-        // 画面を塗りつぶす
+        // 初期化
         glClear(GL_COLOR_BUFFER_BIT);
 
         switch(scene_id) {
-        case scene::title:
-            ts.show_component();
+        case sceneNumber::title:
+            // ts.show_component();
+            /* テクスチャマッピング開始 */
+            glEnable(GL_TEXTURE_2D);
+
+            /* １枚の４角形を描く */
+            glNormal3d(0.0, 0.0, 1.0);
+            glBegin(GL_QUADS);
+            glTexCoord2d(0.0, 1.0);
+            glVertex3d(-1.0, -1.0, 0.0);
+            glTexCoord2d(1.0, 1.0);
+            glVertex3d(1.0, -1.0, 0.0);
+            glTexCoord2d(1.0, 0.0);
+            glVertex3d(1.0, 1.0, 0.0);
+            glTexCoord2d(0.0, 0.0);
+            glVertex3d(-1.0, 1.0, 0.0);
+            glEnd();
             break;
-        case scene::battle:
-            glColor3d(0.0,0.0,1.0);
+        case sceneNumber::battle:
+            glColor3d(0.0, 0.0, 1.0);
             break;
-        case scene::select_card:
+        case sceneNumber::select_card:
             csv.show_component();
             break;
         default:
             break;
         }
 
-        // 上記描画した図形を表画面のバッファにスワップする
         glfwSwapBuffers(window1);
-
-        // 受け取ったイベント（キーボードやマウス入力）を処理する
         glfwPollEvents();
     }
 

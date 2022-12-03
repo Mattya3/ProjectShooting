@@ -1,23 +1,25 @@
 #include <scenes/ChangeStructureView.hpp>
+const int WINDOW_width = 800, WINDOW_height = 700;
+
+
 ChangeStructureView::ChangeStructureView() {}
 
-ChangeStructureView::~ChangeStructureView() {}
+ChangeStructureView::~ChangeStructureView() {
+}
 void ChangeStructureView::mouse_button_callback(GLFWwindow *pwin, int button,
                                                 int action, int mods) {
     double mousex, mousey;
     glfwGetCursorPos(pwin, &mousex, &mousey);
-    to_canonical_xy(mousex, mousey);
+    Setting::to_canonical_xy(mousex, mousey);
     for(auto &&btn : btns) {
-        if(btn.valid_push_location(mousex, mousey)) {
-            btn.action_when_pushed();
+        if(btn->valid_push_location(mousex, mousey)) {
+            btn->action_when_pushed();
         } else {
-            cout << "no valid"
-                 << "\n";
             cout << mousex << ',' << mousey << "\n";
         }
     }
 }
-void ChangeStructureView::add_button(Button btn) { btns.push_back(btn); }
+void ChangeStructureView::add_button(Button *btn) { btns.push_back(btn); }
 void ChangeStructureView::show_component() {
     auto show = [](double sx, double sy, double xlen, double ylen,
                    string color) {
@@ -42,9 +44,6 @@ void ChangeStructureView::show_component() {
         glVertex2d(sx, sy + ylen);
         glEnd();
     };
-    // for(auto &&e : btns) {
-    // e.button_view();
-    // }
     show(50, 200, 200, 300, "red");
     show(60, 340, 180, 100, "green");
 
@@ -53,4 +52,7 @@ void ChangeStructureView::show_component() {
 
     show(550, 200, 200, 300, "red");
     show(560, 340, 180, 100, "green");
+    for(auto &&e : btns) {
+        e->button_view();
+    }
 }
