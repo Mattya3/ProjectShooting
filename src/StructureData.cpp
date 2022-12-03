@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 #include "../include/StructureData.hpp"
+#include <filesystem>
+using std::filesystem::current_path;
 using namespace std;
 
 vector<Card> StructureData::callCardSets(void){//セットカードのリストをvectorで返す関数
@@ -8,7 +10,7 @@ vector<Card> StructureData::callCardSets(void){//セットカードのリスト�
     string text, data;//ファイル読み込み時の文字列をそのまま入れる変数
     Card nowCard;//代入用変数
     int i = 0, j = 0;//ループ処理用変数
-    ifstream files("../data/CardData");//ファイル読み込み
+    ifstream files((current_path() / filesystem::path("data/CardData")).c_str());//ファイル読み込み
     if(files.fail()){
         cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
     }
@@ -18,7 +20,7 @@ vector<Card> StructureData::callCardSets(void){//セットカードのリスト�
     while(i < CardSets.size()){//セットカードリストを作成するループ処理
         if(CardSets.at(i) == j){//セットカードリストに存在する
             nowCard.putCardText(text);//テキストデータを代入
-            nowCard.putCardData(i, data);//数値データを代入
+            nowCard.putCardData(j, data);//数値データを代入
             cards.push_back(nowCard);//カードをリストに入れる
             i++;
         }else{//セットカードリストに存在しない
@@ -34,7 +36,7 @@ vector<int> StructureData::readCardSets(void){//セットカードのIDのリス
     vector<int> output;//帰り値用, セットしたカードIDのリスト
     vector<string> puts;//ファイル読み込み時の文字列を分割して入れる変数
     string line;//ファイル読み込み時の文字列をそのまま入れる変数
-    ifstream files("../data/SaveData");//ファイル読み込み
+    ifstream files((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(files.fail()){
         cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
     }
@@ -59,12 +61,12 @@ vector<string> StructureData::split(string str, char separator){//strをseparato
 void StructureData::writeCardSets(vector<int> list){//新たなセットカードをファイルに書き込む関数
     string line1;//変更しない所持カードリストの保持用
     string line2 = to_string(list.at(0)) + " " + to_string(list.at(1)) + " " + to_string(list.at(2));//変更後のセットカードリスト
-    ifstream file1("../data/SaveData");//ファイル読み込み
+    ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(file1.fail()){
         cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(file1, line1);
-    ofstream file2("../data/SaveData", ios::out);//ファイル読み込み
+    ofstream file2((current_path() / filesystem::path("data/SaveData")).c_str(), ios::out);//ファイル読み込み
     if(file2.fail()){
         cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
     }
