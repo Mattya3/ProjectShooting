@@ -8,6 +8,9 @@ using namespace std;
 
 class NormalPoint{
 public:
+    int height;
+    int width;
+    bool moveFlag = false;
     int shootNum = 1;
     double shotAngle = 0;
     int attack = 20;
@@ -21,6 +24,8 @@ public:
     int shootpenalty;
     double angle = 0;//ラジアン表記, ただし0未満では停止する
     BulletPoint bullet;//未作成
+
+    void setSize(int h, int w);
 
     void setting(int hp, int large, int get, int vec, int stop);
 

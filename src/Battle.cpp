@@ -1,34 +1,37 @@
-#include <bits/stdc++.h>
-#include "../include/StructureData.hpp"
-#include "../include/HeroPoint.hpp"
-#include "../include/BulletPoint.hpp"
-using namespace std;
+#include "../include/Battle.hpp"
 
-const int Battle_height = 660;
-const int Battle_width = 440;
+void Battle::start(){
+    StructureData sets;
+    vector<Card> list = sets.callCardSets();
+    hero.setSize(battle_height, battle_width);
+    hero.setting(100, 64, 0, 10, 240);
+    hero.setCardlist(list);
+    pair<double, double> z;
+    z.first = battle_width / 2;
+    z.second = 3 * battle_height / 4;
+    hero.setFirstSituation(z);
+    hero.changeAngle(M_PI / 2);
+    BulletPoint b;
+    hero.setBulletData(b);
+    z.first = 100;
+    z.second = 100;
+    b.setSize(battle_height, battle_width);
+    b.setFirstSituation(z);
+    b.changeAngle(M_PI / 4);
+    heroBullet.push_back(b);
+    hero.moveFlag = true; //後ほど削除する
+    timer();
+}
 
-class Battle{
-public:
-    HeroPoint hero;
-    vector<BulletPoint> heroBullet;
-    vector<BulletPoint> enemyBullet;
-    int score = 0;
-
-    void start(){
-        StructureData sets;
-        vector<Card> list = sets.callCardSets();
-        hero.setting(100, 64, 0, 10, 240);
-        hero.setCardlist(list);
-        pair<double, double> z;
-        z.first = Battle_width / 2;
-        z.second = 3 * Battle_height / 4;
-        hero.setFirstSituation(z);
-        hero.changeAngle(-1);
-        BulletPoint b;
-        hero.setBulletData(b);
+void Battle::timer(){
+    while (true){
+        this_thread::sleep_for(chrono::milliseconds(20));
+        hero.timer();
+        for (int i = 0; i < heroBullet.size(); i++) heroBullet.at(i).timer();
+        for (int i = 0; i < enemyBullet.size(); i++) enemyBullet.at(i).timer();
+        collision();
     }
+}
 
-    void timer(){
-
-    }
-};
+void Battle::collision(){
+}
