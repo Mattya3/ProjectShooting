@@ -1,22 +1,7 @@
 #include "../include/HeroPoint.hpp"
 
-// int shootNum = 1;
-// int attack = 20;
-// int nowHP;
-// int maxHP;
-// pair<double, double> position;
-// int size;
-// int exp;
-// int velocity;
-// int stopShoot;
-// int shootpenalty;
-// double angle = 0;//ラジアン表記, ただし0未満では停止する
-// BulletPoint bullet;
-//vector<int> level;
-//vector<Card> list;
-
 void HeroPoint::setCardlist(vector<Card> sets){
-    list = sets;//clone化が必要？
+    list = sets;
     for (int i = 0; i < list.size(); i++){
         level.push_back(1);
         exp += list.at(i).needEXP;
@@ -71,37 +56,8 @@ int HeroPoint::levelUp(int target){
 }
 
 void HeroPoint::timer(){
-    if (shootpenalty > 0)   shootpenalty--;
+    if(shootpenalty > 0) shootpenalty -= 20;
     move();
+    //if(shootFlag) shoot();
+    for(int i = 0; i < bullets.size(); i++) bullets.at(i).timer();
 }
-
-// NormalPoint(int hp, int large, int get, int vec){
-//     nowHP = hp;
-//     maxHP = hp;
-//     size = large;
-//     exp = get;
-//     velocity = vec;
-// }
-
-// void setFirstSituation(pair<double, double> z){
-//     position = z;
-// }
-
-// void changeAngle(double per){
-//     angle = per;
-// }
-
-// void setBulletData(vector<int> bullet){
-//     bulletID = bullet;
-// }
-
-// void move(){
-//     position.first += cos(angle);
-//     position.second -= sin(angle);
-// }
-
-// bool damage(int hit){//ダメージ処理、HPが0以下ならtrueを返す
-//     nowHP -= hit;
-//     if(nowHP <= 0) return true;
-//     else return false;
-// }

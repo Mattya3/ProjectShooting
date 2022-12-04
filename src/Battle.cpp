@@ -18,7 +18,7 @@ void Battle::start(){
     b.setSize(battle_height, battle_width);
     b.setFirstSituation(z);
     b.changeAngle(M_PI / 4);
-    heroBullet.push_back(b);
+    hero.bullets.push_back(b);
     hero.moveFlag = true; //後ほど削除する
     timer();
 }
@@ -27,8 +27,6 @@ void Battle::timer(){
     while (true){
         this_thread::sleep_for(chrono::milliseconds(20));
         hero.timer();
-        for (int i = 0; i < heroBullet.size(); i++) heroBullet.at(i).timer();
-        for (int i = 0; i < enemyBullet.size(); i++) enemyBullet.at(i).timer();
         collision();
     }
 }

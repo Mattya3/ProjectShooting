@@ -8,6 +8,7 @@ using namespace std;
 
 class NormalPoint{
 public:
+    vector<BulletPoint> bullets;
     int height;
     int width;
     bool moveFlag = false;

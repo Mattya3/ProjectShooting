@@ -46,6 +46,10 @@ bool NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrue
 
 void NormalPoint::shoot(){
     if (shootpenalty <= 0){
-        //
+        bullet.setSize(height, width);
+        bullet.setFirstSituation(position);
+        bullet.changeAngle(angle);
+        bullets.push_back(bullet);
+        shootpenalty = stopShoot;
     }
 }

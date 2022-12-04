@@ -13,8 +13,7 @@ const int battle_width = 440;
 class Battle{
 public:
     HeroPoint hero;
-    vector<BulletPoint> heroBullet;
-    vector<BulletPoint> enemyBullet;
+    //vector<BulletPoint> enemyBullet;
     int score = 0;
 
     void start();
