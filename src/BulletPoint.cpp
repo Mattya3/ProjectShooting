@@ -51,24 +51,24 @@ double BulletPoint::search(){
     return -1;//仮の戻り値
 }
 
-void BulletPoint::move(){
+void BulletPoint::move(){//接触を内部にしているが、縁に移すかは未定
     double per = search();
     if (per >= 0) angle = acos(cos(angle) * (1 - hormingPower) + cos(per) * hormingPower);
     position.first += velocity * cos(angle);
     if(position.first < 0){
         if(reflect(2)) position.first = - position.first;
-        else velocity = 0;//消滅判定、未作成
+        else velocity = 0;
     }else if(position.first > width - 1){
         if(reflect(0)) position.first = 2 * width - position.first;
-        else velocity = 0;//消滅判定、未作成 
+        else velocity = 0; 
     }
     position.second -= velocity * sin(angle);
     if(position.second < 0){
         if(reflect(1)) position.second = - position.second;
-        else velocity = 0;//消滅判定、未作成
+        else velocity = 0;
     }else if(position.second > height - 1){
         if(reflect(3)) position.second = 2 * height - position.second;
-        else velocity = 0;//消滅判定、未作成 
+        else velocity = 0;
     }
     cout << "bullet:" << angle << ":" << position.first << "," <<position.second << endl;
 }

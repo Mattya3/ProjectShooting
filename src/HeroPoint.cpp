@@ -57,7 +57,24 @@ int HeroPoint::levelUp(int target){
 
 void HeroPoint::timer(){
     if(shootpenalty > 0) shootpenalty -= 20;
+    if(hitTime > 0) hitTime -= 20;
     move();
-    //if(shootFlag) shoot();
+    if(shootFlag) shoot();
     for(int i = 0; i < bullets.size(); i++) bullets.at(i).timer();
+}
+
+void HeroPoint::contact(pair<double, double> point, int large){
+    int x, y, d, r;
+    x = position.first - point.first;
+    y = position.second - point.second;
+    d = x * x + y * y;
+    r = (size + large) / 2;
+    r *= r;
+    if(d <= r){
+        cout << "hit!!" << endl;
+        if(hitTime <= 0){
+            damage(20);
+            hitTime = setHitTime;
+        } 
+    }
 }

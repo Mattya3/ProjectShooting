@@ -12,10 +12,13 @@ public:
     bool shootFlag = true;
     vector<int> level;
     vector<Card> list;
+    
 
     void setCardlist(vector<Card> sets);
 
     int levelUp(int target);
 
     void timer();
+
+    void contact(pair<double, double> point, int large);
 };

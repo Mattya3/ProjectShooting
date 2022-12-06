@@ -23,6 +23,8 @@ public:
     int velocity;
     int stopShoot;
     int shootpenalty;
+    int setHitTime = 20;
+    int hitTime = 0;
     double angle = 0;//ラジアン表記, ただし0未満では停止する
     BulletPoint bullet;//未作成
 
@@ -41,4 +43,10 @@ public:
     bool damage(int hit);
 
     void shoot();
+
+    vector<int> collision(vector<BulletPoint> bullets);
+
+    void lostBullet(int Id);
+
+    void notReflect();
 };
