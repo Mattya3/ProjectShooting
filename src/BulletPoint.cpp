@@ -45,15 +45,40 @@ void BulletPoint::changeAngle(double per){
     angle = per;
 }
 
-double BulletPoint::search(){
+double BulletPoint::search(vector<pair<double, double>> points, vector<int> large){
     if (searchLange == 0 || hormingPower == 0) return -1;
-    //索敵、当たり判定処理のように記述するので後ほど
-    return -1;//仮の戻り値
+    int x, y, d, r;
+    int minx = 0, miny = 0, mind = searchLange;
+    for(int i = 0; i < points.size(); i++){
+        x = position.first - points.at(i).first;
+        y = position.second - points.at(i).second;
+        d = sqrt(x * x + y * y);
+        r = (size + large.at(i)) / 2;
+        d -= r * r;
+        if(d < mind){
+            mind = d;
+            minx = x;
+            miny = y;
+        }
+    }
+    if(minx == 0) return -1;
+    minx /= mind;
+    double angle = acos(minx);
+    if(miny < 0) angle = 2 * M_PI - angle; 
+    return angle;
 }
 
-void BulletPoint::move(){//接触を内部にしているが、縁に移すかは未定
-    double per = search();
-    if (per >= 0) angle = acos(cos(angle) * (1 - hormingPower) + cos(per) * hormingPower);
+void BulletPoint::move(vector<pair<double, double>> points, vector<int> large){//接触を内部にしているが、縁に移すかは未定
+    int x, y, d;
+    double per = search(points, large);
+    if(per >= 0){
+        x = cos(angle) * (1 - hormingPower) + cos(per) * hormingPower;
+        y = sin(angle) * (1 - hormingPower) + sin(per) * hormingPower;
+        d = sqrt(x * x + y * y);
+        x /= d;
+        angle = acos(x);
+        if(y < 0) angle = 2 * M_PI - angle;
+    }
     position.first += velocity * cos(angle);
     if(position.first < 0){
         if(reflect(2)) position.first = - position.first;
@@ -73,6 +98,6 @@ void BulletPoint::move(){//接触を内部にしているが、縁に移すか�
     cout << "bullet:" << angle << ":" << position.first << "," <<position.second << endl;
 }
 
-void BulletPoint::timer(){
-    move();
+void BulletPoint::timer(vector<pair<double, double>> points, vector<int> large){
+    move(points, large);
 }

@@ -26,9 +26,9 @@ public:
 
     void changeAngle(double per);
 
-    double search();
+    double search(vector<pair<double, double>> points, vector<int> large);
 
-    void move();
+    void move(vector<pair<double, double>> points, vector<int> large);
 
-    void timer();
+    void timer(vector<pair<double, double>> points, vector<int> large);
 };

@@ -41,7 +41,7 @@ int HeroPoint::levelUp(int target){
                 break;
             case 5:
                 shootNum = changedNum / 100;
-                shotAngle = changedNum % 100;
+                shootAngle = changedNum % 100;
                 break;
             case 6:
                 bullet.searchLange = (changedNum / 10) * 10;
@@ -55,12 +55,12 @@ int HeroPoint::levelUp(int target){
     return -exp;
 }
 
-void HeroPoint::timer(){
+void HeroPoint::timer(vector<pair<double, double>> points, vector<int> large){
     if(shootpenalty > 0) shootpenalty -= 20;
     if(hitTime > 0) hitTime -= 20;
     move();
     if(shootFlag) shoot();
-    for(int i = 0; i < bullets.size(); i++) bullets.at(i).timer();
+    for(int i = 0; i < bullets.size(); i++) bullets.at(i).timer(points,large);
 }
 
 void HeroPoint::contact(pair<double, double> point, int large){

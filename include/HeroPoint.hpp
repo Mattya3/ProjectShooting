@@ -18,7 +18,7 @@ public:
 
     int levelUp(int target);
 
-    void timer();
+    void timer(vector<pair<double, double>> points, vector<int> large);
 
     void contact(pair<double, double> point, int large);
 };

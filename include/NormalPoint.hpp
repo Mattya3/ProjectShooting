@@ -13,7 +13,7 @@ public:
     int width;
     bool moveFlag = false;
     int shootNum = 1;
-    double shotAngle = 0;
+    double shootAngle = 0;
     int attack = 20;
     int nowHP;
     int maxHP;
@@ -33,6 +33,12 @@ public:
     void setting(int hp, int large, int get, int vec, int stop);
 
     void setFirstSituation(pair<double, double> z);
+
+    pair<double, double> getPosition();
+
+    int getSize();
+
+    double getAngle();
 
     void changeAngle(double per);
 

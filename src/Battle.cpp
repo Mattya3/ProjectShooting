@@ -21,16 +21,22 @@ void Battle::start(){
     b.changeAngle(M_PI / 4);
     hero.bullets.push_back(b);
     hero.moveFlag = true; //後ほど削除する
-    timer();
+    while(hero.nowHP > 0) timer();
 }
 
 void Battle::timer(){
-    while (hero.nowHP > 0){
-        this_thread::sleep_for(chrono::milliseconds(20));
-        hero.timer();
-        //enemy.timer();
-        collision();
+    vector<pair<double, double>> points;
+    vector<int> large;
+    this_thread::sleep_for(chrono::milliseconds(20));
+    /*
+    for(int i = 0; i < enemy.size(); i++){
+        enemy.at(i).timer();
+        points.push_back(enemy.at(i).getPosition());
+        large.push_back(enemy.at(i).getSize());
     }
+    */
+    hero.timer(points, large);
+    collision();
 }
 
 void Battle::collision(){
@@ -54,5 +60,6 @@ void Battle::collision(){
     if(enemy.at(i).lose()) enemy.erase(enemy.begin() + i);
    } //倒されたかどうか
    */
-   //for(int i = 0; i < enemy.size(); i++) hero.contact(enemy.at(i).position, enemy.at(i).size);
+
+   //for(int i = 0; i < enemy.size(); i++) hero.contact(enemy.at(i).getPosition, enemy.at(i).getSize);
 }

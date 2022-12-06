@@ -27,6 +27,18 @@ void NormalPoint::setBulletData(BulletPoint bullets){
     bullet = bullets;
 }
 
+pair<double, double> NormalPoint::getPosition(){
+    return position;
+}
+
+int NormalPoint::getSize(){
+    return size;
+}
+
+double NormalPoint::getAngle(){
+    return angle;
+}
+
 void NormalPoint::move(){
     if(moveFlag){
         position.first += velocity * cos(angle);
@@ -47,14 +59,48 @@ bool NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrue
 
 void NormalPoint::shoot(){
     if (shootpenalty <= 0){
-        cout << "shoot" << endl;
-        pair<double, double> shooter;
-        shooter.first = position.first + size * cos(angle) / 2;
-        shooter.second = position.second - size * sin(angle) / 2;
+        int count = shootNum;
+        double changeAngle = shootAngle * M_PI / 180;
+        double afterAngle;
+        cout << "shoot" << shootNum << endl;
+        pair<double, double> shooter = position;
+        shooter.first += size * cos(angle);
+        shooter.second -= size * sin(angle);
         bullet.setSize(height, width);
         bullet.setFirstSituation(shooter);
-        bullet.changeAngle(angle);
-        bullets.push_back(bullet);
+        if(shootNum % 2 == 1){
+            bullet.changeAngle(angle);
+            bullets.push_back(bullet);
+            count = (shootNum - 1) / 2;
+            while(count > 0){
+                afterAngle = angle + count * changeAngle;
+                if(afterAngle < 0) afterAngle += 2 * M_PI;
+                if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
+                bullet.changeAngle(afterAngle);
+                bullets.push_back(bullet);
+                afterAngle = angle - count * changeAngle;
+                if(afterAngle < 0) afterAngle += 2 * M_PI;
+                if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
+                bullet.changeAngle(afterAngle);
+                bullets.push_back(bullet);
+                count--;
+            }
+        }else{
+            count = (shootNum - 1) / 2;
+            while(count > 0){
+                afterAngle = angle + (count + 1 / 2) * changeAngle;
+                if(afterAngle < 0) afterAngle += 2 * M_PI;
+                if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
+                bullet.changeAngle(afterAngle);
+                bullets.push_back(bullet);
+                afterAngle = angle - (count + 1 / 2) * changeAngle;
+                if(afterAngle < 0) afterAngle += 2 * M_PI;
+                if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
+                bullet.changeAngle(afterAngle);
+                bullets.push_back(bullet);
+                count--;
+            }
+        }
         shootpenalty = stopShoot;
     }
 }
@@ -65,10 +111,10 @@ vector<int> NormalPoint::collision(vector<BulletPoint> bullets){
     for(int i = 0; i < bullets.size(); i++){
         x = position.first - bullets.at(i).position.first;
         y = position.second - bullets.at(i).position.second;
-        d = x * x + y * y;
+        d = sqrt(x * x + y * y);
         r = (size + bullets.at(i).size) / 2;
-        r *= r;
-        if(d <= r){
+        d -= r;
+        if(d < 0){
             cout << "hit!!" << endl;
             if(hitTime <= 0){
                 damage(bullets.at(i).attack);
