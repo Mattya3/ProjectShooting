@@ -1,4 +1,3 @@
-#include <bits/stdc++.h>
 #include "../include/StructureData.hpp"
 #include <filesystem>
 using std::filesystem::current_path;

@@ -1,116 +1,80 @@
-#include <bits/stdc++.h>
-#include "NormalPoint.cpp"
-#include "../include/Card.hpp"
+#include "../include/HeroPoint.hpp"
 
-using namespace std;
+void HeroPoint::setCardlist(vector<Card> sets){
+    list = sets;
+    for (int i = 0; i < list.size(); i++){
+        level.push_back(1);
+        exp += list.at(i).needEXP;
+    }
+}
 
-#define M_PI 3.14159265358979323846264338327950288
-
-class HeroPoint : public NormalPoint{
-public:
-    //int shootNum = 1;
-    //int attack = 20;
-    //int nowHP;
-    //int maxHP;
-    //pair<double, double> position;
-    //int size;
-    //int exp;
-    //int vector;
-    //int stopShoot;
-    //int shootpenalty;
-    //double angle = 0;//ラジアン表記, ただし0未満では停止する
-    //BulletPoint bullet;
-    vector<int> level;
-    vector<Card> list;
-
-    void setCardlist(vector<Card> sets){
-        list = sets.copy();
-        for(int i = 0; i < list.size(); i++){
-            level.push_back(1);
-            exp += list.at(i).needEXP;
+int HeroPoint::levelUp(int target){
+    int changedNum;
+    list.at(target).upNum--;
+    if (level.at(target)++ == 1) changedNum = list.at(target).uped1;
+    else changedNum = list.at(target).uped2;
+    if (list.at(target).typeA == 0){
+        switch (list.at(target).typeA){
+            case 0:
+                velocity = changedNum;
+                break;
+            case 1:
+                size = changedNum;
+                break;
+        }
+    }else{
+        switch (list.at(target).typeA){
+            case 0:
+                bullet.velocity = changedNum;
+                break;
+            case 1:
+                bullet.size = changedNum;
+                break;
+            case 2:
+                bullet.attack = changedNum;
+                break;
+            case 3:
+                bullet.canReflect = changedNum;
+                break;
+            case 4:
+                stopShoot = changedNum;
+                break;
+            case 5:
+                shootNum = changedNum / 100;
+                shootAngle = changedNum % 100;
+                break;
+            case 6:
+                bullet.searchLange = (changedNum / 10) * 10;
+                bullet.hormingPower = (changedNum % 10) * 0.1;
+                break;
+            case 7:
+                //ボムの記載、未作成
+                break;
         }
     }
+    return -exp;
+}
 
-    int levelUp(int target){
-        int changedNum;
-        list.at(target).upNum--;
-        if(level.at(target)++ == 1) changedNum = list.at(target).uped1;
-        else changedNum = list.at(target).uped2;
-        if(list.at(target).typeA == 0){
-            switch(list.at(target).typeA){
-                case 0: 
-                    vector = changedNum;
-                    break;
-                case 1: 
-                    size = changedNum;
-                    break;     
-            }
-        }else{
-            switch(list.at(target).typeA){
-                case 0: 
-                    bullet.vector = changedNum;
-                    break;
-                case 1: 
-                    bullet.size = changedNum;
-                    break;
-                case 2: 
-                    bullet.attack = changedNum;
-                    break;
-                case 3: 
-                    bullet.attack = changedNum;
-                    break;
-                case 4: 
-                    bullet.canReflect = changedNum;
-                    break;
-                case 5:
-                    shootNum = changedNum / 100;
-                    shotAngle = changedNum % 100;
-                    break;
-                 case 6:
-                    bullet.searchLange = (changedNum / 10) * 10;
-                    bullet.hormingPower = (changedNum % 10) * 0.1;
-                    break;
-                case 7:
-                    //ボムの記載、未作成
+void HeroPoint::timer(vector<pair<double, double>> points, vector<int> large){
+    if(shootpenalty > 0) shootpenalty -= 20;
+    if(hitTime > 0) hitTime -= 20;
+    move();
+    if(shootFlag) shoot();
+    for(int i = 0; i < bullets.size(); i++) bullets.at(i).timer(points,large);
+}
 
-            }
-        }
-        return -exp;
+void HeroPoint::contact(pair<double, double> point, int large){
+    int x, y, d, r;
+    x = position.first - point.first;
+    y = position.second - point.second;
+    d = x * x + y * y;
+    r = (size + large) / 2;
+    r *= r;
+    if(d <= r){
+        cout << "hit!!" << endl;
+        if(hitTime <= 0){
+            damage(20);
+            hitTime = setHitTime;
+        } 
     }
-
-    void timer(){
-        if(shootpenalty > 0) shootpenalty--;
-        move();
-    }
-
-    //NormalPoint(int hp, int large, int get, int vec){
-    //    nowHP = hp;
-    //    maxHP = hp;
-    //    size = large;
-    //    exp = get;
-    //    vector = vec;
-    //}
-
-    //void setFirstSituation(pair<double, double> z){
-    //    position = z;
-    //}
-
-    //void changeAngle(double per){
-    //    angle = per;
-    //}
-
-    //void setBulletData(vector<int> bullet){
-    //    bulletID = bullet;
-    //}
-
-    //void move(){
-    //    position.first += cos(angle);
-    //    position.second -= sin(angle);   
-    //}
-
-    //bool damage(int hit){//ダメージ処理、HPが0以下ならtrueを返す
-    //    nowHP -= hit;
-    //    if(nowHP <= 0) return true;
-    //    else return false;
-    //}
-};
+}
