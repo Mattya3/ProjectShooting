@@ -1,6 +1,5 @@
 #include <Setting.hpp>
 #include <scenes/Title_Scene.hpp>
-
 using namespace std;
 
 int main() {
@@ -10,6 +9,8 @@ int main() {
 
     window1 = glfwCreateWindow(Setting::WINDOW_width, Setting::WINDOW_height,
                                "Hello World", NULL, NULL);
+    assert(window1);
+
 
     if(!window1) {
         glfwTerminate();

@@ -2,6 +2,7 @@
 #include <string>
 
 typedef unsigned char ubyte_t;
+// imgディレクトリであることは前提とする
 class PngTexture {
     unsigned int id; // テクスチャID
     ubyte_t *data;   // 生データを保持する

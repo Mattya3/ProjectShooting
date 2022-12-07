@@ -2,13 +2,15 @@
 #include <OpenGL/glu.h>
 #include <bits/stdc++.h>
 #include <component/Image.hpp>
+#include <filesystem>
 #include <png.h>
 #include <stdexcept>
-using namespace std;
 
+using namespace std;
+using std::filesystem::current_path;
 
 PngTexture::PngTexture(const std::string &fname, unsigned int tid) {
-    filename = fname;
+    filename = (current_path() / filesystem::path("img/" + fname)).c_str();
     id = tid;
     cout << filename << endl;
     init();

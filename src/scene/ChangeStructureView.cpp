@@ -1,10 +1,11 @@
 #include <scenes/ChangeStructureView.hpp>
 
+#include <component/Button_anyTimes.hpp>
 #include <component/NextSceneButton.hpp>
-#include <scenes/Title_Scene.hpp>
 #include <scenes/ResolverCallbackFunc.hpp>
-
-float g_angle = 0.0;
+#include <scenes/SelectCardSub.hpp>
+#include <scenes/Title_Scene.hpp>
+static float g_angle = 0.0;
 // GLFWにおいてコールバック関数としてインスタンスメソッドを登録できない
 // 間に静的関数をかませることで解決する。
 // シーンの各種マウスキー入力監視関数をコールバック登録する
@@ -31,20 +32,33 @@ void f() {
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-
 ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
 
     register_callback_resolver::init(*this, window1);
 
-    Button *b = new Button(-0.5, -0.5, 0.3, 0.3);
-    Button *b2 = new Button(0.2, 0.2, 0.2, 0.2);
+    Button_anyTimes *b = new Button_anyTimes(-0.5, -0.5, 0.3, 0.3);
+    Button_anyTimes *b2 = new Button_anyTimes(0.2, 0.2, 0.2, 0.2);
     add_button(b);
     add_button(b2);
 
     NextSceneButton *bb = new NextSceneButton(-0.5, 0.2, 0.3, 0.3);
+    bb->set_color(0.0, 0.0, 0.0);
     add_button(bb);
 
+    vector<Button_anyTimes *> card_struct(3);
+    double x_interval = 0.1, y_pos = -0.7, x_pos = -1 + x_interval;
+    double xlen = (2.0 - x_interval * 4) / 3, ylen = 1.2;
+    for(int i = 0; i < 3; i++) {
+        card_struct[i] = new Button_anyTimes(x_pos, y_pos, xlen, ylen);
+        x_pos += xlen + x_interval;
+        card_struct[i]->set_color(0.0, 0.8, 0.3);
+        this->add_button(card_struct[i]);
+    }
+
+    int card_struct_id = 0;
+    bool is_in_sub_window = false;
     while(!glfwWindowShouldClose(window1)) {
+
         render();
         glfwSwapBuffers(window1);
         glfwPollEvents();
@@ -52,8 +66,20 @@ ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
         if(bb->next_scene) {
             break;
         }
+        for(int id = 0; id < 3; id++) {
+            if(card_struct[id]->is_pushed()) {
+                cout << id << endl;
+                card_struct_id = id;
+                SelectCardSub scs(card_struct_id, window1);
+
+                register_callback_resolver::init(*this, window1);
+                glfwMakeContextCurrent(window1);
+            }
+        }
     }
-    Title_scene ts(window1);
+    if(bb->next_scene) {
+        Title_scene ts(window1);
+    }
 }
 
 void ChangeStructureView::render() {
@@ -64,52 +90,8 @@ void ChangeStructureView::render() {
     g_angle += 0.05;
     f();
 }
-void ChangeStructureView::mouse_button_callback(GLFWwindow *pwin, int button,
-                                                int action, int mods) {
-    double mousex, mousey;
-    glfwGetCursorPos(pwin, &mousex, &mousey);
-    Setting::to_canonical_xy(mousex, mousey);
-    for(auto &&btn : btns) {
-        if(btn->valid_push_location(mousex, mousey)) {
-            btn->action_when_pushed();
-        } else {
-            cout << mousex << ',' << mousey << "\n";
-        }
-    }
-}
-void ChangeStructureView::add_button(Button *btn) { btns.push_back(btn); }
+
 void ChangeStructureView::show_component() {
-    auto show = [](double sx, double sy, double xlen, double ylen,
-                   string color) {
-        sx /= Setting::WINDOW_width / 2;
-        sy /= Setting::WINDOW_height / 2;
-        sx -= 1;
-        sy -= 1;
-        xlen /= Setting::WINDOW_width / 2;
-        ylen /= Setting::WINDOW_height / 2;
-        glBegin(GL_POLYGON);
-        if(color == "red") {
-            glColor3d(1.0, 0.0, 0.0);
-        } else if(color == "blue") {
-            glColor3d(0.0, 0.0, 1.0);
-        } else if(color == "green") {
-            glColor3d(0.0, 1.0, 0.0);
-        }
-
-        glVertex2d(sx, sy);
-        glVertex2d(sx + xlen, sy);
-        glVertex2d(sx + xlen, sy + ylen);
-        glVertex2d(sx, sy + ylen);
-        glEnd();
-    };
-    show(50, 200, 200, 300, "red");
-    show(60, 340, 180, 100, "green");
-
-    show(300, 200, 200, 300, "red");
-    show(310, 340, 180, 100, "green");
-
-    show(550, 200, 200, 300, "red");
-    show(560, 340, 180, 100, "green");
     for(auto &&e : btns) {
         e->button_view();
     }
