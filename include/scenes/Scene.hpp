@@ -8,6 +8,7 @@ class Scene {
 
   protected:
     vector<ButtonBase *> btns;
+    NextSceneButton *btn_next_scene;
 
   public:
     virtual void mouse_button_callback(GLFWwindow *pwin, int button, int action,
@@ -35,5 +36,18 @@ class Scene {
             e->button_view();
         }
     }
-    virtual void render() {}
+    virtual void render(GLFWwindow *window) {
+        while(!glfwWindowShouldClose(window)) {
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            show_component();
+            // btn_func();
+            if(btn_next_scene->is_pushed()){
+
+            }
+
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+        }
+    }
 };

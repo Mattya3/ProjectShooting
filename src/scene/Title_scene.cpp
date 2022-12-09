@@ -5,6 +5,7 @@
 #include <component/NextSceneButton.hpp>
 #include <scenes/ChangeStructureView.hpp>
 #include <scenes/ResolverCallbackFunc.hpp>
+
 double sx, sy, xlen, ylen;
 static void render2() {
     glColor3d(1.0, 1.0, 1.0);
@@ -30,6 +31,7 @@ static void render2() {
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
+    
     glBindTexture(GL_TEXTURE_2D, 2);
     glEnable(GL_TEXTURE_2D);
     glNormal3d(0.0, 0.0, 1.0);
@@ -43,7 +45,6 @@ static void render2() {
     glTexCoord2d(0.0, 0.0);
     glVertex3d(sx, sy + ylen, 0.0);
     glEnd();
-
     glDisable(GL_TEXTURE_2D);
 }
 Title_scene::Title_scene(GLFWwindow *window1) {
@@ -82,5 +83,7 @@ Title_scene::Title_scene(GLFWwindow *window1) {
         ChangeStructureView csv(window1);
     }
 }
-void Title_scene::render(GLFWwindow *window1) {}
+void Title_scene::render(GLFWwindow *window1) {
+    
+}
 Title_scene::~Title_scene() {}
