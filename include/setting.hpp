@@ -13,7 +13,12 @@ class Setting {
         y = 1 - y;
         x = x - 1;
     }
-    class imgData {
+
+  public:
+    class imgIdx {
+      public:
         constexpr static int back_arrow = 3;
+        constexpr static int go_title = 4;
+        constexpr static int f = 5;
     };
 };

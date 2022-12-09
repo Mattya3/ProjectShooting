@@ -1,6 +1,7 @@
 #pragma once
 #include <Setting.hpp>
 #include <component/ButtonBase.hpp>
+#include <component/NextSceneButton.hpp>
 
 class Scene {
   private:

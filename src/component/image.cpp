@@ -8,18 +8,20 @@
 
 using namespace std;
 using std::filesystem::current_path;
+int PngTexture::tid = 0;
 
-PngTexture::PngTexture(const string &fname, unsigned int tid, Location loc)
-    : loc(loc) {
+PngTexture::PngTexture(const string &fname, Location loc) : loc(loc) {
     filename = (current_path() / filesystem::path("img/" + fname)).c_str();
-    id = tid;
-    cout << filename << endl;
+    id = tid; // 各テクスチャに固有可する
+    ++tid;
+    cout << filename << " as " << tid << endl;
     init();
 }
 PngTexture::PngTexture() {}
 PngTexture::~PngTexture() { final(); }
 void PngTexture::view() {
-    glBindTexture(GL_TEXTURE_2D, 2);
+    glColor3d(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, id);
     glEnable(GL_TEXTURE_2D);
     glNormal3d(0.0, 0.0, 1.0);
     glBegin(GL_QUADS);
@@ -66,7 +68,23 @@ void PngTexture::init() {
     gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGBA,
                       GL_UNSIGNED_BYTE, data);
 }
-
+void PngTexture::view_clone(Location loca) {
+    glColor3d(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, id);
+    glEnable(GL_TEXTURE_2D);
+    glNormal3d(0.0, 0.0, 1.0);
+    glBegin(GL_QUADS);
+    glTexCoord2d(0.0, 1.0);
+    glVertex3d(loca.sx, loca.sy, 0.0);
+    glTexCoord2d(1.0, 1.0);
+    glVertex3d(loca.sx + loca.xlen, loca.sy, 0.0);
+    glTexCoord2d(1.0, 0.0);
+    glVertex3d(loca.sx + loca.xlen, loca.sy + loca.ylen, 0.0);
+    glTexCoord2d(0.0, 0.0);
+    glVertex3d(loca.sx, loca.sy + loca.ylen, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
 void PngTexture::final() { free(data); }
 
 unsigned char *PngTexture::rawData() { return data; }

@@ -57,7 +57,7 @@ SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
                          "Card Select", NULL, NULL);
     glfwMakeContextCurrent(sub_window);
 
-    PngTexture back_arrow("back.png", 3);
+    PngTexture back_arrow("test_img/back.png", Location(-0.9, -0.9, 0.49, 0.49));
     NextSceneButton *ii = new NextSceneButton(0, 0, 0.7, 0.7);
     ii->set_color(1.0, 0.0, 0.0);
     register_callback_resolver::init(*this, sub_window);
@@ -65,8 +65,9 @@ SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
     while(!glfwWindowShouldClose(sub_window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
+
         show_component();
-        show_png(-0.9, -0.9, 0.49, 0.49);
+        back_arrow.view();
         draw_grid(sq, 3, 4, 0.05, 0.05);
 
         glfwSwapBuffers(sub_window);
