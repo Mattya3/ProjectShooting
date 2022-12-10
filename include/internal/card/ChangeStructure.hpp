@@ -1,7 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "StructureData.hpp"
-#include "Card.hpp"
+#include <internal/card/StructureData.hpp>
+#include <internal/card/Card.hpp>
 
 using namespace std;
 

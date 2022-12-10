@@ -1,4 +1,4 @@
-#include "Battle.hpp"
+#include <internal/battle/Battle.hpp>
 
 void Battle::start(){
     StructureData sets;

@@ -3,6 +3,7 @@ build/
 include/bits/
 include/GL
 include/GLFW
+src/internal/testmain.cpp
 a.out
 a.exe
 *.exe

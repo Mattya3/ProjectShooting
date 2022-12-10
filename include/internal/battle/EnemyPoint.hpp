@@ -1,7 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "NormalPoint.hpp"
-#include "Card.hpp"
+#include <internal/battle/NormalPoint.hpp>
+#include <internal/card/Card.hpp>
 
 using namespace std;
 

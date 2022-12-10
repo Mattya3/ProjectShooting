@@ -1,6 +1,6 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "BulletPoint.hpp"
+#include <internal/battle/BulletPoint.hpp>
 using std::filesystem::current_path;
 
 using namespace std;

@@ -1,4 +1,4 @@
-#include "EnemyPoint.hpp"
+#include <internal/battle/EnemyPoint.hpp>
 
 void EnemyPoint::getEnemyData(int id){
 }

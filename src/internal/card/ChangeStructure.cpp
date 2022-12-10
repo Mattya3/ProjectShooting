@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "ChangeStructure.hpp"
+#include <internal/card/ChangeStructure.hpp>
 
 using namespace std;
 ChangeStructure::ChangeStructure(void){

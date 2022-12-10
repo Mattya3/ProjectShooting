@@ -1,4 +1,4 @@
-#include "NormalPoint.hpp"
+#include <internal/battle/NormalPoint.hpp>
 
 
 void NormalPoint::setting(int id){

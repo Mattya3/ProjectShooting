@@ -1,7 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "Card.hpp"
-#include "CardHas.hpp"
+#include <internal/card/Card.hpp>
+#include <internal/card/CardHas.hpp>
 
 using namespace std;
 

@@ -1,4 +1,4 @@
-#include "StructureData.hpp"
+#include <internal/card/StructureData.hpp>
 #include <filesystem>
 using std::filesystem::current_path;
 using namespace std;

@@ -2,10 +2,10 @@
 #include <bits/stdc++.h>
 #include <thread>
 #include <chrono>
-#include "StructureData.hpp"
-#include "HeroPoint.hpp"
-#include "EnemyPoint.hpp"
-#include "BulletPoint.hpp"
+#include <internal/card/StructureData.hpp>
+#include <internal/battle/HeroPoint.hpp>
+#include <internal/battle/EnemyPoint.hpp>
+#include <internal/battle/BulletPoint.hpp>
 using namespace std;
 
 const int battle_height = 660;
