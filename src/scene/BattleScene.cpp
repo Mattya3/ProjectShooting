@@ -11,7 +11,7 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     my_fighter = make_unique<PngTexture>("battle/me.png",
                                          Location(-0.8, -0.8, 0.2, 0.2));
     bullet = make_unique<PngTexture>("battle/bulletMe.png",
-                                     Location(-0.8, -0.8, 0.1, 0.1));
+                                     Location(-0.8, -0.8, 0.05, 0.05));
     PngTexture go_select_card("test_img/go_title.png",
                               Location(-0.6, -0.4, 1.2, 0.3));
 
@@ -22,13 +22,19 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     transBtn->set_color(0.1, 0.8, 0.2);
     this->add_button(transBtn);
     int dir = 1;
-
+    bullets_loc.push_back(Location(-0.6, -0.4, 1.2, 0.3));
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
         show_component();
         go_select_card.view();
         bullet->view();
         my_fighter->view();
+
+        for(auto &&l : bullets_loc) {
+            bullet->view_clone(l);
+            l.sy+=0.0018;
+        }
+
         glfwSwapBuffers(window1);
         glfwPollEvents();
         if(b->next_scene) {
@@ -67,11 +73,9 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     if(dp) {
         my_fighter->loc.sx += velocity;
     }
-    if(key==GLFW_KEY_SPACE && action==GLFW_PRESS){
-        bullet->loc.sx+=0.1;
-        bullet->loc.sy+=0.1;
+    if(key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+        bullets_loc.push_back(my_fighter->loc.clone());
+        cout << bullets_loc.size() << endl;
     }
-
-    
 }
 BattleScene::~BattleScene() {}
