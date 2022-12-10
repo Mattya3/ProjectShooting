@@ -65,8 +65,10 @@ void PngTexture::init() {
     glBindTexture(GL_TEXTURE_2D, id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGBA,
-                      GL_UNSIGNED_BYTE, data);
+    // gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGBA,
+    //   GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+                 GL_UNSIGNED_BYTE, data);
 }
 void PngTexture::view_clone(Location loca) {
     glColor3d(1.0, 1.0, 1.0);
