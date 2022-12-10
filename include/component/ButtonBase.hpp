@@ -6,7 +6,7 @@ using namespace std;
 class ButtonBase {
   protected:
     double sx, sy, xlen, ylen;
-    double r=1.0, g=1.0, b=1.0;
+    double r = 1.0, g = 1.0, b = 1.0;
     bool btn_enable = false;
 
   public:
@@ -26,11 +26,11 @@ class ButtonBase {
     // ボタンの種類による挙動の変化は子クラスでoverrideすることで対応
     virtual inline bool is_pushed() { return btn_enable; }
 
-    // ボタンが押されたときの処理  
+    // ボタンが押されたときの処理
     // すなわちvalid_push_locationだったときにmouse_callbackで使われる
     virtual void action_when_pushed() {
         cout << "need override" << endl;
-        btn_enable=true;
+        btn_enable = true;
         // exit(1);
     }
 
@@ -53,7 +53,15 @@ class ButtonBase {
         glVertex2d(sx, sy + ylen);
         glEnd();
     }
-
+    void button_filled_view() {
+        glBegin(GL_POLYGON);
+        glColor3d(r, g, b);
+        glVertex2d(sx, sy);
+        glVertex2d(sx + xlen, sy);
+        glVertex2d(sx + xlen, sy + ylen);
+        glVertex2d(sx, sy + ylen);
+        glEnd();
+    }
     // (sx, sy)は左下を表す。xlen,ylenでボタンの幅と高さを指定する。
     // -1<= sx,sy <= 1
     // 0<=xlen,ylen<=2

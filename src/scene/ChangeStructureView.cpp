@@ -6,10 +6,8 @@
 #include <scenes/SelectCardSub.hpp>
 #include <scenes/Title_Scene.hpp>
 #include <component/Image.hpp>
+
 static float g_angle = 0.0;
-// GLFWにおいてコールバック関数としてインスタンスメソッドを登録できない
-// 間に静的関数をかませることで解決する。
-// シーンの各種マウスキー入力監視関数をコールバック登録する
 
 void f() {
     static const GLfloat vtx3[] = {
@@ -41,9 +39,6 @@ ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
     bb->set_color(0.5, 0.5, 0.0);
     add_button(bb);
     PngTexture back_arrow("test_img/back.png", Location(-0.9, -0.9, 0.49, 0.49));
-    // NextSceneButton *go_title = new NextSceneButton(-0.9, -0.9, 0.49, 0.49);
-
-
 
     vector<Button_anyTimes *> card_struct(3);
     double x_interval = 0.1, y_pos = -0.4, x_pos = -1 + x_interval;

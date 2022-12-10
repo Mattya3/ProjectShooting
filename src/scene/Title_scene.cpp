@@ -22,18 +22,24 @@ Title_scene::Title_scene(GLFWwindow *window1) {
     PngTexture go_select_card("title/goSelectCard.png",
                               Location(-0.6, -0.4, 1.2, 0.3));
 
-    NextSceneButton *btn_go_battle = new NextSceneButton(-0.6, 0.1, 1.2, 0.3);
+    NextSceneButton *btn_go_battle = new NextSceneButton(-0.6, 0.1, 1.5, 0.5);
     NextSceneButton *b = new NextSceneButton(-0.6, -0.4, 1.2, 0.3);
     b->set_color(0.5, 0.1, 0.8);
     this->add_button(b);
     this->add_button(btn_go_battle);
 
     while(!glfwWindowShouldClose(window1)) {
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glDisable(GL_CULL_FACE);
         render2();
         show_component();
+        btn_go_battle->button_filled_view();
         go_battle.view();
         go_select_card.view();
+
         glfwSwapBuffers(window1);
         glfwPollEvents();
 
