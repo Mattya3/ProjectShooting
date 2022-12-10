@@ -1,6 +1,6 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "Card.hpp"
+#include <internal/card/Card.hpp>
 using namespace std;
 
 class CardHas{

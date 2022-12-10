@@ -1,7 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "NormalPoint.hpp"
-#include "Card.hpp"
+#include <internal/battle/NormalPoint.hpp>
+#include <internal/card/Card.hpp>
 
 using namespace std;
 
@@ -9,16 +9,24 @@ using namespace std;
 
 class HeroPoint : public NormalPoint{
 public:
-    bool shootFlag = true;
+    bool shootFlag = false;
     vector<int> level;
     vector<Card> list;
+    bool moveFlag = true;
+
+    void shooting(bool flag);
     
+    void moving(bool flag);
 
     void setCardlist(vector<Card> sets);
+
+    void changeDirection(double per);
 
     int levelUp(int target);
 
     void timer(vector<pair<double, double>> points, vector<int> large);
 
     void contact(pair<double, double> point, int large);
+
+    void shoot();
 };
