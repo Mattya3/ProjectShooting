@@ -7,10 +7,13 @@
 
 BattleScene::BattleScene(GLFWwindow *window1) {
     register_callback_resolver::init(*this, window1);
-    PngTexture me("battle/me.png", Location(-0.8, -0.8, 0.4, 0.4));
+    // PngTexture me("battle/me.png", Location(-0.8, -0.8, 0.4, 0.4));
+    my_fighter = make_unique<PngTexture>("battle/me.png",
+                                         Location(-0.8, -0.8, 0.2, 0.2));
+    bullet = make_unique<PngTexture>("battle/bulletMe.png",
+                                     Location(-0.8, -0.8, 0.1, 0.1));
     PngTexture go_select_card("test_img/go_title.png",
                               Location(-0.6, -0.4, 1.2, 0.3));
-    PngTexture bullet("battle/bulletMe.png", Location(-0.8, -0.8, 0.1, 0.1));
 
     NextSceneButton *b = new NextSceneButton(-0.6, -0.4, 1.2, 0.3);
     Button_anyTimes *transBtn = new Button_anyTimes(0.3, 0.3, 0.5, 0.5);
@@ -24,22 +27,10 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         glClear(GL_COLOR_BUFFER_BIT);
         show_component();
         go_select_card.view();
-        bullet.view();
-        // bullet.view_clone(me.loc);
-        me.view();
+        bullet->view();
+        my_fighter->view();
         glfwSwapBuffers(window1);
         glfwPollEvents();
-        if(transBtn->is_pushed()) {
-            me.loc.sx += 0.07 * dir;
-            me.loc.sy += 0.07 * dir;
-            if(me.loc.sx >= 1 && me.loc.sy >= 1) {
-                dir *= -1;
-            }
-            bullet.loc.sy += 0.1 * dir;
-            if(bullet.loc.sy > 1) {
-                bullet.loc.sy = me.loc.sy;
-            }
-        }
         if(b->next_scene) {
             break;
         }
@@ -49,4 +40,38 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     }
 }
 
+void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
+                               int action, int mods) {
+    auto control_key_flag = [&](int key_id, bool &flag) {
+        if(key == key_id) {
+            if(action == GLFW_PRESS) {
+                flag = true;
+            } else if(action == GLFW_RELEASE) {
+                flag = false;
+            }
+        }
+    };
+    control_key_flag(GLFW_KEY_W, wp);
+    control_key_flag(GLFW_KEY_A, ap);
+    control_key_flag(GLFW_KEY_S, sp);
+    control_key_flag(GLFW_KEY_D, dp);
+    if(wp) {
+        my_fighter->loc.sy += velocity;
+    }
+    if(sp) {
+        my_fighter->loc.sy -= velocity;
+    }
+    if(ap) {
+        my_fighter->loc.sx -= velocity;
+    }
+    if(dp) {
+        my_fighter->loc.sx += velocity;
+    }
+    if(key==GLFW_KEY_SPACE && action==GLFW_PRESS){
+        bullet->loc.sx+=0.1;
+        bullet->loc.sy+=0.1;
+    }
+
+    
+}
 BattleScene::~BattleScene() {}
