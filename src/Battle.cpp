@@ -3,24 +3,26 @@
 void Battle::start(){
     StructureData sets;
     vector<Card> list = sets.callCardSets();
-    hero.setSize(battle_height, battle_width);
-    hero.setting(100, 64, 0, 10, 240);
+    hero.setting(0);
     hero.setCardlist(list);
-    hero.setHitTime = 1000;
     pair<double, double> z;
     z.first = battle_width / 2;
     z.second = 3 * battle_height / 4;
     hero.setFirstSituation(z);
-    hero.changeAngle(M_PI / 2);
-    BulletPoint b;
-    hero.setBulletData(b);
-    z.first = 100;
-    z.second = 100;
-    b.setSize(battle_height, battle_width);
-    b.setFirstSituation(z);
-    b.changeAngle(M_PI / 4);
-    hero.bullets.push_back(b);
-    hero.moveFlag = true; //後ほど削除する
+    hero.changeDirection(0);
+    EnemyPoint emerge;//不要
+    emerge.setting(0);//不要
+    z.first = 200;//不要
+    z.second = 200;//不要
+    emerge.setFirstSituation(z);//不要
+    enemy.push_back(emerge);//不要
+    BulletPoint b;//不要
+    b.setSize(battle_height, battle_width);//不要
+    b.setFirstSituation(z);//不要
+    b.changeAngle(0);//不要
+    b.hormingPower = 1;//不要
+    b.searchLange = 500;//不要
+    enemy.at(0).bullets.push_back(b);//不要
     while(hero.nowHP > 0) timer();
 }
 
@@ -28,22 +30,25 @@ void Battle::timer(){
     vector<pair<double, double>> points;
     vector<int> large;
     this_thread::sleep_for(chrono::milliseconds(20));
-    /*
     for(int i = 0; i < enemy.size(); i++){
-        enemy.at(i).timer();
+        points.push_back(hero.getPosition());
+        large.push_back(hero.getSize());
+        enemy.at(i).timer(points, large);
+        points.erase(points.begin());
+        large.erase(large.begin());
         points.push_back(enemy.at(i).getPosition());
         large.push_back(enemy.at(i).getSize());
     }
-    */
     hero.timer(points, large);
     collision();
+    encount();
+    cout << endl;//不要
 }
 
 void Battle::collision(){
     vector<int> dis;
     dis = hero.collision(hero.bullets);
     for(int i = 0; i < dis.size(); i++) hero.lostBullet(i);
-    /*
     for(int j = 0; j < enemy.size(); j++){
         dis = hero.collision(enemy.at(j).bullets);
         for(int i = 0; i < dis.size(); i++) enemy.at(j).lostBullet(i);
@@ -52,14 +57,22 @@ void Battle::collision(){
         dis = enemy.at(j).collision(hero.bullets);
         for(int i = 0; i < dis.size(); i++) hero.lostBullet(i);
     }
-    */
    hero.notReflect();
-   //for(int i = 0; i < enemy.size(); i++) enemy.at(i).notReflect();
-   /*
+   for(int i = 0; i < enemy.size(); i++) enemy.at(i).notReflect();
    for(int i = enemy.size() - 1; i >= 0; i--){
     if(enemy.at(i).lose()) enemy.erase(enemy.begin() + i);
-   } //倒されたかどうか
-   */
+   }
+   for(int i = 0; i < enemy.size(); i++) hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());
+}
 
-   //for(int i = 0; i < enemy.size(); i++) hero.contact(enemy.at(i).getPosition, enemy.at(i).getSize);
+void Battle::encount(){
+    if(/*敵が出現する条件を満たしたら*/false){
+        EnemyPoint emerge;
+        emerge.setting(0);//引数は条件により変更
+        pair<double, double> z;//ここに出現位置を代入する処理を加えたい
+        z.first = 200;//不要
+        z.second = 200;//不要
+        emerge.setFirstSituation(z);
+        enemy.push_back(emerge);
+    }
 }

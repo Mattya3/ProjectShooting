@@ -38,7 +38,6 @@ bool BulletPoint::reflect(int wallID){ // 0-4で→↑←↓の壁に対応, 反
 
 void BulletPoint::setFirstSituation(pair<double, double> z){
     position = z;
-    cout << position.first << "," << position.second << endl;
 }
 
 void BulletPoint::changeAngle(double per){
@@ -47,29 +46,29 @@ void BulletPoint::changeAngle(double per){
 
 double BulletPoint::search(vector<pair<double, double>> points, vector<int> large){
     if (searchLange == 0 || hormingPower == 0) return -1;
-    int x, y, d, r;
-    int minx = 0, miny = 0, mind = searchLange;
+    double x, y, d;
+    bool flag = true;
+    double minx = 0, miny = 0, mind = searchLange;
     for(int i = 0; i < points.size(); i++){
-        x = position.first - points.at(i).first;
-        y = position.second - points.at(i).second;
+        x = points.at(i).first - position.first;
+        y = points.at(i).second - position.second;
         d = sqrt(x * x + y * y);
-        r = (size + large.at(i)) / 2;
-        d -= r * r;
-        if(d < mind){
+        if(d  < mind){
+            flag = false;
             mind = d;
             minx = x;
             miny = y;
         }
     }
-    if(minx == 0) return -1;
+    if(flag) return -1;
     minx /= mind;
     double angle = acos(minx);
-    if(miny < 0) angle = 2 * M_PI - angle; 
+    if(miny > 0) angle = 2 * M_PI - angle;
     return angle;
 }
 
 void BulletPoint::move(vector<pair<double, double>> points, vector<int> large){//接触を内部にしているが、縁に移すかは未定
-    int x, y, d;
+    double x, y, d;
     double per = search(points, large);
     if(per >= 0){
         x = cos(angle) * (1 - hormingPower) + cos(per) * hormingPower;

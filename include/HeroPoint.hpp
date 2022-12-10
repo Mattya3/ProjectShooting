@@ -9,16 +9,20 @@ using namespace std;
 
 class HeroPoint : public NormalPoint{
 public:
-    bool shootFlag = true;
+    bool shootFlag = false;
     vector<int> level;
     vector<Card> list;
-    
+    bool moveFlag = true;
 
     void setCardlist(vector<Card> sets);
+
+    void changeDirection(double per);
 
     int levelUp(int target);
 
     void timer(vector<pair<double, double>> points, vector<int> large);
 
     void contact(pair<double, double> point, int large);
+
+    void shoot();
 };

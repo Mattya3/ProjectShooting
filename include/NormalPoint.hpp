@@ -1,6 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
 #include "BulletPoint.hpp"
+using std::filesystem::current_path;
 
 using namespace std;
 
@@ -11,26 +12,27 @@ public:
     vector<BulletPoint> bullets;
     int height;
     int width;
-    bool moveFlag = false;
-    int shootNum = 1;
-    double shootAngle = 0;
-    int attack = 20;
+    int shootNum;
+    double shootAngle;
+    int attack;
     int nowHP;
     int maxHP;
     pair<double, double> position;
     int size;
     int exp;
     int velocity;
+    int nowVelocity;
     int stopShoot;
-    int shootpenalty;
-    int setHitTime = 20;
+    int shootpenalty = 0;
+    int setHitTime;
     int hitTime = 0;
-    double angle = 0;//ラジアン表記, ただし0未満では停止する
-    BulletPoint bullet;//未作成
+    double angle;//ラジアン表記
+    double direction;//ラジアン表記
+    BulletPoint bullet;
 
-    void setSize(int h, int w);
+    void setting(int id);
 
-    void setting(int hp, int large, int get, int vec, int stop);
+    vector<string> split(string str, char separator);
 
     void setFirstSituation(pair<double, double> z);
 
@@ -42,13 +44,11 @@ public:
 
     void changeAngle(double per);
 
-    void setBulletData(BulletPoint bullets);
+    double getDirection();
 
     void move();
 
     bool damage(int hit);
-
-    void shoot();
 
     vector<int> collision(vector<BulletPoint> bullets);
 

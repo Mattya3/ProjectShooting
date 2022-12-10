@@ -4,6 +4,7 @@
 #include <chrono>
 #include "StructureData.hpp"
 #include "HeroPoint.hpp"
+#include "EnemyPoint.hpp"
 #include "BulletPoint.hpp"
 using namespace std;
 
@@ -13,7 +14,8 @@ const int battle_width = 440;
 class Battle{
 public:
     HeroPoint hero;
-    //vector<BulletPoint> enemyBullet;
+    vector<EnemyPoint> enemy;
+    vector<BulletPoint> enemyBullet;
     int score = 0;
 
     void start();
@@ -21,4 +23,6 @@ public:
     void timer();
 
     void collision();
+
+    void encount();
 };
