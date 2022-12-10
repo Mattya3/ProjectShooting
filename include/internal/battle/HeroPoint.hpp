@@ -14,6 +14,10 @@ public:
     vector<Card> list;
     bool moveFlag = true;
 
+    void shooting(bool flag);
+    
+    void moving(bool flag);
+
     void setCardlist(vector<Card> sets);
 
     void changeDirection(double per);

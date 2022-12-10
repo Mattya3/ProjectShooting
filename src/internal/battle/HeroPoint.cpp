@@ -1,5 +1,13 @@
 #include <internal/battle/HeroPoint.hpp>
 
+void HeroPoint::shooting(bool flag){
+    shootFlag = flag;
+}
+    
+void HeroPoint::moving(bool flag){
+    moveFlag = flag;
+}
+
 void HeroPoint::setCardlist(vector<Card> sets){
     list = sets;
     for (int i = 0; i < list.size(); i++){
