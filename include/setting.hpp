@@ -3,7 +3,7 @@ class Setting {
   private:
   public:
     static const int sceneNumber_title = 1, sceneNumber_select_card = 2,
-              sceneNumber_battle = 3;
+                     sceneNumber_battle = 3;
     Setting(/* args */);
     ~Setting();
     static const int WINDOW_width = 800, WINDOW_height = 700;
@@ -13,6 +13,12 @@ class Setting {
         y = 1 - y;
         x = x - 1;
     }
-    
 
+  public:
+    class imgIdx {
+      public:
+        constexpr static int back_arrow = 3;
+        constexpr static int go_title = 4;
+        constexpr static int f = 5;
+    };
 };

@@ -1,9 +1,10 @@
-class BattleScene
+#include <scenes/Scene.hpp>
+class BattleScene: Scene
 {
 private:
-    /* data */
+
 public:
-    BattleScene(/* args */);
+    BattleScene(GLFWwindow *window1);
     ~BattleScene();
 };
 

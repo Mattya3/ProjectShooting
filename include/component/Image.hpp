@@ -1,9 +1,10 @@
 #pragma once
+#include <component/Location.hpp>
 #include <string>
-
 typedef unsigned char ubyte_t;
 // imgディレクトリであることは前提とする
 class PngTexture {
+    static int tid;
     unsigned int id; // テクスチャID
     ubyte_t *data;   // 生データを保持する
     unsigned int width, height;
@@ -12,12 +13,16 @@ class PngTexture {
 
     void init();
     void final();
+    ubyte_t *rawData();
 
   public:
+    Location loc;
     PngTexture();
-    PngTexture(const std::string &, unsigned int);
+    PngTexture(const std::string &fname, Location loc);
     ~PngTexture();
-    ubyte_t *rawData();
+    void view();
+    void view_clone(Location loc);
+
     unsigned int getID();
 
     unsigned int getWidth();

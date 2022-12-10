@@ -1,5 +1,9 @@
 #include <scenes/Scene.hpp>
 
+// GLFWにおいてコールバック関数としてインスタンスメソッドを登録できない
+// 間に静的関数をかませることで解決する。
+// シーンの各種マウスキー入力監視関数をコールバック登録する
+
 static Scene *sc_ptr;
 class register_callback_resolver {
   private:

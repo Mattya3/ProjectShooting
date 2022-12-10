@@ -8,16 +8,34 @@
 
 using namespace std;
 using std::filesystem::current_path;
+int PngTexture::tid = 0;
 
-PngTexture::PngTexture(const std::string &fname, unsigned int tid) {
+PngTexture::PngTexture(const string &fname, Location loc) : loc(loc) {
     filename = (current_path() / filesystem::path("img/" + fname)).c_str();
-    id = tid;
-    cout << filename << endl;
+    id = tid; // 各テクスチャに固有可する
+    ++tid;
+    cout << filename << " as " << tid << endl;
     init();
 }
-
+PngTexture::PngTexture() {}
 PngTexture::~PngTexture() { final(); }
-
+void PngTexture::view() {
+    glColor3d(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, id);
+    glEnable(GL_TEXTURE_2D);
+    glNormal3d(0.0, 0.0, 1.0);
+    glBegin(GL_QUADS);
+    glTexCoord2d(0.0, 1.0);
+    glVertex3d(loc.sx, loc.sy, 0.0);
+    glTexCoord2d(1.0, 1.0);
+    glVertex3d(loc.sx + loc.xlen, loc.sy, 0.0);
+    glTexCoord2d(1.0, 0.0);
+    glVertex3d(loc.sx + loc.xlen, loc.sy + loc.ylen, 0.0);
+    glTexCoord2d(0.0, 0.0);
+    glVertex3d(loc.sx, loc.sy + loc.ylen, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
 void PngTexture::init() {
     // png画像ファイルのロード
     png_structp sp =
@@ -47,10 +65,28 @@ void PngTexture::init() {
     glBindTexture(GL_TEXTURE_2D, id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGBA,
-                      GL_UNSIGNED_BYTE, data);
+    // gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGBA,
+    //   GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+                 GL_UNSIGNED_BYTE, data);
 }
-
+void PngTexture::view_clone(Location loca) {
+    glColor3d(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, id);
+    glEnable(GL_TEXTURE_2D);
+    glNormal3d(0.0, 0.0, 1.0);
+    glBegin(GL_QUADS);
+    glTexCoord2d(0.0, 1.0);
+    glVertex3d(loca.sx, loca.sy, 0.0);
+    glTexCoord2d(1.0, 1.0);
+    glVertex3d(loca.sx + loca.xlen, loca.sy, 0.0);
+    glTexCoord2d(1.0, 0.0);
+    glVertex3d(loca.sx + loca.xlen, loca.sy + loca.ylen, 0.0);
+    glTexCoord2d(0.0, 0.0);
+    glVertex3d(loca.sx, loca.sy + loca.ylen, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
 void PngTexture::final() { free(data); }
 
 unsigned char *PngTexture::rawData() { return data; }

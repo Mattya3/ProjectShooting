@@ -5,10 +5,9 @@
 #include <scenes/ResolverCallbackFunc.hpp>
 #include <scenes/SelectCardSub.hpp>
 #include <scenes/Title_Scene.hpp>
+#include <component/Image.hpp>
+
 static float g_angle = 0.0;
-// GLFWにおいてコールバック関数としてインスタンスメソッドを登録できない
-// 間に静的関数をかませることで解決する。
-// シーンの各種マウスキー入力監視関数をコールバック登録する
 
 void f() {
     static const GLfloat vtx3[] = {
@@ -36,17 +35,13 @@ ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
 
     register_callback_resolver::init(*this, window1);
 
-    Button_anyTimes *b = new Button_anyTimes(-0.5, -0.5, 0.3, 0.3);
-    Button_anyTimes *b2 = new Button_anyTimes(0.2, 0.2, 0.2, 0.2);
-    add_button(b);
-    add_button(b2);
-
-    NextSceneButton *bb = new NextSceneButton(-0.5, 0.2, 0.3, 0.3);
-    bb->set_color(0.0, 0.0, 0.0);
+    NextSceneButton *bb = new NextSceneButton(-0.9, -0.9, 0.49, 0.49);
+    bb->set_color(0.5, 0.5, 0.0);
     add_button(bb);
+    PngTexture back_arrow("test_img/back.png", Location(-0.9, -0.9, 0.49, 0.49));
 
     vector<Button_anyTimes *> card_struct(3);
-    double x_interval = 0.1, y_pos = -0.7, x_pos = -1 + x_interval;
+    double x_interval = 0.1, y_pos = -0.4, x_pos = -1 + x_interval;
     double xlen = (2.0 - x_interval * 4) / 3, ylen = 1.2;
     for(int i = 0; i < 3; i++) {
         card_struct[i] = new Button_anyTimes(x_pos, y_pos, xlen, ylen);
@@ -60,6 +55,7 @@ ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
     while(!glfwWindowShouldClose(window1)) {
 
         render();
+        back_arrow.view();
         glfwSwapBuffers(window1);
         glfwPollEvents();
 
