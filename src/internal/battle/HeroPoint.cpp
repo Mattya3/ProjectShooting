@@ -1,4 +1,4 @@
-#include "../include/HeroPoint.hpp"
+#include "HeroPoint.hpp"
 
 void HeroPoint::setCardlist(vector<Card> sets){
     list = sets;

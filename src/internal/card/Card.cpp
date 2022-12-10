@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "../include/Card.hpp"
+#include "Card.hpp"
 using namespace std;
 
 vector<string> Card::split(string str, char separator){//strをseparatorで分割する関数

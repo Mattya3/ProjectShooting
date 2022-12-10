@@ -1,7 +1,6 @@
 
 #include <bits/stdc++.h>
-#include "../include/CardHas.hpp"
-#include <filesystem>
+#include "CardHas.hpp"
 using std::filesystem::current_path;
 using namespace std;
 

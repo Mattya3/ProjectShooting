@@ -1,4 +1,4 @@
-#include "../include/BulletPoint.hpp"
+#include "BulletPoint.hpp"
 
 void BulletPoint::setSize(int h, int w){
     height = h;

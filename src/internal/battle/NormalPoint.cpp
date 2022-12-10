@@ -1,4 +1,4 @@
-#include "../include/NormalPoint.hpp"
+#include "NormalPoint.hpp"
 
 
 void NormalPoint::setting(int id){
