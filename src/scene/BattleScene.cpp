@@ -7,26 +7,17 @@
 
 BattleScene::BattleScene(GLFWwindow *window1) {
     register_callback_resolver::init(*this, window1);
-    // PngTexture me("battle/me.png", Location(-0.8, -0.8, 0.4, 0.4));
+
     my_fighter = make_unique<PngTexture>("battle/me.png",
                                          Location(-0.8, -0.8, 0.2, 0.2));
     bullet = make_unique<PngTexture>("battle/bulletMe.png",
                                      Location(-0.8, -0.8, 0.05, 0.05));
-    PngTexture go_select_card("test_img/go_title.png",
-                              Location(-0.6, -0.4, 1.2, 0.3));
 
-    NextSceneButton *b = new NextSceneButton(-0.6, -0.4, 1.2, 0.3);
-    Button_anyTimes *transBtn = new Button_anyTimes(0.3, 0.3, 0.5, 0.5);
-    b->set_color(0.5, 0.1, 0.8);
-    this->add_button(b);
-    transBtn->set_color(0.1, 0.8, 0.2);
-    this->add_button(transBtn);
-    int dir = 1;
-    bullets_loc.push_back(Location(-0.6, -0.4, 1.2, 0.3));
+    NextSceneButton *go_next = new NextSceneButton(Location(-0.6, -0.4, 1.2, 0.3), "test_img/go_title.png");
+    this->add_button(go_next);
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
         show_component();
-        go_select_card.view();
         bullet->view();
         my_fighter->view();
 
@@ -37,11 +28,11 @@ BattleScene::BattleScene(GLFWwindow *window1) {
 
         glfwSwapBuffers(window1);
         glfwPollEvents();
-        if(b->next_scene) {
+        if(go_next->next_scene) {
             break;
         }
     }
-    if(b->next_scene) {
+    if(go_next->next_scene) {
         Title_scene ts(window1);
     }
 }
@@ -78,4 +69,5 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
         cout << bullets_loc.size() << endl;
     }
 }
+void BattleScene::render(){}
 BattleScene::~BattleScene() {}

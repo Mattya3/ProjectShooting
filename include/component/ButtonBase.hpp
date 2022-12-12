@@ -1,6 +1,8 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include <bits/stdc++.h>
+#include <component/Image.hpp>
+#include <component/Location.hpp>
 using namespace std;
 
 class ButtonBase {
@@ -8,6 +10,8 @@ class ButtonBase {
     double sx, sy, xlen, ylen;
     double r = 1.0, g = 1.0, b = 1.0;
     bool btn_enable = false;
+    PngTexture btn_view;
+    bool has_texture = false;
 
   public:
     virtual inline void set_color(double r, double g, double b) {
@@ -35,7 +39,7 @@ class ButtonBase {
     }
 
     // 引数(x,y)がボタンの領域にあるときtrue
-    virtual bool valid_push_location(double x, double y) {
+    inline bool valid_push_location(double x, double y) {
         return (sx <= x && x <= sx + xlen && sy <= y && y <= sy + ylen);
     }
 
@@ -52,6 +56,9 @@ class ButtonBase {
         glVertex2d(sx + xlen, sy + ylen);
         glVertex2d(sx, sy + ylen);
         glEnd();
+        if(has_texture) {
+            btn_view.view();
+        }
     }
     void button_filled_view() {
         glBegin(GL_POLYGON);
@@ -67,5 +74,8 @@ class ButtonBase {
     // 0<=xlen,ylen<=2
     ButtonBase(double sx, double sy, double xlen, double ylen)
         : sx(sx), sy(sy), xlen(xlen), ylen(ylen) {}
+    ButtonBase(Location loc) : ButtonBase(loc.sx, loc.sy, loc.xlen, loc.ylen) {}
+    ButtonBase(Location loc, string img_fname) : ButtonBase(loc) { btn_view = PngTexture(img_fname, loc);has_texture=true; }
+
     ~ButtonBase() {}
 };
