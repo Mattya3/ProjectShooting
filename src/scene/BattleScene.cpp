@@ -69,5 +69,5 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
         cout << bullets_loc.size() << endl;
     }
 }
-void BattleScene::render(){}
+// void BattleScene::render(){}
 BattleScene::~BattleScene() {}
