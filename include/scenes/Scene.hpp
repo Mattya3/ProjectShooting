@@ -31,6 +31,8 @@ class Scene {
             }
         }
     }
+    virtual void key_callback(GLFWwindow *window, int key, int scancode,
+                              int action, int mods) {}
     virtual void add_button(ButtonBase *btn) { btns.push_back(btn); }
     virtual void show_component() {
         for(auto &&e : btns) {
@@ -43,9 +45,7 @@ class Scene {
 
             show_component();
             // btn_func();
-            if(btn_next_scene->is_pushed()){
-
-            }
+            if(btn_next_scene->is_pushed()) {}
 
             glfwSwapBuffers(window);
             glfwPollEvents();
