@@ -4,8 +4,8 @@ void EnemyPoint::getEnemyData(int id){
 }
 
 void EnemyPoint::timer(vector<pair<double, double>> points, vector<int> large){
-    if(shootpenalty > 0) shootpenalty -= 20;
     if(hitTime > 0) hitTime -= 20;
+    times += 20;
     //move();
     if(/*弾を撃つ条件であれば*/false) shoot();
     for(int i = 0; i < bullets.size(); i++){
