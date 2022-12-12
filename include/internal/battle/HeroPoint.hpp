@@ -13,6 +13,8 @@ public:
     vector<int> level;
     vector<Card> list;
     bool moveFlag = true;
+    int stopShoot = 240;
+    int shootpenalty = 0;
 
     void shooting(bool flag);
     

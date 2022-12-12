@@ -22,8 +22,6 @@ public:
     int exp;
     int velocity;
     int nowVelocity;
-    int stopShoot;
-    int shootpenalty = 0;
     int setHitTime;
     int hitTime = 0;
     double angle;//ラジアン表記

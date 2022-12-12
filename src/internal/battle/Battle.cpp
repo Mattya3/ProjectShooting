@@ -10,6 +10,7 @@ void Battle::start(){
     z.second = 3 * battle_height / 4;
     hero.setFirstSituation(z);
     hero.changeDirection(0);
+    
     EnemyPoint emerge;//不要
     emerge.setting(0);//不要
     z.first = 200;//不要

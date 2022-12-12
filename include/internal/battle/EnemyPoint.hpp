@@ -9,6 +9,8 @@ using namespace std;
 
 class EnemyPoint : public NormalPoint{
 public:
+    int times = 0;
+    int nowStatus;
     int movePattern = 1;
     int shootPattern = 1;
 
