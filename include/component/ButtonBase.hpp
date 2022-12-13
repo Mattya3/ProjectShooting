@@ -72,9 +72,12 @@ class ButtonBase {
     // (sx, sy)は左下を表す。xlen,ylenでボタンの幅と高さを指定する。
     // -1<= sx,sy <= 1
     // 0<=xlen,ylen<=2
+    // 画像なし
     ButtonBase(double sx, double sy, double xlen, double ylen)
         : sx(sx), sy(sy), xlen(xlen), ylen(ylen) {}
+    // Locationクラスによる
     ButtonBase(Location loc) : ButtonBase(loc.sx, loc.sy, loc.xlen, loc.ylen) {}
+    // 画像あり
     ButtonBase(Location loc, string img_fname) : ButtonBase(loc) { btn_view = PngTexture(img_fname, loc);has_texture=true; }
 
     ~ButtonBase() {}

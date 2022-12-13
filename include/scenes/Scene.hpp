@@ -2,14 +2,17 @@
 #include <Setting.hpp>
 #include <component/ButtonBase.hpp>
 #include <component/NextSceneButton.hpp>
-
+/**
+ * @brief
+ * 全てのシーンの親クラス
+ **/
 class Scene {
   private:
     bool mouse_down = false;
 
   protected:
     vector<ButtonBase *> btns;
-    NextSceneButton *btn_next_scene;
+    NextSceneButton *btn_next_scene;// スマートポインタに！
     virtual void render() {}
 
   public:
