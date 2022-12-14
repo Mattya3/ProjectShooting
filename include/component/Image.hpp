@@ -16,6 +16,8 @@ class PngTexture {
     ubyte_t *rawData();
 
   public:
+    float rotate=0;
+
     Location loc;
     PngTexture();
     PngTexture(const std::string &fname, Location loc);

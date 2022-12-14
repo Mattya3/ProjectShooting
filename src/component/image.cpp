@@ -24,6 +24,7 @@ void PngTexture::view() {
     glBindTexture(GL_TEXTURE_2D, id);
     glEnable(GL_TEXTURE_2D);
     glNormal3d(0.0, 0.0, 1.0);
+
     glBegin(GL_QUADS);
     glTexCoord2d(0.0, 1.0);
     glVertex3d(loc.sx, loc.sy, 0.0);
@@ -33,7 +34,10 @@ void PngTexture::view() {
     glVertex3d(loc.sx + loc.xlen, loc.sy + loc.ylen, 0.0);
     glTexCoord2d(0.0, 0.0);
     glVertex3d(loc.sx, loc.sy + loc.ylen, 0.0);
+    glTranslatef(loc.sx, loc.sy, 0);
+
     glEnd();
+
     glDisable(GL_TEXTURE_2D);
 }
 void PngTexture::init() {

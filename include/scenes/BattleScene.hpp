@@ -4,7 +4,7 @@ class BattleScene : Scene {
   // キーcallback用変数
     bool wp = false, ap = false, sp = false, dp = false;
 
-    double velocity = 0.08;
+    double velocity = 0.005;
     vector<Location> bullets_loc, // 自機の弾の位置
         bullets_loc_enemy;        // 敵の弾の位置
 

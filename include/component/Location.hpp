@@ -8,5 +8,5 @@ class Location {
     Location(double sx, double sy, double xlen, double ylen)
         : sx(sx), sy(sy), xlen(xlen), ylen(ylen) {}
     Location() {}
-    // Location(Location c){}
+    // Location(Location &c):Location(c.sx,c.sy,c.xlen,c.ylen) {}
 };
