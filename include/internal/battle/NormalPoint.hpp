@@ -12,6 +12,7 @@ using namespace std;
 class NormalPoint{
 public:
     vector<BulletPoint> bullets;
+    int id;
     int height;
     int width;
     int shootNum;

@@ -12,12 +12,14 @@ void Battle::start(int stage){
     hero.setFirstSituation(z);
     hero.changeDirection(0);
     loading(stage);
+    cout << "check :timer before" << endl;
     while(hero.nowHP > 0 && (appear.size() != 0 || enemy.size() != 0)) timer();
 }
 
 void Battle::timer(){
     vector<pair<double, double>> points;
     vector<int> large;
+    cout << "check :timer start" << endl;
     this_thread::sleep_for(chrono::milliseconds(20));
     time += 20;
     for(int i = 0; i < enemy.size(); i++){

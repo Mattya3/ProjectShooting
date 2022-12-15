@@ -25,6 +25,7 @@ void NormalPoint::setting(int id){
     shootNum = stoi(data.at(5));
     shootAngle = stod(data.at(6));
     exp = stoi(data.at(7));
+    this->id = id;
 }
 
 vector<string> NormalPoint::split(string str, char separator){//strをseparatorで分割する関数
