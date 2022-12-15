@@ -5,7 +5,8 @@ using namespace std;
 
 vector<Card> StructureData::callCardSets(void){//セットカードのリストをvectorで返す関数
     vector<int> CardSets = readCardSets();//セットしたカードIDをvectorで保持
-    vector<Card> cards;//帰り値用, カードのリスト
+    vector<Card> cards(3);//帰り値用, カードのリスト
+    vector<bool> flag(3, false);
     string text, data;//ファイル読み込み時の文字列をそのまま入れる変数
     Card nowCard;//代入用変数
     int i = 0, j = 0;//ループ処理用変数
@@ -16,17 +17,18 @@ vector<Card> StructureData::callCardSets(void){//セットカードのリスト�
     getline(files, text);//一行目のカード数を記入
     getline(files, text);//No.0のテキストの記入
     getline(files, data);//No.0のデータの記入
-    while(i < CardSets.size()){//セットカードリストを作成するループ処理
-        if(CardSets.at(i) == j){//セットカードリストに存在する
-            nowCard.putCardText(text);//テキストデータを代入
-            nowCard.putCardData(j, data);//数値データを代入
-            cards.push_back(nowCard);//カードをリストに入れる
-            i++;
-        }else{//セットカードリストに存在しない
-            getline(files, text);//各No.のテキストの記入
-            getline(files, data);//各No.のデータの記入
-            j++;
+    while(!(flag.at(0) && flag.at(1) && flag.at(2))){
+        for(int i = 0; i < CardSets.size(); i++){
+            if(CardSets.at(i) == j){//セットカードリストに存在する
+                nowCard.putCardText(text);//テキストデータを代入
+                nowCard.putCardData(j, data);//数値データを代入
+                cards.at(i) = nowCard;//カードをリストに入れる
+                flag.at(i) = true;
+            }
         }
+        getline(files, text);//各No.のテキストの記入
+        getline(files, data);//各No.のデータの記入
+        j++;
     }
     return cards;
 }
@@ -45,7 +47,6 @@ vector<int> StructureData::readCardSets(void){//セットカードのIDのリス
     for(int i = 0; i < puts.size(); i++){//セットカードに対してリストを作成するループ処理
         output.push_back(stoi(puts.at(i)));
     }
-    sort(output.begin(), output.end());//セットカードを昇順にソート
     return output;
 }
 
@@ -59,6 +60,7 @@ vector<string> StructureData::split(string str, char separator){//strをseparato
 
 void StructureData::writeCardSets(vector<int> list){//新たなセットカードをファイルに書き込む関数
     string line1;//変更しない所持カードリストの保持用
+    
     string line2 = to_string(list.at(0)) + " " + to_string(list.at(1)) + " " + to_string(list.at(2));//変更後のセットカードリスト
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(file1.fail()){
