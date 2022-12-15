@@ -9,12 +9,12 @@
 
 void PatternPoint::putPattern(string line){
     vector<string> data = split(line, ' ');
-    changeHpLine = stod(data.at(0));
-    hasPattern = stoi(data.at(1));
+    changeHpLine = stod(data.at(1));
+    hasPattern = stoi(data.at(2));
     for(int i = 1; i <= hasPattern; i++){
-        moveId.push_back(stoi(data.at(3 * i - 1)));
-        shootId.push_back(stoi(data.at(3 * i)));
-        loopNum.push_back(stoi(data.at(3 * i + 1)));
+        moveId.push_back(stoi(data.at(3 * i)));
+        shootId.push_back(stoi(data.at(3 * i + 1)));
+        loopNum.push_back(stoi(data.at(3 * i + 2)));
     }
 }
 

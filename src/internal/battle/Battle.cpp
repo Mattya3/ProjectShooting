@@ -35,6 +35,8 @@ void Battle::timer(){
         encount();
     }while(appear.at(0).emergeTime == 0);
     cout << endl;//不要
+    viewer.putHero(hero);
+    viewer.putEnemy(enemy);
 }
 
 void Battle::collision(){
