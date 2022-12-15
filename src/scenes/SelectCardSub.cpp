@@ -2,7 +2,7 @@
 #include <component/Button_anyTimes.hpp>
 #include <component/Image.hpp>
 #include <component/NextSceneButton.hpp>
-#include <scenes/ChangeStructureView.hpp>
+#include <scenes/SelectCards_Scene.hpp>
 #include <scenes/ResolverCallbackFunc.hpp>
 #include <scenes/SelectCardSub.hpp>
 
