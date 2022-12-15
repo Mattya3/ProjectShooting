@@ -7,13 +7,19 @@ using namespace std;
 
 class ChangeStructure{
 private:
-    vector<Card> list;
-    vector<Card> hasCards;
+    vector<Card> hasAllCards;
+    vector<Card> set3Cards;
 
 public:
     ChangeStructure(void);
 
-    void ChangeStructureCard(int point, Card data);
+    vector<Card> callHasAllCards();
 
-    void legisterStructure(void);
+    vector<Card> callSet3Cards();
+
+    void ChangeStructureCard(int point, int id);
+
+    void registerNewCard(int id);
+
+    void registerStructure(void);
 };
