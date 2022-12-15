@@ -1,6 +1,6 @@
 #include <internal/battle/Battle.hpp>
 
-void Battle::start(){
+void Battle::start(int stage){
     StructureData sets;
     vector<Card> list = sets.callCardSets();
     hero.setting(0);
@@ -10,27 +10,15 @@ void Battle::start(){
     z.second = 3 * battle_height / 4;
     hero.setFirstSituation(z);
     hero.changeDirection(0);
-    
-    EnemyPoint emerge;//不要
-    emerge.setting(0);//不要
-    z.first = 200;//不要
-    z.second = 200;//不要
-    emerge.setFirstSituation(z);//不要
-    enemy.push_back(emerge);//不要
-    BulletPoint b;//不要
-    b.setSize(battle_height, battle_width);//不要
-    b.setFirstSituation(z);//不要
-    b.changeAngle(0);//不要
-    b.hormingPower = 1;//不要
-    b.searchLange = 500;//不要
-    enemy.at(0).bullets.push_back(b);//不要
-    while(hero.nowHP > 0) timer();
+    loading(stage);
+    while(hero.nowHP > 0 && (appear.size() != 0 || enemy.size() != 0)) timer();
 }
 
 void Battle::timer(){
     vector<pair<double, double>> points;
     vector<int> large;
     this_thread::sleep_for(chrono::milliseconds(20));
+    time += 20;
     for(int i = 0; i < enemy.size(); i++){
         points.push_back(hero.getPosition());
         large.push_back(hero.getSize());
@@ -42,7 +30,9 @@ void Battle::timer(){
     }
     hero.timer(points, large);
     collision();
-    encount();
+    do{
+        encount();
+    }while(appear.at(0).emergeTime == 0);
     cout << endl;//不要
 }
 
@@ -67,13 +57,31 @@ void Battle::collision(){
 }
 
 void Battle::encount(){
-    if(/*敵が出現する条件を満たしたら*/false){
+    if((time <= appear.at(0).emergeTime && appear.at(0).emergeTime != -1) || (enemy.size() == 0 && appear.at(0).emergeTime == -1)){
         EnemyPoint emerge;
-        emerge.setting(0);//引数は条件により変更
-        pair<double, double> z;//ここに出現位置を代入する処理を加えたい
-        z.first = 200;//不要
-        z.second = 200;//不要
-        emerge.setFirstSituation(z);
+        emerge.setting(appear.at(0).enemyId);
+        emerge.setFirstSituation(appear.at(0).emergePosition);
+        emerge.setPattern(appear.at(0).moving);
         enemy.push_back(emerge);
+        appear.erase(appear.begin());
+        time = 0;
+    }
+}
+
+void Battle::loading(int stage){
+    EmergePoint token;
+    string line;
+    int pattern;
+    ifstream files((current_path() / filesystem::path("data/StageData" + to_string(stage))).c_str());//ファイル読み込み
+    if(files.fail()){
+        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+    }
+    while(getline(files, line)){
+        pattern = token.setFirst(line);
+        for(int i = 0; i < pattern; i++){
+            getline(files, line);
+            token.putPattern(line);
+        }
+        appear.push_back(token);
     }
 }

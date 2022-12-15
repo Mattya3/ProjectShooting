@@ -1,15 +1,18 @@
 #include <internal/battle/EmergePoint.hpp>
 
-void EmergePoint::setFirst(string line){
-
+int EmergePoint::setFirst(string line){
+    vector<string> data = split(line, ' ');
+    emergeTime = stoi(data.at(0));
+    enemyId = stoi(data.at(1));
+    emergePosition.first = stod(data.at(3));
+    emergePosition.second = stod(data.at(4));
+    return stoi(data.at(2));//仮
 }
 
 void EmergePoint::putPattern(string line){
-    
-}
-
-void wastePattern(){
-
+    PatternPoint token;
+    token.putPattern(line);
+    moving.push_back(token);
 }
 
 vector<string> EmergePoint::split(string str, char separator){//strをseparatorで分割する関数

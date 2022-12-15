@@ -1,6 +1,7 @@
 #include <internal/battle/EnemyPoint.hpp>
 
-void EnemyPoint::getEnemyData(int id){
+void EnemyPoint::setPattern( vector<PatternPoint> move){
+    moving = move;
 }
 
 void EnemyPoint::timer(vector<pair<double, double>> points, vector<int> large){

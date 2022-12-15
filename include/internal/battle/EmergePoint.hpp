@@ -1,20 +1,19 @@
 #pragma once
 #include <bits/stdc++.h>
+#include <internal/battle/PatternPoint.hpp>
 using namespace std;
 
-class EmergePoint{//カードデータを保存する関数
+class EmergePoint{
 public:
     int emergeTime;
     int enemyId;
-    int hasPattern;
-    vector<movePoint> moving;
+    pair<double, double> emergePosition;
+    vector<PatternPoint> moving;
 
 
-    void setFirst(string line);
+    int setFirst(string line);
 
     void putPattern(string line);
-
-    void wastePattern();
 
     vector<string> split(string str, char separator);
 };
