@@ -6,6 +6,7 @@
 #include <internal/battle/HeroPoint.hpp>
 #include <internal/battle/EnemyPoint.hpp>
 #include <internal/battle/BulletPoint.hpp>
+#include <internal/battle/EmergePoint.hpp>
 using namespace std;
 
 const int battle_height = 660;
@@ -13,16 +14,19 @@ const int battle_width = 440;
 
 class Battle{
 public:
+    vector<EmergePoint> appear;
     HeroPoint hero;
     vector<EnemyPoint> enemy;
-    vector<BulletPoint> enemyBullet;
     int score = 0;
+    int time = 0;
 
-    void start();
+    void start(int stage);
 
     void timer();
 
     void collision();
 
     void encount();
+
+    void loading(int stage);
 };

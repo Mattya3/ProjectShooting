@@ -13,7 +13,5 @@ public:
 
     void putPattern(string line);
 
-    void changePattern();
-
     vector<string> split(string str, char separator);
 };

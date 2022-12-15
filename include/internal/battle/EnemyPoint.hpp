@@ -1,7 +1,10 @@
 #pragma once
 #include <bits/stdc++.h>
 #include <internal/battle/NormalPoint.hpp>
+#include <internal/battle/PatternPoint.hpp>
+#include <internal/battle/EmergePoint.hpp>
 #include <internal/card/Card.hpp>
+
 
 using namespace std;
 
@@ -9,12 +12,11 @@ using namespace std;
 
 class EnemyPoint : public NormalPoint{
 public:
-    int times = 0;
-    int nowStatus;
-    int movePattern = 1;
-    int shootPattern = 1;
+    int times = 0;//必要?
+    int nowMovePattern = 0;
+    vector<PatternPoint> moving;
 
-    void getEnemyData(int id);
+    void setPattern(vector<PatternPoint> move);
 
     void timer(vector<pair<double, double>> points, vector<int> large);
 
