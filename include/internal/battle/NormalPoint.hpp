@@ -2,9 +2,7 @@
 #include <bits/stdc++.h>
 #include <internal/battle/BulletPoint.hpp>
 #include <filesystem>
-
 using std::filesystem::current_path;
-
 using namespace std;
 
 #define M_PI 3.14159265358979323846264338327950288
@@ -53,7 +51,9 @@ public:
 
     vector<int> collision(vector<BulletPoint> bullets);
 
-    void lostBullet(int Id);
+    void setBullet(int bulletId);
+
+    void lostBullet(int num);
 
     void notReflect();
 };

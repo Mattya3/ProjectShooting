@@ -1,9 +1,4 @@
-
-#include <bits/stdc++.h>
 #include <internal/card/CardHas.hpp>
-#include <filesystem>
-using std::filesystem::current_path;
-using namespace std;
 
 vector<Card> CardHas::callCardLineup(void){//所持カードのリストをvectorで返す関数
     vector<bool> hasFlag = readHasCard();//所持しているかどうかをvectorで保持

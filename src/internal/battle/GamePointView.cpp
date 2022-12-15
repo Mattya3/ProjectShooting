@@ -34,7 +34,7 @@ void GamePointView::putEnemy(vector<EnemyPoint> e){
     GamePointMono enemy;
     enemies.clear();
     enemyBullets.clear();
-    for(int i = 0; e.size(); i++){
+    for(int i = 0; i < e.size(); i++){
         enemy.position = e.at(i).position;
         enemy.size = e.at(i).size;
         enemy.keyNum = e.at(i).id;
