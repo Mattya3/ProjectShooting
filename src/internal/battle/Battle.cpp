@@ -76,14 +76,12 @@ void Battle::loading(int stage){
     if(files.fail()){
         cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
     }
-    getline(files, line);
-    while(line != "EOS"){
+    while(getline(files, line)){
         pattern = token.setFirst(line);
         for(int i = 0; i < pattern; i++){
             getline(files, line);
             token.putPattern(line);
         }
         appear.push_back(token);
-        getline(files, line);
     }
 }
