@@ -34,7 +34,7 @@ link_libraries(glfw)
 link_libraries(png)
 
 add_subdirectory(src/component)
-add_subdirectory(src/scene)
+add_subdirectory(src/scenes)
 add_subdirectory(src)
 
 add_executable(main main.cpp)
