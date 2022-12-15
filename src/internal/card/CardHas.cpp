@@ -13,7 +13,7 @@ vector<Card> CardHas::callCardLineup(void){//所持カードのリストをvecto
     Card nowCard;//代入用変数
     ifstream files((current_path() / filesystem::path("data/CardData")).c_str());//ファイル読み込み
     if(files.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open CardData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(files, line);
     for(int i = 0; i < hasFlag.size(); i++){//各カードに対してリストに入れるかのループ処理
@@ -37,7 +37,7 @@ vector<bool> CardHas::readHasCard(void){//カードを所持しているかの�
     string line;//ファイル読み込み時の文字列をそのまま入れる変数
     ifstream files((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(files.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(files, line);
     puts = split(line, ' ');//putsに分割後を入れる
@@ -53,7 +53,7 @@ void CardHas::writeHasCard(int ID){
     string line2;//変更しないセットカードの保持用
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(file1.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(file1, line1);
     getline(file1, line2);
@@ -65,7 +65,7 @@ void CardHas::writeHasCard(int ID){
     }
     ofstream file2((current_path() / filesystem::path("data/SaveData")).c_str(), ios::out);//ファイル読み込み
     if(file2.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     file2 << line1 << endl;
     file2 << line2 << endl;

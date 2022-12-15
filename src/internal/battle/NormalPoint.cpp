@@ -6,7 +6,7 @@ void NormalPoint::setting(int id){
     string line;
     ifstream files((current_path() / filesystem::path("data/PointData")).c_str());
     if(files.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open PointData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(files, line);
     data = split(line, ' ');

@@ -73,9 +73,9 @@ void Battle::loading(int stage){
     EmergePoint token;
     string line;
     int pattern;
-    ifstream files((current_path() / filesystem::path("data/StageData" + to_string(stage))).c_str());//ファイル読み込み
+    ifstream files((current_path() / filesystem::path("data/StageData/" + to_string(stage))).c_str());//ファイル読み込み
     if(files.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open StageData/" << stage << endl;//ファイル読み込みエラー発生時の処理
     }
     while(getline(files, line)){
         pattern = token.setFirst(line);
