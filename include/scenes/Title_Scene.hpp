@@ -2,6 +2,7 @@
 #include <scenes/Scene.hpp>
 
 class Title_scene : public Scene {
+    using Scene::Scene;
   private:
   public:
     void show_component() {

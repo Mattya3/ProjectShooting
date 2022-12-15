@@ -8,9 +8,9 @@
  **/
 class Scene {
   private:
-    bool mouse_down = false;
 
   protected:
+    bool mouse_down = false;
     vector<ButtonBase *> btns;
     NextSceneButton *btn_next_scene;// スマートポインタに！
     virtual void render() {}
@@ -26,4 +26,5 @@ class Scene {
             e->button_view();
         }
     }
+    Scene(){}
 };

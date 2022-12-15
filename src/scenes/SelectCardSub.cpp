@@ -5,6 +5,7 @@
 #include <scenes/ChangeStructureView.hpp>
 #include <scenes/ResolverCallbackFunc.hpp>
 #include <scenes/SelectCardSub.hpp>
+
 using pdd = pair<double, double>;
 using square = pair<pdd, pdd>;
 inline void draw_grid(square rect, int nx, int ny, double x_interval,
@@ -30,23 +31,7 @@ inline void draw_grid(square rect, int nx, int ny, double x_interval,
     }
 }
 
-void show_png(double sx, double sy, double xlen, double ylen) {
-    glColor3d(1.0, 1.0, 1.0);
-    glBindTexture(GL_TEXTURE_2D, 3);
-    glEnable(GL_TEXTURE_2D);
-    glNormal3d(0.0, 0.0, 1.0);
-    glBegin(GL_QUADS);
-    glTexCoord2d(0.0, 1.0);
-    glVertex3d(sx, sy, 0.0);
-    glTexCoord2d(1.0, 1.0);
-    glVertex3d(sx + xlen, sy, 0.0);
-    glTexCoord2d(1.0, 0.0);
-    glVertex3d(sx + xlen, sy + ylen, 0.0);
-    glTexCoord2d(0.0, 0.0);
-    glVertex3d(sx, sy + ylen, 0.0);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-}
+
 SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
 
     NextSceneButton *bt = new NextSceneButton(-0.9, -0.9, 0.5, 0.5);
@@ -57,19 +42,20 @@ SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
                          "Card Select", NULL, NULL);
     glfwMakeContextCurrent(sub_window);
 
-    PngTexture back_arrow("test_img/back.png", Location(-0.9, -0.9, 0.49, 0.49));
+    PngTexture back_arrow("test_img/back.png",
+                          Location(-0.9, -0.9, 0.49, 0.49));
     NextSceneButton *ii = new NextSceneButton(0, 0, 0.7, 0.7);
     ii->set_color(1.0, 0.0, 0.0);
-    register_callback_resolver::init(*this, sub_window);
+
     square sq = {{-0.8, -0.4}, {0.8, 1}};
+    register_callback_resolver::init(*this, sub_window);
     while(!glfwWindowShouldClose(sub_window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
-
         show_component();
         back_arrow.view();
-        draw_grid(sq, 3, 4, 0.05, 0.05);
-
+        // draw_grid(sq, 3, 4, 0.05, 0.05);
+        gb.view();
         glfwSwapBuffers(sub_window);
         glfwPollEvents();
         if(bt->next_scene) {

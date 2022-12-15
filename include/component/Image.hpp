@@ -16,8 +16,10 @@ class PngTexture {
     ubyte_t *rawData();
 
   public:
+
     Location loc;
     PngTexture();
+    PngTexture(const std::string &fname);
     PngTexture(const std::string &fname, Location loc);
     ~PngTexture();
     void view();

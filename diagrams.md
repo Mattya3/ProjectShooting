@@ -12,6 +12,16 @@ graph LR;
 所持カードはウィンドウ
 それ以外は上書き
 
+## ライブラリ関係
+
+
+```mermaid
+graph LR;
+    main-->scene
+    scene-->component  
+    scene-->GameEngine
+    GameEngine-->internal
+```
 ## クラス図
 ![image](image.jpg)
 ```mermaid

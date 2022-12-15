@@ -67,7 +67,6 @@ ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
                 cout << id << endl;
                 card_struct_id = id;
                 SelectCardSub scs(card_struct_id, window1);
-
                 register_callback_resolver::init(*this, window1);
                 glfwMakeContextCurrent(window1);
             }
