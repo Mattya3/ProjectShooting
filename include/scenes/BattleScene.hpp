@@ -1,7 +1,7 @@
 #include <GameEngine/MyFighter.hpp>
 #include <scenes/Scene.hpp>
 class BattleScene : Scene {
-    using Scene::Scene();
+    using Scene::Scene;
 
   private:
     // キーcallback用変数

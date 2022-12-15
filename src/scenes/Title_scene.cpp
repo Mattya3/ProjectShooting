@@ -4,7 +4,7 @@
 #include <component/Image.hpp>
 #include <component/NextSceneButton.hpp>
 #include <scenes/BattleScene.hpp>
-#include <scenes/ChangeStructureView.hpp>
+#include <scenes/SelectCards_Scene.hpp>
 #include <scenes/ResolverCallbackFunc.hpp>
 
 static void render2() {
@@ -51,7 +51,7 @@ Title_scene::Title_scene(GLFWwindow *window1) {
         }
     }
     if(b->next_scene) {
-        ChangeStructureView csv(window1);
+        SelectCards_Scene csv(window1);
     } else if(btn_go_battle->next_scene) {
         BattleScene bs(window1);
     }

@@ -1,7 +1,7 @@
 #pragma once
 #include <scenes/Scene.hpp>
 
-class ChangeStructureView : public Scene {
+class SelectCards_Scene : public Scene {
     using Scene::Scene;
 
   private:
@@ -10,6 +10,6 @@ class ChangeStructureView : public Scene {
   public:
     void show_component();
     void render();
-    ChangeStructureView(GLFWwindow *window1);
-    ~ChangeStructureView();
+    SelectCards_Scene(GLFWwindow *window1);
+    ~SelectCards_Scene();
 };

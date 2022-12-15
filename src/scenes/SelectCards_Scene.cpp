@@ -1,5 +1,4 @@
-#include <scenes/ChangeStructureView.hpp>
-
+#include <scenes/SelectCards_Scene.hpp>
 #include <component/Button_anyTimes.hpp>
 #include <component/NextSceneButton.hpp>
 #include <scenes/ResolverCallbackFunc.hpp>
@@ -31,7 +30,7 @@ void f() {
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
+SelectCards_Scene::SelectCards_Scene(GLFWwindow *window1) {
 
     register_callback_resolver::init(*this, window1);
 
@@ -77,7 +76,7 @@ ChangeStructureView::ChangeStructureView(GLFWwindow *window1) {
     }
 }
 
-void ChangeStructureView::render() {
+void SelectCards_Scene::render() {
     // 初期化
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -86,10 +85,10 @@ void ChangeStructureView::render() {
     f();
 }
 
-void ChangeStructureView::show_component() {
+void SelectCards_Scene::show_component() {
     for(auto &&e : btns) {
         e->button_view();
     }
 }
 
-ChangeStructureView::~ChangeStructureView() {}
+SelectCards_Scene::~SelectCards_Scene() {}
