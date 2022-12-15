@@ -10,3 +10,4 @@ a.exe
 *.out
 com.sh
 Makefile
+test/

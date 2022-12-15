@@ -26,4 +26,5 @@ class Scene {
             e->button_view();
         }
     }
+    Scene(){}
 };
