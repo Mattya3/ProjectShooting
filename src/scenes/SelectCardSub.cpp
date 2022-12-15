@@ -2,35 +2,14 @@
 #include <component/Button_anyTimes.hpp>
 #include <component/Image.hpp>
 #include <component/NextSceneButton.hpp>
-#include <internal/card/Card.hpp>
+// #include <internal/card/Card.hpp>
+// #include <internal/card/StructureData.hpp>
+#include <internal/card/ChangeStructure.hpp>
+
+
 #include <scenes/ResolverCallbackFunc.hpp>
 #include <scenes/SelectCardSub.hpp>
 #include <scenes/SelectCards_Scene.hpp>
-
-using pdd = pair<double, double>;
-using square = pair<pdd, pdd>;
-inline void draw_grid(square rect, int nx, int ny, double x_interval,
-                      double y_interval) {
-    double sx = rect.first.first + x_interval,
-           sy = rect.first.second + y_interval;
-    double xlen =
-        ((rect.second.first - rect.first.first) - (nx + 1) * x_interval) / nx;
-    double ylen =
-        ((rect.second.second - rect.first.second) - (ny + 1) * y_interval) / ny;
-    for(int i = 0; i < ny; i++) {
-        for(int j = 0; j < nx; j++) {
-            glBegin(GL_LINE_LOOP);
-            glVertex2d(sx, sy);
-            glVertex2d(sx + xlen, sy);
-            glVertex2d(sx + xlen, sy + ylen);
-            glVertex2d(sx, sy + ylen);
-            glEnd();
-            sx += xlen + x_interval;
-        }
-        sx = rect.first.first + x_interval;
-        sy += ylen + y_interval;
-    }
-}
 
 SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
 
@@ -47,13 +26,7 @@ SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
     NextSceneButton *ii = new NextSceneButton(0, 0, 0.7, 0.7);
     ii->set_color(1.0, 0.0, 0.0);
 
-    square sq = {{-0.8, -0.4}, {0.8, 1}};
     register_callback_resolver::init(*this, sub_window);
-    auto cards_inf = cardhas.callCardLineup();
-
-    for(auto &&e : cards_inf) {
-        cout << e.id << "," << e.cardName << endl;
-    }
     
 
     while(!glfwWindowShouldClose(sub_window)) {
@@ -61,7 +34,6 @@ SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
 
         show_component();
         back_arrow.view();
-        // draw_grid(sq, 3, 4, 0.05, 0.05);
         gb.view();
 
         glfwSwapBuffers(sub_window);

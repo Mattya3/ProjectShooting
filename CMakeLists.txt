@@ -24,6 +24,7 @@ if(APPLE)
     link_directories(/opt/homebrew/Cellar/libpng/1.6.39/lib)
     link_directories(/opt/homebrew/Cellar/glfw/3.3.8/lib)
 endif()
+
 if(WIN32)
     #link_directories()
     include_directories(C:/Program Files/mingw64/include)
@@ -49,12 +50,12 @@ add_executable(main main.cpp)
 
 if(APPLE)
     target_link_libraries(main "-framework OpenGL" glfw)
-    target_link_libraries(main "-framework GLUT")
 endif()
 
 if(WIN32)
     target_link_libraries(main glfw)
-    #message(STATUS "!!! this is windos")
+    target_link_libraries(main opengl32)
+    target_link_libraries(main gdi32)
 endif()
 
 target_link_libraries(main Setting)

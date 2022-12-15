@@ -10,7 +10,7 @@ class SelectCardSub : Scene {
     bool *tm;
     GridButtons gb =
         GridButtons(Location(-0.9, -0.4, 1.8, 1.3), 3, 4, 0.05, 0.05);
-    CardHas cardhas;
+    // CardHas cardhas;
   public:
     void mouse_button_callback(GLFWwindow *pwin, int button, int action,
                                int mods) override {
