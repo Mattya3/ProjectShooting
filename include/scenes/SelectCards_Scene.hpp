@@ -3,7 +3,7 @@
 
 class SelectCards_Scene : public Scene {
     using Scene::Scene;
-
+    
   private:
     bool is_no_subWindow = true;
 

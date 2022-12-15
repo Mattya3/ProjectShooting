@@ -2,9 +2,10 @@
 #include <component/Button_anyTimes.hpp>
 #include <component/Image.hpp>
 #include <component/NextSceneButton.hpp>
-#include <scenes/SelectCards_Scene.hpp>
+#include <internal/card/Card.hpp>
 #include <scenes/ResolverCallbackFunc.hpp>
 #include <scenes/SelectCardSub.hpp>
+#include <scenes/SelectCards_Scene.hpp>
 
 using pdd = pair<double, double>;
 using square = pair<pdd, pdd>;
@@ -31,7 +32,6 @@ inline void draw_grid(square rect, int nx, int ny, double x_interval,
     }
 }
 
-
 SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
 
     NextSceneButton *bt = new NextSceneButton(-0.9, -0.9, 0.5, 0.5);
@@ -49,6 +49,13 @@ SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
 
     square sq = {{-0.8, -0.4}, {0.8, 1}};
     register_callback_resolver::init(*this, sub_window);
+    auto cards_inf = cardhas.callCardLineup();
+
+    for(auto &&e : cards_inf) {
+        cout << e.id << "," << e.cardName << endl;
+    }
+    
+
     while(!glfwWindowShouldClose(sub_window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -56,6 +63,7 @@ SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
         back_arrow.view();
         // draw_grid(sq, 3, 4, 0.05, 0.05);
         gb.view();
+
         glfwSwapBuffers(sub_window);
         glfwPollEvents();
         if(bt->next_scene) {

@@ -5,7 +5,7 @@ project(shooting
     LANGUAGES CXX
 )
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # guard against in-source builds
@@ -42,6 +42,8 @@ link_libraries(png)
 add_subdirectory(src/component)
 add_subdirectory(src/scenes)
 add_subdirectory(src)
+add_subdirectory(src/internal/battle)
+add_subdirectory(src/internal/card)
 
 add_executable(main main.cpp)
 
@@ -58,4 +60,5 @@ endif()
 target_link_libraries(main Setting)
 target_link_libraries(main component)
 target_link_libraries(main scene)
+
 

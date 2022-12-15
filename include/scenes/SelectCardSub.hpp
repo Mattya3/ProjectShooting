@@ -1,13 +1,16 @@
 #include <component/GridButtons.hpp>
 #include <scenes/Scene.hpp>
 
+#include <internal/card/CardHas.hpp>
+#include <internal/card/ChangeStructure.hpp>
+
 class SelectCardSub : Scene {
   private:
     /* data */
     bool *tm;
     GridButtons gb =
         GridButtons(Location(-0.9, -0.4, 1.8, 1.3), 3, 4, 0.05, 0.05);
-
+    CardHas cardhas;
   public:
     void mouse_button_callback(GLFWwindow *pwin, int button, int action,
                                int mods) override {

@@ -1,4 +1,5 @@
 #include <internal/battle/Battle.hpp>
+#include <filesystem>
 
 void Battle::start(int stage){
     StructureData sets;
