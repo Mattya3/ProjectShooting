@@ -12,6 +12,7 @@ void NormalPoint::setting(int id){
     data = split(line, ' ');
     height = stoi(data.at(0));
     width = stoi(data.at(1));
+    bullet.setSize(height, width);
     for(int i = 0; i < id; i++) getline(files, line);
     getline(files, line);
     data = split(line, ' ');

@@ -11,30 +11,35 @@ void EnemyPoint::timer(vector<pair<double, double>> points, vector<int> large){
     if(moving.at(0).changeHpLine > nowHP / maxHP){
         moving.erase(moving.begin());
         prepareMoving = true;
+        directionFlag = true;
         movingUseStatus = 0;
         setBullet(moving.at(0).shootId.at(0));
     }
-    if(moving.at(0).loopNum.at(moving.at(0).nowPattern) <= moving.at(0).nowLoop){
+    if(moving.at(0).moveId.size() != 0 && moving.at(0).loopNum.at(moving.at(0).nowPattern) <= moving.at(0).nowLoop){
         moving.at(0).changeLoop();
         prepareMoving = true;
+        directionFlag = true;
         movingUseStatus = 0;
         setBullet(moving.at(0).shootId.at(moving.at(0).nowPattern));
     }
     makeMove();
     move();
-    if(shootFlag) shoot();
+    if(shootFlag) shoot(points.at(0));
     for(int i = 0; i < bullets.size(); i++){
-        bullets.at(i).timer(points,large);
+        bullets.at(i).timer(points, large);
     } 
 }
 
-void EnemyPoint::shoot(){
+void EnemyPoint::shoot(pair<double, double> points){
+    double random = moving.at(0).random.at(moving.at(0).nowLoop) * (rand() % 100);
+    if(rand() % 2 == 1) random *= -1;
     int count = shootNum;
     double changeAngle = shootAngle * M_PI / 180;
     double afterAngle;
     pair<double, double> shooter = position;
-    bullet.setSize(height, width);
     bullet.setFirstSituation(shooter);
+    if(moving.at(0).angles.at(moving.at(0).nowLoop) >= 0) bullet.changeAngle(moving.at(0).angles.at(moving.at(0).nowLoop) + random);
+    else bullet.changeAngle(goHero(points) + random);
     if(shootNum % 2 == 1){
         bullet.changeAngle(angle);
         bullets.push_back(bullet);
@@ -68,6 +73,7 @@ void EnemyPoint::shoot(){
             count--;
         }
     }
+    shootFlag = false;
 }
 
 bool EnemyPoint::lose(){
@@ -77,7 +83,50 @@ bool EnemyPoint::lose(){
 
 
 void EnemyPoint::makeMove(){
+    switch (moving.at(0).nowPattern){
+        case 0://静止(弾を300ms毎に発射)
+            velocity = 0;
+            if(times >= 300){
+                times = 0;
+                shootFlag = true;
+            }
+            break;
+        case 1://横移動(弾を300ms毎に発射)
+            if(prepareMoving){
+                nowVelocity = 0.5 * velocity;
+                prepareMoving = goTo(-1, height / 4, directionFlag);
+                directionFlag = false;
+            }else{
+                nowVelocity = velocity;
+                if(moving.at(0).nowLoop % 2 == 0){
+                    if(!goTo(size, -1, directionFlag)){
+                        moving.at(0).nowLoop++;
+                        directionFlag = false;
+                    }else{
+                        directionFlag = true;
+                    }
+                }else{
+                    if(!goTo(width - size, -1, directionFlag)){
+                        moving.at(0).nowLoop++;
+                        directionFlag = false;
+                    }else{
+                        directionFlag = true;
+                    }
+                }
+                if(times >= 300){
+                    times = 0;
+                    shootFlag = true;
+                }
+            }
+            break;
+    
+        default:
+            break;
+    }
+}
 
+void EnemyPoint::changeDirection(double per){
+    direction = per;
 }
 
 void EnemyPoint::changeBullet(){
@@ -88,4 +137,50 @@ void EnemyPoint::changeBullet(){
     }
     for(int i = 0; i < moving.at(0).shootId.at(moving.at(0).nowLoop); i++) getline(files, line);
 
+}
+
+bool EnemyPoint::goTo(int x, int y, bool flag){
+    if(x < 0){
+        if(position.second == y) return false;
+        if(position.second < y){
+            changeDirection(3 * M_PI / 2);
+            if(y - position.second < nowVelocity) nowVelocity = y - position.second;
+        }
+        else{
+            changeDirection(M_PI / 2);
+            if(position.second - y < nowVelocity) nowVelocity = position.second - y;
+        } 
+    }else if(y < 0){
+        if(position.first == x) return false;
+        if(position.first < x){
+            changeDirection(0);
+            if(x - position.first < nowVelocity) nowVelocity = x - position.first;
+        }
+        else{
+            changeDirection(M_PI);
+            if(position.first - x < nowVelocity) nowVelocity = position.first - x;
+        } 
+    }else{
+        if(position.first == x && position.second == y) return false;
+        if(flag){
+            double dx = x - position.first;
+            double dy = y - position.second;
+            double r = sqrt(dx * dx + dy * dy);
+            if(r < nowVelocity) nowVelocity = r;
+            dx /= r;
+            double directions = acos(dx);
+            if(dy > 0) directions = 2 * M_PI - directions;
+            changeDirection(directions);
+        }
+    }
+    return true;
+}
+
+double EnemyPoint::goHero(pair<double, double> points){
+    double dx = points.first - position.first;
+    double dy = points.second - position.second;
+    dx /= sqrt(dx * dx + dy * dy);
+    double per = acos(dx);
+    if(dy > 0) per = 2 * M_PI - per;
+    return per;
 }

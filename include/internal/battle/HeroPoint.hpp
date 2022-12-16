@@ -9,7 +9,7 @@ using namespace std;
 
 class HeroPoint : public NormalPoint{
 public:
-    bool shootFlag = true;
+    bool shootFlag = false;
     vector<int> level;
     vector<Card> list;
     bool moveFlag = false;

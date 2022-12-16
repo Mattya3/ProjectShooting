@@ -6,7 +6,7 @@ int EmergePoint::setFirst(string line){
     enemyId = stoi(data.at(1));
     emergePosition.first = stod(data.at(3));
     emergePosition.second = stod(data.at(4));
-    return stoi(data.at(2));//仮
+    return stoi(data.at(2));
 }
 
 void EmergePoint::putPattern(string line){
