@@ -45,6 +45,7 @@ add_subdirectory(src/scenes)
 add_subdirectory(src)
 add_subdirectory(src/internal/battle)
 add_subdirectory(src/internal/card)
+add_subdirectory(src/GameEngine)
 
 add_executable(main main.cpp)
 
@@ -57,7 +58,6 @@ if(WIN32)
     target_link_libraries(main opengl32)
     target_link_libraries(main gdi32)
 endif()
-
 target_link_libraries(main Setting)
 target_link_libraries(main component)
 target_link_libraries(main scene)

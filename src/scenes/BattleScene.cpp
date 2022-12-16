@@ -1,61 +1,51 @@
-#include <GameEngine/Game.hpp>
 #include <component/Button_anyTimes.hpp>
 #include <component/Image.hpp>
 #include <component/NextSceneButton.hpp>
 #include <scenes/BattleScene.hpp>
 #include <scenes/ResolverCallbackFunc.hpp>
 #include <scenes/Title_Scene.hpp>
+void show_sphere(double x, double y, char c) {
+    glBegin(GL_POLYGON);
+    if(c == 'R') {
+        glColor3d(1.0, 0.0, 0.0);
+    } else if(c == 'G') {
+        glColor3d(0.0, 1.0, 0.0);
+    } else if(c == 'B') {
+        glColor3d(0.0, 0.0, 1.0);
+    }
 
+    glVertex2d(x, y);
+    glVertex2d(x + 0.01, y);
+    glVertex2d(x + 0.01, y + 0.01);
+    glVertex2d(x, y + 0.01);
+    glEnd();
+}
 BattleScene::BattleScene(GLFWwindow *window1) {
     register_callback_resolver::init(*this, window1); // コールバック関数を登録
-    bullet = make_unique<PngTexture>("battle/bulletMe.png",
-                                     Location(-0.8, -0.8, 0.05, 0.05));
-
-    btn_go_next_scene = make_unique<NextSceneButton>(
-        Location(-0.6, -0.4, 1.2, 0.3), "test_img/go_title.png");
-    bullet_enemy = make_unique<PngTexture>("battle/bulletEnemy.png",
-                                           Location(-0.8, -0.8, 0.005, 0.005));
+    btn_go_next_scene = new NextSceneButton(Location(-0.6, -0.4, 1.2, 0.3),
+                                            "test_img/go_title.png");
     auto x = make_unique<PngTexture>("battle/bulletMe.png",
                                      Location(-0.8, -0.8, 0.05, 0.05));
     enemies.emplace_back(make_unique<PngTexture>(
         "battle/bulletMe.png", Location(-0.8, -0.8, 0.05, 0.05)));
-    Game game;
-    Location g(10, 675, game.WindowWidth, game.WindowHeight);
+    Location g(game.SX, game.SY, game.WindowWidth, game.WindowHeight);
     Button_anyTimes *game_space = new Button_anyTimes(g);
     game_space->set_color(0, 0, 1);
-
+    int cnt_of_attacked = 0;
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
         show_component();
         btn_go_next_scene->button_view();
-        bullet->view();
         game_space->button_filled_view();
 
-        for(auto &&l : bullets_loc) {
-            bullet->view_clone(l);
-            l.sy += 0.0018;
-        }
-        for(auto &&e : bullets_loc_enemy) {
-            bullet_enemy->view_clone(e);
-            e.sy -= 0.002;
-        }
+        game.bullets.view();
         double vx, vy;
         vx = vy = 0;
-        if(wp) {
-            vy += velocity;
-        }
-        if(sp) {
-            vy -= velocity;
-        }
-        if(ap) {
-            vx -= velocity;
-        }
-        if(dp) {
-            vx += velocity;
-        }
-        my_fighter.change_loc(vx, vy);
-        game.limit_my_fighter_loc(my_fighter.get_loc());
-        my_fighter.view();
+        game.operate_my_fighter(wp, ap, sp, dp);
+        game.view();
+        game.reflect();
+        game.bullets.proceed();
+        game.limit_my_fighter_loc();
 
         glfwSwapBuffers(window1);
         glfwPollEvents();
@@ -64,6 +54,7 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         }
     }
     if(btn_go_next_scene->next_scene) {
+        delete btn_go_next_scene;
         Title_scene ts(window1);
     }
 }
@@ -85,22 +76,21 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     control_key_flag(GLFW_KEY_D, dp);
 
     if(key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
-        bullets_loc.push_back(my_fighter.get_loc().clone());
+        game.bullets.push(game.my_fighter.get_pos().get_cxy());
     }
     if(key == GLFW_KEY_E && action == GLFW_PRESS) {
-        auto tm = my_fighter.get_loc().clone();
-        tm.sy += 0.7;
-        tm.xlen = 0.1;
-        tm.ylen = 0.1;
-        bullets_loc_enemy.push_back(tm);
+        // auto tm = my_fighter.get_loc().clone();
+        // tm.sy += 0.7;
+        // tm.xlen = 0.1;
+        // tm.ylen = 0.1;
+        // bullets_loc_enemy.push_back(tm);
     }
     if(key == GLFW_KEY_R && action == GLFW_PRESS) {
-        // my_fighter->rotate += 10;
-        my_fighter.change_rotate();
+        game.rotate_my_fighter();
     }
-    if(key == GLFW_KEY_V && action == GLFW_PRESS) {
-        velocity += 0.001;
-    }
+    if(key == GLFW_KEY_V && action == GLFW_PRESS) {}
 }
 // void BattleScene::render(){}
-BattleScene::~BattleScene() {}
+BattleScene::~BattleScene() {
+    // delete btn_go_next_scene;
+}

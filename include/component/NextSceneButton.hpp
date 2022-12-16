@@ -10,4 +10,5 @@ class NextSceneButton : public ButtonBase {
         btn_enable = true;
         next_scene = true;
     }
+    ~NextSceneButton(){}
  };

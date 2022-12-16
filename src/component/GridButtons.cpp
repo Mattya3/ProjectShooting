@@ -25,10 +25,21 @@ GridButtons::GridButtons(Location draw_domain, int number_xbtn, int number_ybtn,
     }
 }
 
-void GridButtons:: view() {
+void GridButtons::view() {
     for(int i = 0; i < yn; i++) {
         for(int j = 0; j < xn; j++) {
-            if(selected_y == i && selected_x == j) {
+            bool has = false;
+            for(auto &&e : valids) {
+                if(e == card_id_of_index(i, j)) {
+                    has = true;
+                    break;
+                }
+            }
+            vector<double> col = {0.0, 1.0, 0.0};
+            if(!has) {
+                buttons[i][j]->set_color(col);
+                buttons[i][j]->button_view();
+            } else if(selected_y == i && selected_x == j) {
                 buttons[i][j]->button_filled_view();
             } else {
                 buttons[i][j]->button_view();
@@ -37,14 +48,14 @@ void GridButtons:: view() {
     }
 }
 void GridButtons::btns_valid(double x, double y) {
-        for(int i = 0; i < yn; i++) {
-            for(int j = 0; j < xn; j++) {
-                if(buttons[i][j]->valid_push_location(x, y)) {
-                    buttons[i][j]->action_when_pushed();
-                    selected_x = j;
-                    selected_y = i;
-                }
+    for(int i = 0; i < yn; i++) {
+        for(int j = 0; j < xn; j++) {
+            if(buttons[i][j]->valid_push_location(x, y)) {
+                buttons[i][j]->action_when_pushed();
+                selected_x = j;
+                selected_y = i;
             }
         }
+    }
 }
 GridButtons::~GridButtons() {}

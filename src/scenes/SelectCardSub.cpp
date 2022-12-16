@@ -2,10 +2,10 @@
 #include <component/Button_anyTimes.hpp>
 #include <component/Image.hpp>
 #include <component/NextSceneButton.hpp>
-// #include <internal/card/Card.hpp>
-// #include <internal/card/StructureData.hpp>
-#include <internal/card/ChangeStructure.hpp>
 
+#include <internal/card/Card.hpp>
+// #include <internal/card/StructureData.hpp>
+// #include <internal/card/ChangeStructure.hpp>
 
 #include <scenes/ResolverCallbackFunc.hpp>
 #include <scenes/SelectCardSub.hpp>
@@ -27,8 +27,8 @@ SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
     ii->set_color(1.0, 0.0, 0.0);
 
     register_callback_resolver::init(*this, sub_window);
-    
-
+    ChangeStructure cs_inner;
+    gb.set_valids(cs_inner.get_having_card_id());
     while(!glfwWindowShouldClose(sub_window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -39,6 +39,7 @@ SelectCardSub::SelectCardSub(int struct_id, GLFWwindow *window) {
         glfwSwapBuffers(sub_window);
         glfwPollEvents();
         if(bt->next_scene) {
+
             break;
         }
     }

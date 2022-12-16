@@ -1,5 +1,8 @@
+#include <GameEngine/subGameObject/GroupGameObject.hpp>
+#include <GameEngine/subGameObject/MyFighter.hpp>
 #include <component/Location.hpp>
 #include <setting.hpp>
+
 /**
  * @brief
  * ゲームはウィンドウの左側で行われる
@@ -8,33 +11,47 @@
 class Game {
   private:
     int time;
+    Location game_domain;
+    CenterLocation domain;
+    double right_b, up_b, left_b, down_b;
 
   public:
-    const int WindowWidth = 700, WindowHeight = 650;
-    const int SX = 10, SY = 675; // 左上中心座標
-    Location game_domain;
-    void limit_my_fighter_loc(Location &loc) {
-        double cx = loc.sx - loc.xlen / 2;
-        double cy = loc.sy - loc.ylen / 2;
-        if(cx < game_domain.sx) {
-            loc.sx = game_domain.sx+loc.xlen/2;
-        }
-        if(cx > game_domain.sx + game_domain.xlen) {
-            loc.sx = game_domain.sx + game_domain.xlen+loc.xlen/2;
-        }
-        if(cy < game_domain.sy) {
-            loc.sy = game_domain.sy+loc.ylen/2;
-        }
-        if(cy > game_domain.sy + game_domain.ylen) {
-            loc.sy = game_domain.sy + game_domain.ylen+loc.ylen/2;
-        }
+    GroupGameObject bullets;
+    MyFighter my_fighter = MyFighter("battle/me.png"); // 自機
+    const int WindowWidth = 440, WindowHeight = 660;
+    const int SX = 20, SY = 20; // wwsssss 左上中心座標
+
+    void reflect() { bullets.reflect(domain); }
+    void limit_my_fighter_loc() {
+        auto fixed_domain =
+            CenterLocation(domain.get_cxy(),
+                           domain.get_len() - my_fighter.get_pos().get_len());
+        auto &&p = my_fighter.pos.c;
+        p.x = min(p.x, fixed_domain.right());
+        p.y = min(p.y, fixed_domain.up());
+        p.x = max(p.x, fixed_domain.left());
+        p.y = max(p.y, fixed_domain.down());
     }
+    void operate_my_fighter(bool w, bool a, bool s, bool d) {
+        if(w) {
+            my_fighter.accelerate(0, +1);
+        }
+        if(s) {
+            my_fighter.accelerate(0, -1);
+        }
+        if(a) {
+            my_fighter.accelerate(-1, 0);
+        }
+        if(d) {
+            my_fighter.accelerate(1, 0);
+        }
+        limit_my_fighter_loc();
+    }
+    void rotate_my_fighter() {
+        my_fighter.change_rotate();
+        my_fighter.get_pos().dump();
+    }
+    void view() { my_fighter.view(); }
     Game(/* args */);
     ~Game();
 };
-
-Game::Game(/* args */) {
-    game_domain = Location(SX, SY, WindowWidth, WindowHeight);
-}
-
-Game::~Game() {}
