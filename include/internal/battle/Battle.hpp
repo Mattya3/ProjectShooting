@@ -31,4 +31,10 @@ public:
     void encount();
 
     void loading(int stage);
+
+    void inputMoving(bool flag);
+
+    void inputShooting(bool flag);
+
+    void inputAngle(double angle);
 };

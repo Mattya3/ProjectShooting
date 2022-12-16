@@ -90,3 +90,15 @@ void Battle::loading(int stage){
         appear.push_back(token);
     }
 }
+
+void Battle::inputMoving(bool flag){
+    hero.moving(flag);
+}
+
+void Battle::inputShooting(bool flag){
+    hero.shooting(flag);
+}
+
+void Battle::inputAngle(double angle){
+    hero.changeDirection(angle);
+}
