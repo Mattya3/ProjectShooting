@@ -6,7 +6,7 @@ void NormalPoint::setting(int id){
     string line;
     ifstream files((current_path() / filesystem::path("data/PointData")).c_str());
     if(files.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open PointData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(files, line);
     data = split(line, ' ');
@@ -25,6 +25,7 @@ void NormalPoint::setting(int id){
     shootNum = stoi(data.at(5));
     shootAngle = stod(data.at(6));
     exp = stoi(data.at(7));
+    this->id = id;
 }
 
 vector<string> NormalPoint::split(string str, char separator){//strをseparatorで分割する関数
@@ -96,8 +97,24 @@ vector<int> NormalPoint::collision(vector<BulletPoint> bullets){
     return bulletId;
 }
 
-void NormalPoint::lostBullet(int id){
-    bullets.erase(bullets.begin() + id);
+void NormalPoint::setBullet(int bulletId){
+    string line;
+    vector<string> data;
+    ifstream files((current_path() / filesystem::path("data/BulletData")).c_str());//ファイル読み込み
+    if(files.fail()){
+        cerr << "Error: not open BulletData" << endl;//ファイル読み込みエラー発生時の処理
+    }
+    getline(files, line);
+    for(int i = 0; i < bulletId; i++) getline(files, line);
+    data = split(line, ' ');
+    bullet.setting(data);
+    shootNum = stoi(data.at(6));
+    shootAngle = stod(data.at(7));
+    angle = stod(data.at(8));
+}
+
+void NormalPoint::lostBullet(int num){
+    bullets.erase(bullets.begin() + num);
 }
 
 void NormalPoint::notReflect(){

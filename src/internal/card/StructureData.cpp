@@ -12,7 +12,7 @@ vector<Card> StructureData::callCardSets(void){//セットカードのリスト�
     int i = 0, j = 0;//ループ処理用変数
     ifstream files((current_path() / filesystem::path("data/CardData")).c_str());//ファイル読み込み
     if(files.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open CardData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(files, text);//一行目のカード数を記入
     getline(files, text);//No.0のテキストの記入
@@ -39,7 +39,7 @@ vector<int> StructureData::readCardSets(void){//セットカードのIDのリス
     string line;//ファイル読み込み時の文字列をそのまま入れる変数
     ifstream files((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(files.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(files, line);
     getline(files, line);
@@ -64,12 +64,12 @@ void StructureData::writeCardSets(vector<int> list){//新たなセットカー�
     string line2 = to_string(list.at(0)) + " " + to_string(list.at(1)) + " " + to_string(list.at(2));//変更後のセットカードリスト
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(file1.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(file1, line1);
     ofstream file2((current_path() / filesystem::path("data/SaveData")).c_str(), ios::out);//ファイル読み込み
     if(file2.fail()){
-        cerr << "Error: not open file" << endl;//ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     file2 << line1 << endl;
     file2 << line2 << endl;

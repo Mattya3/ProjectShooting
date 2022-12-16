@@ -12,8 +12,10 @@ using namespace std;
 
 class EnemyPoint : public NormalPoint{
 public:
+    bool prepareMoving = true;
+    bool shootFlag = false;
+    int movingUseStatus = 0;
     int times = 0;//必要?
-    int nowMovePattern = 0;
     vector<PatternPoint> moving;
 
     void setPattern(vector<PatternPoint> move);
@@ -22,11 +24,9 @@ public:
 
     void shoot();
 
-    void changeDirection();
-
     bool lose();
 
-    void setMovePattern(int id);
+    void makeMove();
 
-    void setShootPattern(int id);
+    void changeBullet();
 };

@@ -1,21 +1,18 @@
 #include <internal/battle/PatternPoint.hpp>
-    double changeHpLine;
-    int hasPattern;
-    int nowPattern = 0;
-    int nowLoop = 0;
-    vector<int> moveId;
-    vector<int> shootId;
-    vector<int> loopNum;
 
 void PatternPoint::putPattern(string line){
     vector<string> data = split(line, ' ');
-    changeHpLine = stod(data.at(0));
-    hasPattern = stoi(data.at(1));
-    for(int i = 1; i <= hasPattern; i++){
-        moveId.push_back(stoi(data.at(3 * i - 1)));
-        shootId.push_back(stoi(data.at(3 * i)));
-        loopNum.push_back(stoi(data.at(3 * i + 1)));
+    changeHpLine = stod(data.at(1));
+    for(int i = 1; i <= stoi(data.at(2)); i++){
+        moveId.push_back(stoi(data.at(3 * i)));
+        shootId.push_back(stoi(data.at(3 * i + 1)));
+        loopNum.push_back(stoi(data.at(3 * i + 2)));
     }
+}
+
+void PatternPoint::changeLoop(){
+    nowLoop = 0;
+    if(moveId.size() <= ++nowPattern) nowPattern = 0;
 }
 
 vector<string> PatternPoint::split(string str, char separator){//strをseparatorで分割する関数

@@ -1,6 +1,8 @@
 #pragma once
 #include <bits/stdc++.h>
 #include <internal/card/Card.hpp>
+#include <filesystem>
+using std::filesystem::current_path;
 using namespace std;
 
 class CardHas{
