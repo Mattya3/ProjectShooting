@@ -37,4 +37,6 @@ public:
     void inputShooting(bool flag);
 
     void inputAngle(double angle);
+
+    void inputLevelUp(int target);
 };

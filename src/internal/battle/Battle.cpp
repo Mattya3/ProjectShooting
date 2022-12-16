@@ -11,7 +11,7 @@ void Battle::start(int stage){
     z.first = battle_width / 2;
     z.second = 3 * battle_height / 4;
     hero.setFirstSituation(z);
-    hero.changeDirection(0);
+    hero.changeDirection(M_PI);
     loading(stage);
     while(hero.nowHP > 0 && (appear.size() != 0 || enemy.size() != 0)) timer();
 }
@@ -38,6 +38,8 @@ void Battle::timer(){
     }while(appear.at(0).emergeTime == 0);
     viewer.putHero(hero);
     viewer.putEnemy(enemy);
+    cout << "hero:" << hero.position.first << "," << hero.position.second << " angle:" << hero.angle << endl;
+    cout << endl;
 }
 
 void Battle::collision(){

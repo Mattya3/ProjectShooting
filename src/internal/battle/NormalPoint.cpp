@@ -44,7 +44,7 @@ void NormalPoint::changeAngle(double per){
     angle = per;
 }
 
-void NormalPoint::getExp(){
+int NormalPoint::getExp(){
     return exp;
 }
 
@@ -65,12 +65,14 @@ double NormalPoint::getDirection(){
 }
 
 void NormalPoint::move(){
+    cout << "before:" << position.first << "," << position.second << endl;
     position.first += nowVelocity * cos(direction);
     position.first = max(position.first, (double)size / 2);
     position.first = min(position.first, (double)(width - 1) - (double)size / 2);
     position.second -= nowVelocity * sin(direction);
     position.second = max(position.second, (double)size / 2);
     position.second = min(position.second, (double)(height - 1) - (double)size / 2);
+    cout << "after:" << position.first << "," << position.second << endl;
 }
 
 bool NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrueを返す

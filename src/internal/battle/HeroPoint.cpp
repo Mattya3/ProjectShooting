@@ -90,6 +90,7 @@ void HeroPoint::contact(pair<double, double> point, int large){
 
 void HeroPoint::shoot(){
     if (shootpenalty <= 0){
+        cout << "shoot!!" << endl;
         int count = shootNum;
         double changeAngle = shootAngle * M_PI / 180;
         double afterAngle;
