@@ -13,15 +13,17 @@ graph LR;
 それ以外は上書き
 
 ## ライブラリ関係
-
-
 ```mermaid
 graph LR;
     main-->scene
     scene-->component  
+    component---LocationClass
     scene-->GameEngine
+    GameEngine---CenterLocationClass
     GameEngine-->internal
 ```
+Locationは描画の時やりやすいのでViewにおいて使う。一方GameObjectの計算をするときには中心座標などがほしいのでCenterLocationを用いる。
+
 ## クラス図
 ![image](image.jpg)
 ```mermaid

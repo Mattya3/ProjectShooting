@@ -1,0 +1,1 @@
+## BattleSceneで使うよう
