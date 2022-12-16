@@ -35,6 +35,8 @@ public:
 
     void setFirstSituation(pair<double, double> z);
 
+    int getExp();
+
     pair<double, double> getPosition();
 
     int getSize();

@@ -16,8 +16,9 @@ void HeroPoint::setCardlist(vector<Card> sets){
     }
 }
 
-int HeroPoint::levelUp(int target){
+bool HeroPoint::levelUp(int target){
     int changedNum;
+    if(list.at(target).upNum <= 0) return false;
     list.at(target).upNum--;
     if (level.at(target)++ == 1) changedNum = list.at(target).uped1;
     else changedNum = list.at(target).uped2;
@@ -60,7 +61,7 @@ int HeroPoint::levelUp(int target){
                 break;
         }
     }
-    return -exp;
+    return true;
 }
 
 void HeroPoint::timer(vector<pair<double, double>> points, vector<int> large){
@@ -92,7 +93,6 @@ void HeroPoint::shoot(){
         int count = shootNum;
         double changeAngle = shootAngle * M_PI / 180;
         double afterAngle;
-        cout << "shoot" << shootNum << endl;
         pair<double, double> shooter = position;
         shooter.first += size * cos(direction);
         shooter.second -= size * sin(direction);

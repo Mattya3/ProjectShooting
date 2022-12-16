@@ -103,7 +103,6 @@ void BulletPoint::move(vector<pair<double, double>> points, vector<int> large){/
         if(reflect(3)) position.second = 2 * height - position.second;
         else velocity = 0;
     }
-    cout << "bullet:" << angle << ":" << position.first << "," <<position.second << endl;
 }
 
 void BulletPoint::timer(vector<pair<double, double>> points, vector<int> large){

@@ -55,7 +55,10 @@ void Battle::collision(){
    hero.notReflect();
    for(int i = 0; i < enemy.size(); i++) enemy.at(i).notReflect();
    for(int i = enemy.size() - 1; i >= 0; i--){
-    if(enemy.at(i).lose()) enemy.erase(enemy.begin() + i);
+    if(enemy.at(i).lose()){
+        score += enemy.at(i).getExp();
+        enemy.erase(enemy.begin() + i);
+    }
    }
    for(int i = 0; i < enemy.size(); i++) hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());
 }
@@ -101,4 +104,10 @@ void Battle::inputShooting(bool flag){
 
 void Battle::inputAngle(double angle){
     hero.changeDirection(angle);
+}
+
+void Battle::inputLevelUp(int target){
+    if(score >= hero.getExp()){
+        if(hero.levelUp(target)) score -= hero.getExp();
+    }
 }

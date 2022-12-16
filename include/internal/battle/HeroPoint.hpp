@@ -12,7 +12,7 @@ public:
     bool shootFlag = false;
     vector<int> level;
     vector<Card> list;
-    bool moveFlag = true;
+    bool moveFlag = false;
     int stopShoot = 240;
     int shootpenalty = 0;
 
@@ -24,7 +24,7 @@ public:
 
     void changeDirection(double per);
 
-    int levelUp(int target);
+    bool levelUp(int target);
 
     void timer(vector<pair<double, double>> points, vector<int> large);
 
