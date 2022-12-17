@@ -1,5 +1,6 @@
 #include <scenes/Scene.hpp>
 #include <GameEngine/Game.hpp>
+#include <internal/battle/Battle.hpp>
 
 class BattleScene : Scene {
     using Scene::Scene;
@@ -8,6 +9,7 @@ class BattleScene : Scene {
     // キーcallback用変数
     bool wp = false, ap = false, sp = false, dp = false;
     Game game;
+    Battle bt;
 
     vector<Location> bullets_loc_enemy;                // 敵の弾の位置
 

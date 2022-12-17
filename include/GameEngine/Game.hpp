@@ -1,8 +1,8 @@
+#include "Event.hpp"
 #include <GameEngine/subGameObject/GroupGameObject.hpp>
 #include <GameEngine/subGameObject/MyFighter.hpp>
 #include <component/Location.hpp>
 #include <setting.hpp>
-
 /**
  * @brief
  * ゲームはウィンドウの左側で行われる
@@ -14,13 +14,18 @@ class Game {
     Location game_domain;
     CenterLocation domain;
     double right_b, up_b, left_b, down_b;
+    // map<double, vector<Event>> event_list;
 
   public:
     GroupGameObject bullets;
     MyFighter my_fighter = MyFighter("battle/me.png"); // 自機
     const int WindowWidth = 440, WindowHeight = 660;
-    const int SX = 20, SY = 20; // wwsssss 左上中心座標
-
+    const int SX = 20, SY = 20; //  左上中心座標
+    // void do_event(double elt) { // 経過時間 elt
+    //     for(auto &&event : event_list[elt]) {
+    //         event_list[elt+0.5].emplace_back()
+    //     }
+    // }
     void reflect() { bullets.reflect(domain); }
     void limit_my_fighter_loc() {
         auto fixed_domain =

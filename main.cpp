@@ -1,4 +1,4 @@
-#include <Setting.hpp>
+#include <setting.hpp>
 #include <scenes/Title_Scene.hpp>
 using namespace std;
 

@@ -1,5 +1,5 @@
 #include <GLFW/glfw3.h>
-#include <OpenGL/glu.h>
+// #include <OpenGL/glu.h>
 #include <bits/stdc++.h>
 #include <component/Image.hpp>
 #include <filesystem>
