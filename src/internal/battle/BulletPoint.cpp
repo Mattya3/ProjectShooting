@@ -77,6 +77,7 @@ double BulletPoint::search(vector<pair<double, double>> points, vector<int> larg
 }
 
 void BulletPoint::move(vector<pair<double, double>> points, vector<int> large){//接触を内部にしているが、縁に移すかは未定
+    cout << "beforeBullet:" << position.first << "," << position.second << " angle" << angle << endl;
     double x, y, d;
     double per = search(points, large);
     if(per >= 0){
@@ -89,21 +90,21 @@ void BulletPoint::move(vector<pair<double, double>> points, vector<int> large){/
     }
     position.first += velocity * cos(angle);
     if(position.first < 0){
-        if(reflect(2)) position.first = - position.first;
+        if(reflect(2)) position.first = - position.first + size;
         else velocity = 0;
     }else if(position.first > width - 1){
-        if(reflect(0)) position.first = 2 * width - position.first;
+        if(reflect(0)) position.first = 2 * width - position.first - size;
         else velocity = 0; 
     }
     position.second -= velocity * sin(angle);
     if(position.second < 0){
-        if(reflect(1)) position.second = - position.second;
+        if(reflect(1)) position.second = - position.second + size;
         else velocity = 0;
     }else if(position.second > height - 1){
-        if(reflect(3)) position.second = 2 * height - position.second;
+        if(reflect(3)) position.second = 2 * height - position.second - size;
         else velocity = 0;
     }
-    cout << "bullet:" << angle << ":" << position.first << "," <<position.second << endl;
+    cout << "afterBullet:" << position.first << "," << position.second <<" angle" << angle<< endl;
 }
 
 void BulletPoint::timer(vector<pair<double, double>> points, vector<int> large){

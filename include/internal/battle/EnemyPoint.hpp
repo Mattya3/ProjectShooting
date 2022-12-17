@@ -12,21 +12,28 @@ using namespace std;
 
 class EnemyPoint : public NormalPoint{
 public:
+    bool directionFlag = true;
     bool prepareMoving = true;
     bool shootFlag = false;
     int movingUseStatus = 0;
-    int times = 0;//必要?
+    int times = 0;
     vector<PatternPoint> moving;
 
     void setPattern(vector<PatternPoint> move);
 
     void timer(vector<pair<double, double>> points, vector<int> large);
 
-    void shoot();
+    void shoot(pair<double, double> points);
 
     bool lose();
 
     void makeMove();
 
+    void changeDirection(double per);
+
     void changeBullet();
+
+    bool goTo(int x, int y, bool flag);
+
+    double goHero(pair<double, double> points);
 };

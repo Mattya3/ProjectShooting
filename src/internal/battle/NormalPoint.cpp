@@ -12,6 +12,7 @@ void NormalPoint::setting(int id){
     data = split(line, ' ');
     height = stoi(data.at(0));
     width = stoi(data.at(1));
+    bullet.setSize(height, width);
     for(int i = 0; i < id; i++) getline(files, line);
     getline(files, line);
     data = split(line, ' ');
@@ -44,6 +45,10 @@ void NormalPoint::changeAngle(double per){
     angle = per;
 }
 
+int NormalPoint::getExp(){
+    return exp;
+}
+
 pair<double, double> NormalPoint::getPosition(){
     return position;
 }
@@ -61,13 +66,14 @@ double NormalPoint::getDirection(){
 }
 
 void NormalPoint::move(){
+    cout << "before:" << position.first << "," << position.second << " direction:"  << direction << endl;
     position.first += nowVelocity * cos(direction);
     position.first = max(position.first, (double)size / 2);
     position.first = min(position.first, (double)(width - 1) - (double)size / 2);
     position.second -= nowVelocity * sin(direction);
     position.second = max(position.second, (double)size / 2);
     position.second = min(position.second, (double)(height - 1) - (double)size / 2);
-    cout<<"moving" << nowHP <<  ":" <<position.first << "," << position.second << endl;
+    cout << "after:" << position.first << "," << position.second << " direction:"  << direction << endl;
 }
 
 bool NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrueを返す

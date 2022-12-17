@@ -14,7 +14,6 @@ void Battle::start(int stage) {
     z.second = 3 * battle_height / 4;
     hero.setFirstSituation(z);
     hero.changeDirection(0);
-    cout << "hero maxhp=" << hero.maxHP << endl;
     loading(stage);
     cout << "hero maxhp22=" << hero.maxHP << endl;
 
@@ -45,6 +44,8 @@ void Battle::timer() {
     } while(appear.at(0).emergeTime == 0);
     viewer.putHero(hero);
     viewer.putEnemy(enemy);
+    cout << "hero:" << hero.position.first << "," << hero.position.second << " angle:" << hero.angle << endl;
+    cout << endl;
 }
 
 void Battle::collision() {
@@ -62,15 +63,12 @@ void Battle::collision() {
         for(int i = 0; i < dis.size(); i++)
             hero.lostBullet(i);
     }
-    hero.notReflect();
-    for(int i = 0; i < enemy.size(); i++)
-        enemy.at(i).notReflect();
-    for(int i = enemy.size() - 1; i >= 0; i--) {
-        if(enemy.at(i).lose())
-            enemy.erase(enemy.begin() + i);
-    }
-    for(int i = 0; i < enemy.size(); i++)
-        hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());
+   hero.notReflect();
+   for(int i = 0; i < enemy.size(); i++) enemy.at(i).notReflect();
+   for(int i = enemy.size() - 1; i >= 0; i--){
+    if(enemy.at(i).lose()) enemy.erase(enemy.begin() + i);
+   }
+   for(int i = 0; i < enemy.size(); i++) hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());
 }
 
 void Battle::encount() {
@@ -113,4 +111,6 @@ void Battle::inputMoving(bool flag) { hero.moving(flag); }
 
 void Battle::inputShooting(bool flag) { hero.shooting(flag); }
 
-void Battle::inputAngle(double angle) { hero.changeDirection(angle); }
+void Battle::inputAngle(double angle){
+    hero.changeDirection(angle);
+}
