@@ -11,14 +11,14 @@ using std::filesystem::current_path;
 int PngTexture::tid = 0;
 
 PngTexture::PngTexture(const string &fname, Location loc) : loc(loc) {
-    filename = (current_path() / filesystem::path("img/" + fname)).c_str();
+    filename = (current_path() / filesystem::path("img/" + fname)).string().c_str();
     id = tid; // 各テクスチャに固有可する
     ++tid;
     cout << filename << " as " << tid << endl;
     init();
 }
 PngTexture::PngTexture(const string &fname) {
-    filename = (current_path() / filesystem::path("img/" + fname)).c_str();
+    filename = (current_path() / filesystem::path("img/" + fname)).string().c_str();
     id = tid; // 各テクスチャに固有可する
     ++tid;
     cout << filename << " as " << tid << endl;

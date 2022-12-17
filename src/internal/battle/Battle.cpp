@@ -13,7 +13,7 @@ void Battle::start(int stage) {
     z.first = battle_width / 2;
     z.second = 3 * battle_height / 4;
     hero.setFirstSituation(z);
-    hero.changeDirection(0);
+    hero.changeDirection(M_PI / 2);
     loading(stage);
     cout << "hero maxhp22=" << hero.maxHP << endl;
     // while(hero.nowHP > 0 && (appear.size() != 0 || enemy.size() != 0));
@@ -106,9 +106,13 @@ void Battle::loading(int stage) {
     }
 }
 
-void Battle::inputMoving(bool flag) { hero.moving(flag); }
+void Battle::inputMoving(bool flag) { 
+    hero.moving(flag); 
+}
 
-void Battle::inputShooting(bool flag) { hero.shooting(flag); }
+void Battle::inputShooting(bool flag){
+    hero.shooting(flag);
+}
 
 void Battle::inputAngle(double angle){
     hero.changeDirection(angle);
