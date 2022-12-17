@@ -83,9 +83,9 @@ bool EnemyPoint::lose(){
 
 
 void EnemyPoint::makeMove(){
-    switch (moving.at(0).nowPattern){
+    switch (moving.at(0).moveId.at(moving.at(0).nowPattern)){
         case 0://静止(弾を300ms毎に発射)
-            velocity = 0;
+            nowVelocity = 0;
             if(times >= 300){
                 times = 0;
                 shootFlag = true;
@@ -93,8 +93,10 @@ void EnemyPoint::makeMove(){
             break;
         case 1://横移動(弾を300ms毎に発射)
             if(prepareMoving){
+                cout << "prepare!" << endl;
                 nowVelocity = 0.5 * velocity;
                 prepareMoving = goTo(-1, height / 4, directionFlag);
+                cout << "direction:" << direction << endl;
                 directionFlag = false;
             }else{
                 nowVelocity = velocity;
