@@ -16,7 +16,7 @@ void f() {
     glVertexPointer(2, GL_FLOAT, 0, vtx3);
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-    glEnable(GL_MULTISAMPLE);
+    //glEnable(GL_MULTISAMPLE);
     glMatrixMode(GL_MODELVIEW);
     glEnableClientState(GL_VERTEX_ARRAY);
 

@@ -1,8 +1,12 @@
 .vscode/
+.gitignore
+lib/
 build/
 include/bits/
 include/GL
 include/GLFW
+include/png.h
+include/pngconf.h
 src/internal/testmain.cpp
 a.out
 a.exe
