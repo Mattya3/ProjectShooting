@@ -43,7 +43,6 @@ BattleScene::BattleScene(GLFWwindow *window1) {
 
     double prev_time = glfwGetTime();
     double start_time = glfwGetTime();
-    GamePointView gpv;
     bt.start(0);
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
@@ -70,12 +69,10 @@ BattleScene::BattleScene(GLFWwindow *window1) {
             testboss.view();
         }
 
-        auto myFi = gpv.callHero();
-        game.my_fighter.set_pos(
-            DataOf2D(myFi.position.first, myFi.position.second));
+        // game.my_fighter.set_pos(
+            // DataOf2D(myFi.position.first, myFi.position.second));
         game.bullets.view();
-
-        auto d = gpv.callHeroBullet();
+        auto d = bt.viewer.callHeroBullet();
         cout << "heroBullet size " << d.size() << endl;
         for(auto &&i : d) {
             ene.view_clone(Location(double(i.position.first),
@@ -120,6 +117,7 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     if(key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         // game.bullets.push(game.my_fighter.get_pos().get_cxy());
         bt.inputShooting(true);
+        cout << "shoot!!!!!!!" << endl;
     }
     if(key == GLFW_KEY_E && action == GLFW_PRESS) {
         // auto tm = my_fighter.get_loc().clone();

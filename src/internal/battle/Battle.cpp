@@ -16,7 +16,6 @@ void Battle::start(int stage) {
     hero.changeDirection(M_PI / 2);
     loading(stage);
     cout << "hero maxhp22=" << hero.maxHP << endl;
-
     // while(hero.nowHP > 0 && (appear.size() != 0 || enemy.size() != 0));
     // timer();
 }
