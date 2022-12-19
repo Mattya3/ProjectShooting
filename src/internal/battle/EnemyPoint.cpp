@@ -93,10 +93,8 @@ void EnemyPoint::makeMove(){
             break;
         case 1://横移動(弾を300ms毎に発射)
             if(prepareMoving){
-                cout << "prepare!" << endl;
                 nowVelocity = 0.5 * velocity;
                 prepareMoving = goTo(-1, height / 4, directionFlag);
-                cout << "direction:" << direction << endl;
                 directionFlag = false;
             }else{
                 nowVelocity = velocity;

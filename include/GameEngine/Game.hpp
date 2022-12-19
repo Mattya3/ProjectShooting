@@ -37,34 +37,7 @@ class Game {
         p.y = max(p.y, fixed_domain.down());
     }
     void operate_my_fighter(bool w, bool a, bool s, bool d) {
-        if(w) {
-            // my_fighter.accelerate(0, +1);
-            bt.inputMoving(true);
-            bt.inputAngle(M_PI / 2);
-        } else {
-            bt.inputMoving(false);
-        }
-        if(s) {
-            // my_fighter.accelerate(0, -1);
-            bt.inputMoving(true);
-            bt.inputAngle(-M_PI / 2);
-        } else {
-            bt.inputMoving(false);
-        }
-        if(a) {
-            // my_fighter.accelerate(-1, 0);
-            bt.inputMoving(true);
-            bt.inputAngle(M_PI);
-        } else {
-            bt.inputMoving(false);
-        }
-        if(d) {
-            // my_fighter.accelerate(1, 0);
-            bt.inputMoving(true);
-            bt.inputAngle(0);
-        } else {
-            bt.inputMoving(false);
-        }
+        bt.inputMoving(w, a, s, d);
         limit_my_fighter_loc();
     }
     void rotate_my_fighter() {

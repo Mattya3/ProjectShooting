@@ -80,7 +80,6 @@ void HeroPoint::contact(pair<double, double> point, int large){
     r = (size + large) / 2;
     r *= r;
     if(d <= r){
-        cout << "hit!!" << endl;
         if(hitTime <= 0){
             damage(20);//ダメージ量確認
             hitTime = setHitTime;
@@ -90,7 +89,6 @@ void HeroPoint::contact(pair<double, double> point, int large){
 
 void HeroPoint::shoot(){
     if (shootpenalty <= 0){
-        cout << "shoot!!" << endl;
         int count = shootNum;
         double changeAngle = shootAngle * M_PI / 180;
         double afterAngle;

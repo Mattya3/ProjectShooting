@@ -66,14 +66,12 @@ double NormalPoint::getDirection(){
 }
 
 void NormalPoint::move(){
-    cout << "before:" << position.first << "," << position.second << " direction:"  << direction << endl;
     position.first += nowVelocity * cos(direction);
     position.first = max(position.first, (double)size / 2);
     position.first = min(position.first, (double)(width - 1) - (double)size / 2);
     position.second -= nowVelocity * sin(direction);
     position.second = max(position.second, (double)size / 2);
     position.second = min(position.second, (double)(height - 1) - (double)size / 2);
-    cout << "after:" << position.first << "," << position.second << " direction:"  << direction << endl;
 }
 
 bool NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrueを返す
@@ -92,7 +90,6 @@ vector<int> NormalPoint::collision(vector<BulletPoint> bullets){
         r = (size + bullets.at(i).size) / 2;
         d -= r;
         if(d < 0){
-            cout << "hit!!" << endl;
             if(hitTime <= 0){
                 damage(bullets.at(i).attack);
                 hitTime = setHitTime;
@@ -127,7 +124,6 @@ void NormalPoint::notReflect(){
     for(int i = 0; i < bullets.size(); i++){
         if(bullets.at(i).velocity <= 0){
             bullets.erase(bullets.begin() + i);
-            cout << "lost" << endl;
         } 
     }
 }

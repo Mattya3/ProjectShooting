@@ -15,7 +15,6 @@ void Battle::start(int stage) {
     hero.setFirstSituation(z);
     hero.changeDirection(M_PI / 2);
     loading(stage);
-    cout << "hero maxhp22=" << hero.maxHP << endl;
     // while(hero.nowHP > 0 && (appear.size() != 0 || enemy.size() != 0));
     // timer();
 }
@@ -43,8 +42,6 @@ void Battle::timer() {
     } while(appear.at(0).emergeTime == 0);
     viewer.putHero(hero);
     viewer.putEnemy(enemy);
-    cout << "hero:" << hero.position.first << "," << hero.position.second << " angle:" << hero.angle << endl;
-    cout << endl;
 }
 
 void Battle::collision() {
