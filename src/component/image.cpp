@@ -3,34 +3,33 @@
 #include <bits/stdc++.h>
 #include <component/Image.hpp>
 #include <filesystem>
-#include <png.h>
 #include <stdexcept>
+#include <lodepng.h>
 
 using namespace std;
 using std::filesystem::current_path;
 int PngTexture::tid = 0;
 
 PngTexture::PngTexture(const string &fname, Location loc) : loc(loc) {
-    filename = (current_path() / filesystem::path("img/" + fname)).string().c_str();
+    filename =
+        (current_path() / filesystem::path("img/" + fname)).string().c_str();
     id = tid; // 各テクスチャに固有可する
     ++tid;
     cout << filename << " as " << tid << endl;
     init();
 }
 PngTexture::PngTexture(const string &fname) {
-    filename = (current_path() / filesystem::path("img/" + fname)).string().c_str();
+    filename =
+        (current_path() / filesystem::path("img/" + fname)).string().c_str();
     id = tid; // 各テクスチャに固有可する
     ++tid;
     cout << filename << " as " << tid << endl;
     init();
-    // cout << "fjaljf" << this->getWidth() << endl;
-    // cout << "fjlajfla" << double(Setting::WINDOW_width) << endl;
     loc.xlen = double(this->getWidth()) / double(Setting::WINDOW_width);
     loc.ylen = double(this->getHeight()) / double(Setting::WINDOW_height);
-    // cout << "png" << loc.xlen << "," << loc.ylen << endl;
 }
 PngTexture::PngTexture() {}
-PngTexture::~PngTexture() { final(); }
+PngTexture::~PngTexture() { }
 void PngTexture::view() {
     glColor3d(1.0, 1.0, 1.0);
     glBindTexture(GL_TEXTURE_2D, id);
@@ -54,37 +53,52 @@ void PngTexture::view() {
 }
 void PngTexture::init() {
     // png画像ファイルのロード
-    png_structp sp =
-        png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    png_infop ip = png_create_info_struct(sp);
-    FILE *fp = fopen(filename.c_str(), "rb");
-    if(!fp) {
-        perror(filename.c_str());
-    }
-    png_init_io(sp, fp);
-    png_read_info(sp, ip);
-    png_get_IHDR(sp, ip, (png_uint_32 *)&width, (png_uint_32 *)&height, &depth,
-                 &colortype, &interlacetype, NULL, NULL);
-    // メモリ領域確保
-    int rb = png_get_rowbytes(sp, ip);
-    data = new ubyte_t[height * rb];
-    ubyte_t **recv = new ubyte_t *[height];
-    for(int i = 0; i < height; i++)
-        recv[i] = &data[i * rb];
-    png_read_image(sp, recv);
-    png_read_end(sp, ip);
-    png_destroy_read_struct(&sp, &ip, NULL);
-    fclose(fp);
-    delete[] recv;
+    vector<unsigned char> image;
+    unsigned error = lodepng::decode(image, width, height, filename);
+    if(error != 0) {
+        std::cout << "error " << error << ": " << lodepng_error_text(error)
+                  << std::endl;
+        exit(1);
+    } 
 
     // テクスチャへの登録
     glBindTexture(GL_TEXTURE_2D, id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    // gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGBA,
-    //   GL_UNSIGNED_BYTE, data);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
-                 GL_UNSIGNED_BYTE, data);
+                 GL_UNSIGNED_BYTE, &image[0]);
+    // png_structp sp =
+    //     png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    // png_infop ip = png_create_info_struct(sp);
+    // FILE *fp = fopen(filename.c_str(), "rb");
+    // if(!fp) {
+    //     perror(filename.c_str());
+    // }
+    // png_init_io(sp, fp);
+    // png_read_info(sp, ip);
+    // png_get_IHDR(sp, ip, (png_uint_32 *)&width, (png_uint_32 *)&height,
+    // &depth,
+    //              &colortype, &interlacetype, NULL, NULL);
+    // // メモリ領域確保
+    // int rb = png_get_rowbytes(sp, ip);
+    // data = new ubyte_t[height * rb];
+    // ubyte_t **recv = new ubyte_t *[height];
+    // for(int i = 0; i < height; i++)
+    //     recv[i] = &data[i * rb];
+    // png_read_image(sp, recv);
+    // png_read_end(sp, ip);
+    // png_destroy_read_struct(&sp, &ip, NULL);
+    // fclose(fp);
+    // delete[] recv;
+
+    // // テクスチャへの登録
+    // glBindTexture(GL_TEXTURE_2D, id);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // // gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGBA,
+    // //   GL_UNSIGNED_BYTE, data);
+    // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+    //              GL_UNSIGNED_BYTE, data);
 }
 void PngTexture::view_clone(Location loca) {
     glColor3d(1.0, 1.0, 1.0);
@@ -103,9 +117,9 @@ void PngTexture::view_clone(Location loca) {
     glEnd();
     glDisable(GL_TEXTURE_2D);
 }
-void PngTexture::final() { free(data); }
+// void PngTexture::final() { free(data); }
 
-unsigned char *PngTexture::rawData() { return data; }
+// unsigned char *PngTexture::rawData() { return data; }
 
 unsigned int PngTexture::getID() { return id; }
 

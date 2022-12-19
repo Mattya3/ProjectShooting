@@ -14,6 +14,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 endif()
 
 include_directories(./include)
+include_directories(./externsrc)
 
 if(APPLE)
     include_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers)
@@ -41,6 +42,7 @@ link_libraries(${OPENGL_glu_LIBRARY} ${OPENGL_gl_LIBRARY})
 link_libraries(glfw)
 link_libraries(png)
 
+add_subdirectory(externsrc)
 add_subdirectory(src/component)
 add_subdirectory(src/scenes)
 add_subdirectory(src)
@@ -59,8 +61,10 @@ if(WIN32)
     target_link_libraries(main glfw3)
     target_link_libraries(main gdi32)
 endif()
+target_link_libraries(main )
 target_link_libraries(main Setting)
 target_link_libraries(main component)
-target_link_libraries(main scene)
+target_link_libraries(main scene lodepng) 
+
 
 
