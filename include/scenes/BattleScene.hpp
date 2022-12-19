@@ -9,7 +9,6 @@ class BattleScene : Scene {
     // キーcallback用変数
     bool wp = false, ap = false, sp = false, dp = false;
     Game game;
-    Battle bt;
 
     vector<Location> bullets_loc_enemy;                // 敵の弾の位置
 

@@ -6,14 +6,13 @@ typedef unsigned char ubyte_t;
 class PngTexture {
     static int tid;
     unsigned int id; // テクスチャID
-    ubyte_t *data;   // 生データを保持する
     unsigned int width, height;
     int depth, colortype, interlacetype;
     std::string filename;
 
     void init();
-    void final();
-    ubyte_t *rawData();
+    // void final();
+    // ubyte_t *rawData();
 
   public:
 
