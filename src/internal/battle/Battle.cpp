@@ -106,14 +106,33 @@ void Battle::loading(int stage) {
     }
 }
 
-void Battle::inputMoving(bool flag) { 
-    hero.moving(flag); 
+void Battle::inputMoving(bool w, bool a, bool s ,bool d){
+    if(w || a || s || d){
+        int dx = 0, dy = 0;
+        if(w) dy++;
+        if(a) dx--;
+        if(s) dy--;
+        if(d) dx++;
+        if(dx != 0 || dy != 0){
+            hero.moving(true);
+            dx /= sqrt(dx * dx + dy * dy);
+            double per = acos(dx);
+            if(dy > 0) per = 2 * M_PI - per;
+             hero.changeDirection(per);
+        }else{
+            hero.moving(false);
+        }
+    }else{
+        hero.moving(false);
+    }
 }
 
 void Battle::inputShooting(bool flag){
     hero.shooting(flag);
 }
 
-void Battle::inputAngle(double angle){
-    hero.changeDirection(angle);
+void Battle::inputLevelUp(int target){
+    if(score >= hero.getExp()){
+        if(hero.levelUp(target)) score -= hero.getExp();
+    }
 }

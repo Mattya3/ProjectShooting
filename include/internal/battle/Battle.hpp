@@ -32,11 +32,9 @@ public:
 
     void loading(int stage);
 
-    void inputMoving(bool flag);
+    void inputMoving(bool w, bool a, bool s, bool d);
 
     void inputShooting(bool flag);
-
-    void inputAngle(double angle);
 
     void inputLevelUp(int target);
 };
