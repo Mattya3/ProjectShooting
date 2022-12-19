@@ -1,12 +1,11 @@
 .vscode/
 .gitignore
-lib/
 build/
+include/lodepng.h
 include/bits/
 include/GL
 include/GLFW
-include/png.h
-include/pngconf.h
+src/scenes/lodepng.cpp
 src/internal/testmain.cpp
 a.out
 a.exe
