@@ -42,6 +42,7 @@ void Battle::timer() {
     } while(appear.at(0).emergeTime == 0);
     viewer.putHero(hero);
     viewer.putEnemy(enemy);
+    cout << viewer.hero.position.first << "," << viewer.hero.position.second << endl;
 }
 
 void Battle::collision() {
@@ -104,8 +105,14 @@ void Battle::loading(int stage) {
 }
 
 void Battle::inputMoving(bool w, bool a, bool s ,bool d){
+    int l = 0, b=0, c=0, k=0;
+    if(w) l++;
+    if(a) b++;
+    if(s) c++;
+    if(d) k++;
+    cout <<"w:"<<l<<" a:"<<b<<" s:"<<c<<"d:"<<k<<endl;
     if(w || a || s || d){
-        int dx = 0, dy = 0;
+        double dx = 0, dy = 0;
         if(w) dy++;
         if(a) dx--;
         if(s) dy--;
@@ -114,8 +121,9 @@ void Battle::inputMoving(bool w, bool a, bool s ,bool d){
             hero.moving(true);
             dx /= sqrt(dx * dx + dy * dy);
             double per = acos(dx);
-            if(dy > 0) per = 2 * M_PI - per;
-             hero.changeDirection(per);
+            if(dy < 0) per = 2 * M_PI - per;
+            cout << "input angle:" << per << endl;
+            hero.changeDirection(per);
         }else{
             hero.moving(false);
         }
