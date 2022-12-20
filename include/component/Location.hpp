@@ -1,5 +1,8 @@
 #pragma once
 #include <setting.hpp>
+#include <bits/stdc++.h>
+using namespace std;
+
 class Location {
   public:
     double sx, sy;
@@ -9,5 +12,8 @@ class Location {
         : sx(sx), sy(sy), xlen(xlen), ylen(ylen) {}
     Location(int sx, int sy, int xlen, int ylen);
     Location() {}
+    void dump(){
+      cout << sx << "," << sy << endl;
+    }
     // Location(Location &c):Location(c.sx,c.sy,c.xlen,c.ylen) {}
 };

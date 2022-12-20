@@ -7,7 +7,7 @@ class BattleScene : Scene {
 
   private:
     // キーcallback用変数
-    bool wp = false, ap = false, sp = false, dp = false;
+    bool wp = false, ap = false, sp = false, dp = false, spacep=false;
     Game game;
 
     vector<Location> bullets_loc_enemy;                // 敵の弾の位置

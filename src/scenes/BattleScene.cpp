@@ -40,6 +40,8 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     black->set_color(0.1, 0.1, 0.1);
     int cnt_of_attacked = 0;
     PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
+    PngTexture sample("ic_launcher.png");
+    PngTexture me("battle/me.png");
 
     double prev_time = glfwGetTime();
     double start_time = glfwGetTime();
@@ -52,18 +54,25 @@ BattleScene::BattleScene(GLFWwindow *window1) {
 
         double now_time = glfwGetTime();
         double era = now_time - start_time;
-
-        game.bullets.view();
+        sample.view_clone(Location(0,0,50,50));
+        auto x = game.bt.viewer.callHero();
+        me.view_clone(Location(int(x.position.first), int(x.position.second), 32,32));
+        
         auto d = game.bt.viewer.callHeroBullet();
-        cout << "heroBullet size " << d.size() << endl;
         for(auto &&i : d) {
-            ene.view_clone(Location(int(i.position.first), int(i.position.second),32,32) );
+            ene.view_clone(Location(int(i.position.first),
+                                     int(i.position.second), 32, 32));
+            cout << i.position.first << endl;
+            cout << "herx" << game.bt.viewer.callHero().position.first << endl;
+            cout << "hery" << game.bt.viewer.callHero().position.second << endl;
+
+            Location(int(i.position.first) ,int(i.position.second), 32,
+                     32)
+                .dump();
         }
         game.operate_my_fighter(wp, ap, sp, dp);
         game.view();
-        game.reflect();
-        game.bullets.proceed();
-        // game.limit_my_fighter_loc();
+        auto &&bullets = game.bt.viewer.callHeroBullet();
 
         glfwSwapBuffers(window1);
         glfwPollEvents();
@@ -92,20 +101,9 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     control_key_flag(GLFW_KEY_A, ap);
     control_key_flag(GLFW_KEY_S, sp);
     control_key_flag(GLFW_KEY_D, dp);
+    control_key_flag(GLFW_KEY_SPACE, spacep);
+    game.bt.inputShooting(spacep);
 
-
-    if(key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
-        // game.bullets.push(game.my_fighter.get_pos().get_cxy());
-        game.bt.inputShooting(true);
-        cout << "shoot!!!!!!!" << endl;
-    }
-    if(key == GLFW_KEY_E && action == GLFW_PRESS) {
-        // auto tm = my_fighter.get_loc().clone();
-        // tm.sy += 0.7;
-        // tm.xlen = 0.1;
-        // tm.ylen = 0.1;
-        // bullets_loc_enemy.push_back(tm);
-    }
     if(key == GLFW_KEY_R && action == GLFW_PRESS) {
         game.rotate_my_fighter();
     }
