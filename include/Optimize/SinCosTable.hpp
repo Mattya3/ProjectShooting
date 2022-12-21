@@ -1,20 +1,18 @@
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
-constexpr static float PI = 3.1415926536;
-// 名前衝突を避けるために関数は sin=osin, cos=ocosで呼ぶ
-// 全てfloatで実装 doubleで受け取る意味はない
+
+namespace optm {
+constexpr float PI = 3.1415926536;
+
 class SinCosTable {
     // 3.14...を何分割するか
     int sz;
-    int PI10;
-    vector<float> _sin;
+    int PI10, PI102;
+    vector<float> _sin, _cos;
 
   public:
-    // szを大きくすれば精度up 必要メモリ増
-    // sz=500~3000くらいが良さげ
-
-    SinCosTable(int sz) : sz(sz), PI10(sz * PI) {
+    SinCosTable(int sz) : sz(sz), PI10(sz * PI), PI102(2*PI10) {
         int N = PI10 + 1;
         _sin.resize(N);
         const float d = (1.0 / sz);
@@ -26,6 +24,9 @@ class SinCosTable {
     inline float osin(float x) {
         x *= sz;
         int th = int(x);
+        if(th < 0) {
+            th += ((-th) / PI102 + 1) * PI102;
+        }
         if(th > 2 * PI10) {
             th %= (2 * PI10);
         }
@@ -37,3 +38,4 @@ class SinCosTable {
     }
     inline float ocos(float x) { return osin(x + (M_PI / 2.0)); }
 };
+} // namespace optm
