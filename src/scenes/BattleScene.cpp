@@ -7,6 +7,7 @@
 
 #include <internal/battle/GamePointMono.hpp>
 #include <internal/battle/GamePointView.hpp>
+#include <DataOf2D.hpp>
 
 void filled_view(Location l, float r, float g, float b) {
     glBegin(GL_POLYGON);

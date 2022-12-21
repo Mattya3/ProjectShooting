@@ -1,7 +1,6 @@
 #include <scenes/Scene.hpp>
 #include <GameEngine/Game.hpp>
 #include <internal/battle/Battle.hpp>
-
 class BattleScene : Scene {
     using Scene::Scene;
 
