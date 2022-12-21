@@ -18,14 +18,11 @@ void NormalPoint::setting(int id){//初期設定用のメソッド
     data = split(line, ' ');
     nowHP = stoi(data.at(0));
     maxHP = stoi(data.at(0));
-    attack = stoi(data.at(1));
-    size = stoi(data.at(2));
-    velocity = stoi(data.at(3));
-    nowVelocity = stoi(data.at(3));
-    setHitTime = stoi(data.at(4));
-    shootNum = stoi(data.at(5));
-    shootAngle = stod(data.at(6));
-    exp = stoi(data.at(7));
+    size = stoi(data.at(1));
+    velocity = stoi(data.at(2));
+    nowVelocity = stoi(data.at(2));
+    setHitTime = stoi(data.at(3));
+    exp = stoi(data.at(4));
     this->id = id;
 }
 

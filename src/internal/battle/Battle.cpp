@@ -53,54 +53,50 @@ void Battle::collision(int size) {//接触判定のメソッド
     for(int i = 0; i < dis.size(); i++) heroBullets.erase(heroBullets.begin() + i);//自機とぶつかった自機の弾を消失
     dis = hero.collision(enemyBullets, enemyBullets.size());
     for(int i = 0; i < dis.size(); i++) enemyBullets.erase(enemyBullets.begin() + i);//自機とぶつかった敵の弾を消失
-    for(int j = 0; j < enemy.size(); j++) {
+    for(int j = 0; j < enemy.size(); j++) {//敵とぶつかった際の上記の処理
         dis = enemy.at(j).collision(heroBullets, heroBullets.size());
         for(int i = 0; i < dis.size(); i++) heroBullets.erase(heroBullets.begin() + i);
     }
-    for(int i = heroBullets.size() - 1; i >= 0; i--){
+    for(int i = heroBullets.size() - 1; i >= 0; i--){//反射回数をオーバーした自機の弾を消失
         if(heroBullets.at(i).nonReflect()) heroBullets.erase(heroBullets.begin() + i);
     }
-    for(int i = enemyBullets.size() - 1; i >= 0; i--){
+    for(int i = enemyBullets.size() - 1; i >= 0; i--){//反射回数をオーバーした敵の弾を消失
         if(enemyBullets.at(i).nonReflect()) enemyBullets.erase(enemyBullets.begin() + i);
     }
     for(int i = enemy.size() - 1; i >= 0; i--){
-        hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());
-        if(!enemy.at(i).alive()){
+        hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());//自機と敵がぶつかった際の処理
+        if(!enemy.at(i).alive()){//敵のHP0による消失判定
             score += enemy.at(i).getExp();
             enemy.erase(enemy.begin() + i);
         }
     }
 }
 
-void Battle::encount() {
-    if(appear.size() == 0)
-        return;
-    if((time >= appear.at(0).emergeTime && appear.at(0).emergeTime != -1) ||
-       (enemy.size() == 0 && appear.at(0).emergeTime == -1)) {
+void Battle::encount() {//敵の出現処理メソッド
+    if(appear.size() == 0) return;
+    if((time >= appear.at(0).emergeTime && appear.at(0).emergeTime != -1) || (enemy.size() == 0 && appear.at(0).emergeTime == -1)) {//出現時間で全滅条件なし、または全滅条件ありで全滅済
         EnemyPoint emerge;
         emerge.setting(appear.at(0).enemyId);
         emerge.setFirstSituation(appear.at(0).emergePosition);
         emerge.setPattern(appear.at(0).moving);
         enemy.push_back(emerge);
         appear.erase(appear.begin());
-        time = 0;
+        time = 0;//ファイル内の時間は1つ前からの経過時間であるので、タイマリセット
     }
 }
 
-void Battle::loading(int stage) {
+void Battle::loading(int stage) {//ステージ読み込みのメソッド
     EmergePoint token;
     string line;
     int pattern;
-    ifstream files((current_path() /
-                    filesystem::path("data/StageData/" + to_string(stage)))
-                       .c_str()); // ファイル読み込み
+    ifstream files((current_path() / filesystem::path("data/StageData/" + to_string(stage))).c_str()); // ファイル読み込み
     if(files.fail()) {
         cerr << "Error: not open StageData/" << stage
              << endl; // ファイル読み込みエラー発生時の処理
     }
-    while(getline(files, line)) {
-        pattern = token.setFirst(line);
-        for(int i = 0; i < pattern; i++) {
+    while(getline(files, line)) {//ファイル全体を読み込む
+        pattern = token.setFirst(line);//各敵の動作パターンの数を入れる
+        for(int i = 0; i < pattern; i++) {//動作パターンの数だけその敵に追加する
             getline(files, line);
             token.putPattern(line);
         }
@@ -108,14 +104,14 @@ void Battle::loading(int stage) {
     }
 }
 
-void Battle::inputMoving(bool w, bool a, bool s ,bool d){
-    if(w || a || s || d){
+void Battle::inputMoving(bool w, bool a, bool s ,bool d){//操作入力の反映メソッド
+    if(w || a || s || d){//入力されているか
         double dx = 0, dy = 0;
         if(w) dy++;
         if(a) dx--;
         if(s) dy--;
         if(d) dx++;
-        if(dx != 0 || dy != 0){
+        if(dx != 0 || dy != 0){//打ち消しされていないか
             hero.moving(true);
             dx /= sqrt(dx * dx + dy * dy);
             double per = acos(dx);
@@ -129,11 +125,11 @@ void Battle::inputMoving(bool w, bool a, bool s ,bool d){
     }
 }
 
-void Battle::inputShooting(bool flag){
+void Battle::inputShooting(bool flag){//操作入力の反映メソッド
     hero.shooting(flag);
 }
 
-void Battle::inputLevelUp(int target){
+void Battle::inputLevelUp(int target){//操作入力の反映メソッド
     if(score >= hero.getExp()){
         if(hero.levelUp(target)) score -= hero.getExp();
     }

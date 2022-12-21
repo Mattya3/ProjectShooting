@@ -14,7 +14,6 @@ public:
     int width;
     int shootNum;
     double shootAngle;
-    int attack;
     int nowHP;
     int maxHP;
     pair<double, double> position;

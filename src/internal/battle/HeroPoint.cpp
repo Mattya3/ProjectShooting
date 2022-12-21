@@ -129,7 +129,7 @@ void HeroPoint::shoot(vector<BulletPoint> &bullets){
                 count--;
             }
         }
-        shootpenalty = stopShoot;
+        shootpenalty = stopShoot * shootNum;
     }
 }
 

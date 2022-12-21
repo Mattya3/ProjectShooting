@@ -35,14 +35,14 @@ void EnemyPoint::shoot(pair<double, double> points, vector<BulletPoint> &bullets
     double afterAngle;
     pair<double, double> shooter = position;
     bullet.setFirstSituation(shooter);
-    if(moving.at(0).angles.at(moving.at(0).nowPattern) >= 0) bullet.changeAngle(moving.at(0).angles.at(moving.at(0).nowPattern) + random);
-    else bullet.changeAngle(goHero(points) + random);
+    if(moving.at(0).angles.at(moving.at(0).nowPattern) >= 0) afterAngle = moving.at(0).angles.at(moving.at(0).nowPattern) + random;
+    else afterAngle = goHero(points) + random;
     if(shootNum % 2 == 1){
-        bullet.changeAngle(angle);
+        bullet.changeAngle(afterAngle);
         bullets.push_back(bullet);
         count = (shootNum - 1) / 2;
         while(count > 0){
-            afterAngle = angle + count * changeAngle;
+            afterAngle = afterAngle + count * changeAngle;
             if(afterAngle < 0) afterAngle += 2 * M_PI;
             if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
             bullet.changeAngle(afterAngle);
@@ -57,12 +57,12 @@ void EnemyPoint::shoot(pair<double, double> points, vector<BulletPoint> &bullets
     }else{
         count = (shootNum - 1) / 2;
         while(count > 0){
-            afterAngle = angle + (count + 1 / 2) * changeAngle;
+            afterAngle = afterAngle + (count + 1 / 2) * changeAngle;
             if(afterAngle < 0) afterAngle += 2 * M_PI;
             if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
             bullet.changeAngle(afterAngle);
             bullets.push_back(bullet);
-            afterAngle = angle - (count + 1 / 2) * changeAngle;
+            afterAngle = afterAngle - (count + 1 / 2) * changeAngle;
             if(afterAngle < 0) afterAngle += 2 * M_PI;
             if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
             bullet.changeAngle(afterAngle);
@@ -88,8 +88,7 @@ void EnemyPoint::makeMove(){
                 shootFlag = true;
             }
             break;
-        case 1://横移動(弾を300ms毎に発射)
-            changeAngle(3 * M_PI / 2);
+        case 1://横移動(弾を400ms毎に発射)
             if(prepareMoving){
                 nowVelocity = 0.5 * velocity;
                 prepareMoving = goTo(-1, height / 4, directionFlag);
@@ -101,7 +100,7 @@ void EnemyPoint::makeMove(){
                 }else{
                     if(!goTo(width - size, -1, true)) moving.at(0).nowLoop = 0;
                 }
-                if(times >= 300){
+                if(times >= 400){
                     times = 0;
                     shootFlag = true;
                 }
