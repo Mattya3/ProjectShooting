@@ -63,7 +63,10 @@ void Battle::collision(int size) {//接触判定のメソッド
     for(int i = enemyBullets.size() - 1; i >= 0; i--){
         if(enemyBullets.at(i).nonReflect()) enemyBullets.erase(enemyBullets.begin() + i);
     }
-    for(int i = 0; i < enemy.size(); i++) hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());
+    for(int i = enemy.size() - 1; i >= 0; i--){
+        hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());
+        if(!enemy.at(i).alive()) enemy.erase(enemy.begin() + i);
+    }
 }
 
 void Battle::encount() {

@@ -74,10 +74,8 @@ void NormalPoint::move(){
     position.second = min(position.second, (double)(height - 1) - (double)size / 2);
 }
 
-bool NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrueを返す
+void NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrueを返す
     nowHP -= hit;
-    if (nowHP <= 0) return true;
-    else return false;
 }
 
 vector<int> NormalPoint::collision(vector<BulletPoint> bullets, int range){
@@ -113,4 +111,9 @@ void NormalPoint::setBullet(int bulletId){
     shootNum = stoi(data.at(6));
     shootAngle = stod(data.at(7));
     angle = stod(data.at(8));
+}
+
+bool NormalPoint::alive(){
+    if(nowHP > 0) return true;
+    else return false;
 }

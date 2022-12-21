@@ -48,9 +48,11 @@ public:
 
     void move();
 
-    bool damage(int hit);
+    void damage(int hit);
 
     vector<int> collision(vector<BulletPoint> bullets, int range);
 
     void setBullet(int bulletId);
+
+    bool alive();
 };
