@@ -80,10 +80,10 @@ bool NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrue
     else return false;
 }
 
-vector<int> NormalPoint::collision(vector<BulletPoint> bullets){
+vector<int> NormalPoint::collision(vector<BulletPoint> bullets, int size){
     vector<int> bulletId;
     int x, y, d, r;
-    for(int i = 0; i < bullets.size(); i++){
+    for(int i = 0; i < size; i++){
         x = position.first - bullets.at(i).position.first;
         y = position.second - bullets.at(i).position.second;
         d = sqrt(x * x + y * y);
@@ -114,16 +114,4 @@ void NormalPoint::setBullet(int bulletId){
     shootNum = stoi(data.at(6));
     shootAngle = stod(data.at(7));
     angle = stod(data.at(8));
-}
-
-void NormalPoint::lostBullet(int num){
-    bullets.erase(bullets.begin() + num);
-}
-
-void NormalPoint::notReflect(){
-    for(int i = 0; i < bullets.size(); i++){
-        if(bullets.at(i).velocity <= 0){
-            bullets.erase(bullets.begin() + i);
-        } 
-    }
 }

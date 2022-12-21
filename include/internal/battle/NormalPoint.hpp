@@ -9,7 +9,6 @@ using namespace std;
 
 class NormalPoint{
 public:
-    vector<BulletPoint> bullets;
     int id;
     int height;
     int width;
@@ -51,11 +50,7 @@ public:
 
     bool damage(int hit);
 
-    vector<int> collision(vector<BulletPoint> bullets);
+    vector<int> collision(vector<BulletPoint> bullets, int size);
 
     void setBullet(int bulletId);
-
-    void lostBullet(int num);
-
-    void notReflect();
 };

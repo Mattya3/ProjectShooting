@@ -21,9 +21,9 @@ public:
 
     void setPattern(vector<PatternPoint> move);
 
-    void timer(vector<pair<double, double>> points, vector<int> large);
+    void timer(vector<pair<double, double>> points, vector<BulletPoint> &bullets);
 
-    void shoot(pair<double, double> points);
+    void shoot(pair<double, double> points, vector<BulletPoint> &bullets);
 
     bool lose();
 

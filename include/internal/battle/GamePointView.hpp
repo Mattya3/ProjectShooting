@@ -21,7 +21,13 @@ public:
 
     vector<GamePointMono> callEnemyBullet();
 
-    void putHero(HeroPoint h);
+    void putHero(HeroPoint h, vector<BulletPoint> b);
 
-    void putEnemy(vector<EnemyPoint> e);
+    void putEnemy(vector<EnemyPoint> e, vector<BulletPoint> b);
+
+    void putHeroBullet();
+
+    void putEnemyBullet();
+
+
 };

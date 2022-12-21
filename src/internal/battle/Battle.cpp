@@ -20,6 +20,7 @@ void Battle::start(int stage) {
 }
 
 void Battle::timer() {
+    int heroBulletBeforeSize = heroBullets.size();
     vector<pair<double, double>> heroPoints;
     vector<int> heroLarge;
     vector<pair<double, double>> enemyPoints;
@@ -29,43 +30,41 @@ void Battle::timer() {
     heroPoints.push_back(hero.getPosition());
     heroLarge.push_back(hero.getSize());
     for(int i = 0; i < enemy.size(); i++) {
-        enemy.at(i).timer(heroPoints, heroLarge);
+        enemy.at(i).timer(heroPoints, enemyBullets);
         enemyPoints.push_back(enemy.at(i).getPosition());
         enemyLarge.push_back(enemy.at(i).getSize());
     }
-    hero.timer(enemyPoints, enemyLarge);
-    collision();
+    hero.timer(heroBullets);
+    for(int i = 0; i < heroBullets.size(); i++) heroBullets.at(i).timer(enemyPoints, enemyLarge);
+    for(int i = 0; i < enemyBullets.size(); i++) enemyBullets.at(i).timer(heroPoints, heroLarge);
+    collision(heroBulletBeforeSize);
     do {
         encount();
         if(appear.size() == 0)
             break;
     } while(appear.at(0).emergeTime == 0);
-    viewer.putHero(hero);
-    viewer.putEnemy(enemy);
+    viewer.putHero(hero, heroBullets);
+    viewer.putEnemy(enemy, enemyBullets);
     cout << viewer.hero.position.first << "," << viewer.hero.position.second << endl;
 }
 
-void Battle::collision() {
+void Battle::collision(int size) {
     vector<int> dis;
-    dis = hero.collision(hero.bullets);
-    for(int i = 0; i < dis.size(); i++)
-        hero.lostBullet(i);
+    dis = hero.collision(heroBullets, size);
+    for(int i = 0; i < dis.size(); i++) heroBullets.erase(heroBullets.begin() + i);
+    dis = hero.collision(enemyBullets, enemyBullets.size());
+    for(int i = 0; i < dis.size(); i++) enemyBullets.erase(enemyBullets.begin() + i);
     for(int j = 0; j < enemy.size(); j++) {
-        dis = hero.collision(enemy.at(j).bullets);
-        for(int i = 0; i < dis.size(); i++)
-            enemy.at(j).lostBullet(i);
+        dis = enemy.at(j).collision(heroBullets, heroBullets.size());
+        for(int i = 0; i < dis.size(); i++) heroBullets.erase(heroBullets.begin() + i);
     }
-    for(int j = 0; j < enemy.size(); j++) {
-        dis = enemy.at(j).collision(hero.bullets);
-        for(int i = 0; i < dis.size(); i++)
-            hero.lostBullet(i);
+    for(int i = heroBullets.size() - 1; i >= 0; i--){
+        if(heroBullets.at(i).nonReflect()) heroBullets.erase(heroBullets.begin() + i);
     }
-   hero.notReflect();
-   for(int i = 0; i < enemy.size(); i++) enemy.at(i).notReflect();
-   for(int i = enemy.size() - 1; i >= 0; i--){
-    if(enemy.at(i).lose()) enemy.erase(enemy.begin() + i);
-   }
-   for(int i = 0; i < enemy.size(); i++) hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());
+    for(int i = enemyBullets.size() - 1; i >= 0; i--){
+        if(enemyBullets.at(i).nonReflect()) enemyBullets.erase(enemyBullets.begin() + i);
+    }
+    for(int i = 0; i < enemy.size(); i++) hero.contact(enemy.at(i).getPosition(), enemy.at(i).getSize());
 }
 
 void Battle::encount() {

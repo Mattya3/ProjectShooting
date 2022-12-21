@@ -26,9 +26,9 @@ public:
 
     bool levelUp(int target);
 
-    void timer(vector<pair<double, double>> points, vector<int> large);
+    void timer(vector<BulletPoint> &bullets);
 
     void contact(pair<double, double> point, int large);
 
-    void shoot();
+    void shoot(vector<BulletPoint> &bullets);
 };
