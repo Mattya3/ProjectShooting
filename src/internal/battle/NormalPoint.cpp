@@ -1,9 +1,9 @@
 #include <internal/battle/NormalPoint.hpp>
 
 
-void NormalPoint::setting(int id){
-    vector<string> data;
-    string line;
+void NormalPoint::setting(int id){//初期設定用のメソッド
+    vector<string> data;//ファイル読み取り
+    string line;//
     ifstream files((current_path() / filesystem::path("data/PointData")).c_str());
     if(files.fail()){
         cerr << "Error: not open PointData" << endl;//ファイル読み込みエラー発生時の処理
