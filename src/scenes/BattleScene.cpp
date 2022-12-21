@@ -7,6 +7,17 @@
 
 #include <internal/battle/GamePointMono.hpp>
 #include <internal/battle/GamePointView.hpp>
+
+void filled_view(Location l, float r, float g, float b) {
+    glBegin(GL_POLYGON);
+    glColor3d(r, g, b);
+    glVertex2d(l.sx, l.sy);
+    glVertex2d(l.sx + l.xlen, l.sy);
+    glVertex2d(l.sx + l.xlen, l.sy + l.ylen);
+    glVertex2d(l.sx, l.sy + l.ylen);
+    glEnd();
+}
+
 void show_sphere(double x, double y, char c) {
     glBegin(GL_POLYGON);
     if(c == 'R') {
@@ -52,8 +63,9 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     game.bt.start(0);
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
+        filled_view(g, 0.2, 0.2, 0.2);
         show_component();
-        btn_go_next_scene->button_view();
+        // btn_go_next_scene->button_view();
         game.bt.timer();
 
         double now_time = glfwGetTime();
