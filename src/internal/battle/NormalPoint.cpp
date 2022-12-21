@@ -1,9 +1,9 @@
 #include <internal/battle/NormalPoint.hpp>
 
 
-void NormalPoint::setting(int id){
-    vector<string> data;
-    string line;
+void NormalPoint::setting(int id){//初期設定用のメソッド
+    vector<string> data;//ファイル読み取り
+    string line;//
     ifstream files((current_path() / filesystem::path("data/PointData")).c_str());
     if(files.fail()){
         cerr << "Error: not open PointData" << endl;//ファイル読み込みエラー発生時の処理
@@ -74,10 +74,8 @@ void NormalPoint::move(){
     position.second = min(position.second, (double)(height - 1) - (double)size / 2);
 }
 
-bool NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrueを返す
+void NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrueを返す
     nowHP -= hit;
-    if (nowHP <= 0) return true;
-    else return false;
 }
 
 vector<int> NormalPoint::collision(vector<BulletPoint> bullets, int range){
@@ -113,4 +111,9 @@ void NormalPoint::setBullet(int bulletId){
     shootNum = stoi(data.at(6));
     shootAngle = stod(data.at(7));
     angle = stod(data.at(8));
+}
+
+bool NormalPoint::alive(){
+    if(nowHP > 0) return true;
+    else return false;
 }

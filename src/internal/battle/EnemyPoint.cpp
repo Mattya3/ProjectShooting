@@ -15,7 +15,7 @@ void EnemyPoint::timer(vector<pair<double, double>> points, vector<BulletPoint> 
         movingUseStatus = 0;
         setBullet(moving.at(0).shootId.at(0));
     }
-    if(moving.at(0).moveId.size() != 0 && moving.at(0).loopNum.at(moving.at(0).nowPattern) <= moving.at(0).nowLoop){
+    if(moving.at(0).moveId.size() != 1 && moving.at(0).loopNum.at(moving.at(0).nowPattern) <= moving.at(0).nowLoop){
         moving.at(0).changeLoop();
         prepareMoving = true;
         directionFlag = true;
@@ -28,14 +28,14 @@ void EnemyPoint::timer(vector<pair<double, double>> points, vector<BulletPoint> 
 }
 
 void EnemyPoint::shoot(pair<double, double> points, vector<BulletPoint> &bullets){
-    double random = moving.at(0).random.at(moving.at(0).nowLoop) * (rand() % 100);
+    double random = moving.at(0).random.at(moving.at(0).nowPattern) * (rand() % 100);
     if(rand() % 2 == 1) random *= -1;
     int count = shootNum;
     double changeAngle = shootAngle * M_PI / 180;
     double afterAngle;
     pair<double, double> shooter = position;
     bullet.setFirstSituation(shooter);
-    if(moving.at(0).angles.at(moving.at(0).nowLoop) >= 0) bullet.changeAngle(moving.at(0).angles.at(moving.at(0).nowLoop) + random);
+    if(moving.at(0).angles.at(moving.at(0).nowPattern) >= 0) bullet.changeAngle(moving.at(0).angles.at(moving.at(0).nowPattern) + random);
     else bullet.changeAngle(goHero(points) + random);
     if(shootNum % 2 == 1){
         bullet.changeAngle(angle);
@@ -89,6 +89,7 @@ void EnemyPoint::makeMove(){
             }
             break;
         case 1://横移動(弾を300ms毎に発射)
+            changeAngle(3 * M_PI / 2);
             if(prepareMoving){
                 nowVelocity = 0.5 * velocity;
                 prepareMoving = goTo(-1, height / 4, directionFlag);
@@ -96,19 +97,9 @@ void EnemyPoint::makeMove(){
             }else{
                 nowVelocity = velocity;
                 if(moving.at(0).nowLoop % 2 == 0){
-                    if(!goTo(size, -1, directionFlag)){
-                        moving.at(0).nowLoop++;
-                        directionFlag = false;
-                    }else{
-                        directionFlag = true;
-                    }
+                    if(!goTo(size, -1, true)) moving.at(0).nowLoop = 1;
                 }else{
-                    if(!goTo(width - size, -1, directionFlag)){
-                        moving.at(0).nowLoop++;
-                        directionFlag = false;
-                    }else{
-                        directionFlag = true;
-                    }
+                    if(!goTo(width - size, -1, true)) moving.at(0).nowLoop = 0;
                 }
                 if(times >= 300){
                     times = 0;
