@@ -5,7 +5,7 @@ void EnemyPoint::setPattern(vector<PatternPoint> move){
     setBullet(moving.at(0).shootId.at(0));
 }
 
-void EnemyPoint::timer(vector<pair<double, double>> points, vector<int> large){
+void EnemyPoint::timer(vector<pair<double, double>> points, vector<BulletPoint> &bullets){
     if(hitTime > 0) hitTime -= 20;
     times += 20;
     if(moving.at(0).changeHpLine > nowHP / maxHP){
@@ -24,13 +24,10 @@ void EnemyPoint::timer(vector<pair<double, double>> points, vector<int> large){
     }
     makeMove();
     move();
-    if(shootFlag) shoot(points.at(0));
-    for(int i = 0; i < bullets.size(); i++){
-        bullets.at(i).timer(points, large);
-    } 
+    if(shootFlag) shoot(points.at(0), bullets);
 }
 
-void EnemyPoint::shoot(pair<double, double> points){
+void EnemyPoint::shoot(pair<double, double> points, vector<BulletPoint> &bullets){
     double random = moving.at(0).random.at(moving.at(0).nowLoop) * (rand() % 100);
     if(rand() % 2 == 1) random *= -1;
     int count = shootNum;

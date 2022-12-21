@@ -33,4 +33,6 @@ public:
     void move(vector<pair<double, double>> points, vector<int> large);
 
     void timer(vector<pair<double, double>> points, vector<int> large);
+
+    bool nonReflect();
 };

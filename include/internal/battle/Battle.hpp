@@ -15,10 +15,12 @@ const int battle_width = 440;
 
 class Battle{
 public:
-    GamePointView viewer;
-    vector<EmergePoint> appear;
     HeroPoint hero;
     vector<EnemyPoint> enemy;
+    vector<BulletPoint> heroBullets;
+    vector<BulletPoint> enemyBullets;
+    GamePointView viewer;
+    vector<EmergePoint> appear;
     int score = 0;
     int time = 0;
 
@@ -26,7 +28,7 @@ public:
 
     void timer();
 
-    void collision();
+    void collision(int size);
 
     void encount();
 

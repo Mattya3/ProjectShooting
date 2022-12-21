@@ -108,3 +108,8 @@ void BulletPoint::move(vector<pair<double, double>> points, vector<int> large){/
 void BulletPoint::timer(vector<pair<double, double>> points, vector<int> large){
     move(points, large);
 }
+
+bool BulletPoint::nonReflect(){
+    if(canReflect < 0) return true;
+    else return false;
+}
