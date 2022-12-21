@@ -104,12 +104,6 @@ void Battle::loading(int stage) {
 }
 
 void Battle::inputMoving(bool w, bool a, bool s ,bool d){
-    int l = 0, b=0, c=0, k=0;
-    if(w) l++;
-    if(a) b++;
-    if(s) c++;
-    if(d) k++;
-    cout <<"w:"<<l<<" a:"<<b<<" s:"<<c<<"d:"<<k<<endl;
     if(w || a || s || d){
         double dx = 0, dy = 0;
         if(w) dy++;
@@ -121,7 +115,6 @@ void Battle::inputMoving(bool w, bool a, bool s ,bool d){
             dx /= sqrt(dx * dx + dy * dy);
             double per = acos(dx);
             if(dy < 0) per = 2 * M_PI - per;
-            cout << "input angle:" << per << endl;
             hero.changeDirection(per);
         }else{
             hero.moving(false);

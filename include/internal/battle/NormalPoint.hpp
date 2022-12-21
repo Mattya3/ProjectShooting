@@ -50,7 +50,7 @@ public:
 
     bool damage(int hit);
 
-    vector<int> collision(vector<BulletPoint> bullets, int size);
+    vector<int> collision(vector<BulletPoint> bullets, int range);
 
     void setBullet(int bulletId);
 };
