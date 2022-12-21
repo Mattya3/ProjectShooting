@@ -5,9 +5,9 @@
 #include <scenes/ResolverCallbackFunc.hpp>
 #include <scenes/Title_Scene.hpp>
 
+#include <DataOf2D.hpp>
 #include <internal/battle/GamePointMono.hpp>
 #include <internal/battle/GamePointView.hpp>
-#include <DataOf2D.hpp>
 
 void filled_view(Location l, float r, float g, float b) {
     glBegin(GL_POLYGON);
@@ -35,9 +35,7 @@ void show_sphere(double x, double y, char c) {
     glVertex2d(x, y + 0.01);
     glEnd();
 }
-Location to_Location(GamePointMono gpm, int w, int h) {
-    return Location(int(gpm.position.first), int(gpm.position.second), h, w);
-}
+
 BattleScene::BattleScene(GLFWwindow *window1) {
     register_callback_resolver::init(*this, window1); // コールバック関数を登録
     btn_go_next_scene = new NextSceneButton(Location(-0.6, -0.4, 1.2, 0.3),
@@ -62,8 +60,10 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     double prev_time = glfwGetTime();
     double start_time = glfwGetTime();
     game.bt.start(0);
+    float ratio = 0.5;
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
+        game.rotate_my_fighter();
         filled_view(g, 0.2, 0.2, 0.2);
         show_component();
         // btn_go_next_scene->button_view();
@@ -72,9 +72,9 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         double now_time = glfwGetTime();
         double era = now_time - start_time;
         sample.view_clone(Location(0, 0, 50, 50));
+ 
 
-        auto x = game.bt.viewer.callHero();
-        me.view_clone(to_Location(x, 32, 32));
+
 
         game.bt.viewer.callEnemy();
         auto d = game.bt.viewer.callHeroBullet();

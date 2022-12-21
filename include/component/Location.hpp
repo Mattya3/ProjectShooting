@@ -1,6 +1,7 @@
 #pragma once
 #include <setting.hpp>
 #include <bits/stdc++.h>
+#include <internal/battle/GamePointMono.hpp>
 using namespace std;
 
 class Location {
@@ -17,3 +18,4 @@ class Location {
     }
     // Location(Location &c):Location(c.sx,c.sy,c.xlen,c.ylen) {}
 };
+Location to_Location(GamePointMono gpm, int w, int h);

@@ -29,14 +29,13 @@ class Game {
         // limit_my_fighter_loc();
     }
     void rotate_my_fighter() {
-        my_fighter.change_rotate();
-        my_fighter.get_pos().dump();
+        // my_fighter.change_rotate();
+        my_fighter.rotate=bt.viewer.callHero().keyNum*180/M_PI;
+        // my_fighter.get_pos().dump();
     }
     void view() {
-        // auto x = bt.viewer.callHero();
-        // // my_fighter.set_pos(DataOf2D(x.position.first, x.position.second, 1.0));
-        // // my_fighter.view();
-        // my_fighter
+        auto x =bt.viewer.callHero();
+        my_fighter.view(to_Location(x, 32, 32));
     }
     Game(/* args */);
     ~Game();
