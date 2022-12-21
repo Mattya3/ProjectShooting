@@ -23,6 +23,9 @@ void show_sphere(double x, double y, char c) {
     glVertex2d(x, y + 0.01);
     glEnd();
 }
+Location to_Location(GamePointMono gpm, int w, int h) {
+    return Location(int(gpm.position.first), int(gpm.position.second), h, w);
+}
 BattleScene::BattleScene(GLFWwindow *window1) {
     register_callback_resolver::init(*this, window1); // コールバック関数を登録
     btn_go_next_scene = new NextSceneButton(Location(-0.6, -0.4, 1.2, 0.3),
@@ -31,6 +34,7 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     enemies.emplace_back(make_unique<PngTexture>(
         "battle/bulletMe.png", Location(-0.8, -0.8, 0.05, 0.05)));
     PngTexture ene("battle/bulletEnemy.png", Location(-0.8, -0.8, 0.05, 0.05));
+    PngTexture mybullet("battle/bulletMe.png");
     Location g(game.SX, game.SY, game.WindowWidth, game.WindowHeight);
     Button_anyTimes *game_space = new Button_anyTimes(g);
     game_space->set_color(0, 0, 1);
@@ -54,25 +58,29 @@ BattleScene::BattleScene(GLFWwindow *window1) {
 
         double now_time = glfwGetTime();
         double era = now_time - start_time;
-        sample.view_clone(Location(0,0,50,50));
+        sample.view_clone(Location(0, 0, 50, 50));
+
         auto x = game.bt.viewer.callHero();
-        me.view_clone(Location(int(x.position.first), int(x.position.second), 32,32));
-        
+        me.view_clone(to_Location(x, 32, 32));
+
+        game.bt.viewer.callEnemy();
         auto d = game.bt.viewer.callHeroBullet();
         for(auto &&i : d) {
-            ene.view_clone(Location(int(i.position.first),
-                                     int(i.position.second), 32, 32));
-            cout << i.position.first << endl;
-            cout << "herx" << game.bt.viewer.callHero().position.first << endl;
-            cout << "hery" << game.bt.viewer.callHero().position.second << endl;
-
-            Location(int(i.position.first) ,int(i.position.second), 32,
-                     32)
-                .dump();
+            mybullet.view_clone(to_Location(i, 32, 32));
         }
+
+        auto en = game.bt.viewer.callEnemy();
+        for(auto &&i : en) {
+            sample.view_clone(to_Location(i, 32, 32));
+        }
+
+        auto ebs = game.bt.viewer.callEnemyBullet();
+        for(auto &&i : ebs) {
+            ene.view_clone(to_Location(i, 16, 16));
+        }
+
         game.operate_my_fighter(wp, ap, sp, dp);
         game.view();
-        auto &&bullets = game.bt.viewer.callHeroBullet();
 
         glfwSwapBuffers(window1);
         glfwPollEvents();
