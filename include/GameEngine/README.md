@@ -1,2 +1,0 @@
-## BattleSceneで使うよう
-ll
