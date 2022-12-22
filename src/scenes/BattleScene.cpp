@@ -56,18 +56,19 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
     PngTexture sample("ic_launcher.png");
     PngTexture me("battle/me.png");
+    game.bt.viewer.hero.size;
 
     double prev_time = glfwGetTime();
     double start_time = glfwGetTime();
     game.bt.start(0);
-    float ratio = 0.5;
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
-        game.rotate_my_fighter();
         filled_view(g, 0.2, 0.2, 0.2);
         show_component();
         // btn_go_next_scene->button_view();
         game.bt.timer();
+        game.view_rotated_myfighter();
+
 
         double now_time = glfwGetTime();
         double era = now_time - start_time;
@@ -93,7 +94,6 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         }
 
         game.operate_my_fighter(wp, ap, sp, dp);
-        game.view();
 
         glfwSwapBuffers(window1);
         glfwPollEvents();
@@ -126,7 +126,7 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     game.bt.inputShooting(spacep);
 
     if(key == GLFW_KEY_R && action == GLFW_PRESS) {
-        game.rotate_my_fighter();
+        // game.rotate_my_fighter();
     }
     if(key == GLFW_KEY_V && action == GLFW_PRESS) {}
 }
