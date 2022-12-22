@@ -1,7 +1,7 @@
 #pragma once
 #include <DataOf2D.hpp>
-#include <component/Location.hpp>
 #include <GLFW/glfw3.h>
+#include <component/Location.hpp>
 #include <string>
 typedef unsigned char ubyte_t;
 // imgディレクトリであることは前提とする
@@ -25,24 +25,7 @@ class PngTexture {
     void view();
     void view_clone(Location loc);
     void view(DataOf2D pos, float ratio = 1.0,
-              const vector<float> &col = vector<float>(3, 1.0)) {
-        float w = width / Setting::WINDOW_width,
-              h = height / Setting::WINDOW_height;
-        glEnable(GL_TEXTURE_2D);
-        glNormal3d(0.0, 0.0, 1.0);
-        glBegin(GL_QUADS);
-        glColor3d(col[0], col[1], col[2]);
-        glTexCoord2d(0, 0 + 1);
-        glVertex3d(pos.x - w * ratio, pos.y - h * ratio, 0.0);
-        glTexCoord2d(0 + 1, 0 + 1);
-        glVertex3d(pos.x + w * ratio, pos.y - h * ratio, 0.0);
-        glTexCoord2d(0 + 1, 0);
-        glVertex3d(pos.x + w * ratio, pos.y + h * ratio, 0.0);
-        glTexCoord2d(0, 0);
-        glVertex3d(pos.x - w * ratio, pos.y + h * ratio, 0.0);
-        glEnd();
-        glDisable(GL_TEXTURE_2D);
-    }
+              const vector<float> &col = vector<float>(3, 1.0)) ;
     unsigned int getID();
 
     unsigned int getWidth();

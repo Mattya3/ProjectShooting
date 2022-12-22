@@ -3,8 +3,8 @@
 #include <bits/stdc++.h>
 #include <component/Image.hpp>
 #include <filesystem>
-#include <stdexcept>
 #include <lodepng.h>
+#include <stdexcept>
 
 using namespace std;
 using std::filesystem::current_path;
@@ -29,7 +29,7 @@ PngTexture::PngTexture(const string &fname) {
     loc.ylen = double(this->getHeight()) / double(Setting::WINDOW_height);
 }
 PngTexture::PngTexture() {}
-PngTexture::~PngTexture() { }
+PngTexture::~PngTexture() {}
 void PngTexture::view() {
     glColor3d(1.0, 1.0, 1.0);
     glBindTexture(GL_TEXTURE_2D, id);
@@ -59,7 +59,7 @@ void PngTexture::init() {
         std::cout << "error " << error << ": " << lodepng_error_text(error)
                   << std::endl;
         exit(1);
-    } 
+    }
 
     // テクスチャへの登録
     glBindTexture(GL_TEXTURE_2D, id);
@@ -121,6 +121,26 @@ void PngTexture::view_clone(Location loca) {
 
 // unsigned char *PngTexture::rawData() { return data; }
 
+void PngTexture::view(DataOf2D pos, float ratio, const vector<float> &col) {
+    float w = float(width) / Setting::WINDOW_width,
+          h = float(height) / Setting::WINDOW_height;
+
+    glEnable(GL_TEXTURE_2D);
+    glNormal3d(0.0, 0.0, 1.0);
+    glBegin(GL_QUADS);
+    glColor3d(col[0], col[1], col[2]);
+    glBindTexture(GL_TEXTURE_2D, this->getID());
+    glTexCoord2d(0, 0 + 1);
+    glVertex3d(pos.x - w * ratio, pos.y - h * ratio, 0.0);
+    glTexCoord2d(0 + 1, 0 + 1);
+    glVertex3d(pos.x + w * ratio, pos.y - h * ratio, 0.0);
+    glTexCoord2d(0 + 1, 0);
+    glVertex3d(pos.x + w * ratio, pos.y + h * ratio, 0.0);
+    glTexCoord2d(0, 0);
+    glVertex3d(pos.x - w * ratio, pos.y + h * ratio, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
 unsigned int PngTexture::getID() { return id; }
 
 unsigned int PngTexture::getWidth() { return width; }
