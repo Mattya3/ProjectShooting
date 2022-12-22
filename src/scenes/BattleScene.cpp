@@ -46,7 +46,7 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         "battle/bulletMe.png", Location(-0.8, -0.8, 0.05, 0.05)));
     PngTexture ene("battle/bulletEnemy.png", Location(-0.8, -0.8, 0.05, 0.05));
     PngTexture mybullet("battle/bulletMe.png");
-    Location g(game.SX, game.SY, game.WindowWidth, game.WindowHeight);
+    Location g(SX, SY, WindowWidth, WindowHeight);
     Button_anyTimes *game_space = new Button_anyTimes(g);
     game_space->set_color(0, 0, 1);
     Button_anyTimes *red = new Button_anyTimes(g);
@@ -55,45 +55,43 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     black->set_color(0.1, 0.1, 0.1);
     PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
     PngTexture sample("battle/enemy.png");
-    PngTexture me("battle/me.png");
-    game.bt.viewer.hero.size;
-    cout << heart.getID() << endl;
- 
 
     double prev_time = glfwGetTime();
     double start_time = glfwGetTime();
-    game.bt.start(0);
+    bt.start(0);
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
         filled_view(g, 0.2, 0.2, 0.2);
         show_component();
         // btn_go_next_scene->button_view();
-        game.bt.timer();
-        game.view_rotated_myfighter();
+        bt.timer();
+        view_rotated_myfighter();
 
         life.view();
-        heart.view(DataOf2D(0, 0));
         double now_time = glfwGetTime();
         double era = now_time - start_time;
-        sample.view_clone(Location(0, 0, 50, 50));
+        testboss.view_clone(Location(20, 20, 50, 50));
+        testboss.view_clone(Location(70, 70, 50, 50));
 
-        game.bt.viewer.callEnemy();
-        auto d = game.bt.viewer.callHeroBullet();
+        testboss.view_clone(Location(460, 20, 50, 50));
+
+        bt.viewer.callEnemy();
+        auto d = bt.viewer.callHeroBullet();
         for(auto &&i : d) {
-            mybullet.view_clone(to_Location(i, 32, 32));
+            mybullet.view_clone(to_Location(i, i.size, i.size));
         }
 
-        auto en = game.bt.viewer.callEnemy();
+        auto en = bt.viewer.callEnemy();
         for(auto &&i : en) {
-            sample.view_clone(to_Location(i, 32, 32));
+            sample.view_clone(to_Location(i, i.size, i.size));
         }
 
-        auto ebs = game.bt.viewer.callEnemyBullet();
+        auto ebs = bt.viewer.callEnemyBullet();
         for(auto &&i : ebs) {
-            ene.view_clone(to_Location(i, 16, 16));
+            ene.view_clone(to_Location(i, i.size, i.size));
         }
 
-        game.operate_my_fighter(wp, ap, sp, dp);
+        operate_my_fighter(wp, ap, sp, dp);
 
         glfwSwapBuffers(window1);
         glfwPollEvents();
@@ -123,10 +121,10 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     control_key_flag(GLFW_KEY_S, sp);
     control_key_flag(GLFW_KEY_D, dp);
     control_key_flag(GLFW_KEY_SPACE, spacep);
-    game.bt.inputShooting(spacep);
+    bt.inputShooting(spacep);
 
     if(key == GLFW_KEY_R && action == GLFW_PRESS) {
-        // game.rotate_my_fighter();
+        // rotate_my_fighter();
         life.decrement_stock();
     }
     if(key == GLFW_KEY_V && action == GLFW_PRESS) {}

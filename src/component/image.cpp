@@ -15,7 +15,7 @@ PngTexture::PngTexture(const string &fname, Location loc) : loc(loc) {
         (current_path() / filesystem::path("img/" + fname)).string().c_str();
     id = tid; // 各テクスチャに固有可する
     ++tid;
-    cout << filename << " as " << tid << endl;
+    cout << fname << " as " << tid << endl;
     init();
 }
 PngTexture::PngTexture(const string &fname) {
@@ -23,7 +23,7 @@ PngTexture::PngTexture(const string &fname) {
         (current_path() / filesystem::path("img/" + fname)).string().c_str();
     id = tid; // 各テクスチャに固有可する
     ++tid;
-    cout << filename << " as " << tid << endl;
+    cout << fname << " as " << tid << endl;
     init();
     loc.xlen = double(this->getWidth()) / double(Setting::WINDOW_width);
     loc.ylen = double(this->getHeight()) / double(Setting::WINDOW_height);
@@ -124,12 +124,11 @@ void PngTexture::view_clone(Location loca) {
 void PngTexture::view(DataOf2D pos, float ratio, const vector<float> &col) {
     float w = float(width) / Setting::WINDOW_width,
           h = float(height) / Setting::WINDOW_height;
-
     glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, this->getID());
     glNormal3d(0.0, 0.0, 1.0);
     glBegin(GL_QUADS);
     glColor3d(col[0], col[1], col[2]);
-    glBindTexture(GL_TEXTURE_2D, this->getID());
     glTexCoord2d(0, 0 + 1);
     glVertex3d(pos.x - w * ratio, pos.y - h * ratio, 0.0);
     glTexCoord2d(0 + 1, 0 + 1);

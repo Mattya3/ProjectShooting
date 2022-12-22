@@ -1,7 +1,7 @@
 #pragma once
 #include <DataOf2D.hpp>
-#include <component/Image.hpp>
 #include <bits/stdc++.h>
+#include <component/Image.hpp>
 using namespace std;
 
 class RemainingStatus {
@@ -14,7 +14,6 @@ class RemainingStatus {
   public:
     void view() {
         DataOf2D p = view_start_point;
-        // cout << valid_tex.getID() << endl;
         for(int i = 1; i < max_stock + 1; i++) {
             if(i <= now_stock) {
                 valid_tex.view(p);
@@ -24,7 +23,7 @@ class RemainingStatus {
             p.x += len.x * 1.8;
         }
     }
-    RemainingStatus(DataOf2D st, PngTexture valid, PngTexture invalid,
+    RemainingStatus(DataOf2D st, PngTexture &valid, PngTexture &invalid,
                     int stock)
         : view_start_point(st), valid_tex(valid), invalid_tex(invalid),
           max_stock(stock), now_stock(stock) {
