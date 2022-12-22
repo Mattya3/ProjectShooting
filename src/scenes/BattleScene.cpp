@@ -54,7 +54,7 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     black->set_color(0.1, 0.1, 0.1);
     int cnt_of_attacked = 0;
     PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
-    PngTexture sample("ic_launcher.png");
+    PngTexture sample("battle/enemy.png");
     PngTexture me("battle/me.png");
 
     double prev_time = glfwGetTime();
