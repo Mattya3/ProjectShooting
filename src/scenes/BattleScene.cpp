@@ -41,6 +41,7 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     btn_go_next_scene = new NextSceneButton(Location(-0.6, -0.4, 1.2, 0.3),
                                             "test_img/go_title.png");
     cout << "here ok " << endl;
+
     enemies.emplace_back(make_unique<PngTexture>(
         "battle/bulletMe.png", Location(-0.8, -0.8, 0.05, 0.05)));
     PngTexture ene("battle/bulletEnemy.png", Location(-0.8, -0.8, 0.05, 0.05));
@@ -52,29 +53,29 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     red->set_color(1, 0, 0);
     Button_anyTimes *black = new Button_anyTimes(g);
     black->set_color(0.1, 0.1, 0.1);
-    int cnt_of_attacked = 0;
     PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
     PngTexture sample("battle/enemy.png");
     PngTexture me("battle/me.png");
+    game.bt.viewer.hero.size;
+    cout << heart.getID() << endl;
+ 
 
     double prev_time = glfwGetTime();
     double start_time = glfwGetTime();
     game.bt.start(0);
-    float ratio = 0.5;
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
-        game.rotate_my_fighter();
         filled_view(g, 0.2, 0.2, 0.2);
         show_component();
         // btn_go_next_scene->button_view();
         game.bt.timer();
+        game.view_rotated_myfighter();
 
+        life.view();
+        heart.view(DataOf2D(0, 0));
         double now_time = glfwGetTime();
         double era = now_time - start_time;
         sample.view_clone(Location(0, 0, 50, 50));
- 
-
-
 
         game.bt.viewer.callEnemy();
         auto d = game.bt.viewer.callHeroBullet();
@@ -93,7 +94,6 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         }
 
         game.operate_my_fighter(wp, ap, sp, dp);
-        game.view();
 
         glfwSwapBuffers(window1);
         glfwPollEvents();
@@ -126,7 +126,8 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     game.bt.inputShooting(spacep);
 
     if(key == GLFW_KEY_R && action == GLFW_PRESS) {
-        game.rotate_my_fighter();
+        // game.rotate_my_fighter();
+        life.decrement_stock();
     }
     if(key == GLFW_KEY_V && action == GLFW_PRESS) {}
 }
