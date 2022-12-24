@@ -13,7 +13,6 @@ void PatternPoint::putPattern(string line){
 }
 
 void PatternPoint::changeLoop(){
-    cout << "!?" << endl;
     nowLoop = 0;
     if(moveId.size() <= ++nowPattern) nowPattern = 0;
 }

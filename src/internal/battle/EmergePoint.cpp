@@ -1,6 +1,7 @@
 #include <internal/battle/EmergePoint.hpp>
 
 int EmergePoint::setFirst(string line){
+    moving.clear();
     vector<string> data = split(line, ' ');
     emergeTime = stoi(data.at(0));
     enemyId = stoi(data.at(1));
