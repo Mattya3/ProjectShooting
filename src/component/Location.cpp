@@ -7,6 +7,3 @@ Location::Location(int sx, int sy, int xlen, int ylen) {
     this->xlen = double(xlen) / double(Setting::WINDOW_width) * 2;
     this->ylen = double(ylen) / double(Setting::WINDOW_height) * 2;
 }
-Location to_Location(GamePointMono gpm, int w, int h) {
-    return Location(int(gpm.position.first), int(gpm.position.second), w, h);
-}
