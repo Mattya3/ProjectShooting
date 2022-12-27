@@ -116,7 +116,7 @@ void EnemyPoint::makeMove(){
         case 4://縦(右)移動(弾を400ms毎に発射)
             if(prepareMoving){
                 nowVelocity = 0.5 * velocity;
-                prepareMoving = goTo((3 * moving.at(0).moveId.at(moving.at(0).nowPattern) - 8)width / 5,  -1, directionFlag);
+                prepareMoving = goTo((3 * moving.at(0).moveId.at(moving.at(0).nowPattern) - 8) * width / 5,  -1, directionFlag);
                 directionFlag = false;
             }else{
                 nowVelocity = velocity;
