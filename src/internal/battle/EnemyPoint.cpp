@@ -28,26 +28,30 @@ void EnemyPoint::timer(vector<pair<double, double>> points, vector<BulletPoint> 
 }
 
 void EnemyPoint::shoot(pair<double, double> points, vector<BulletPoint> &bullets){
-    double random = moving.at(0).random.at(moving.at(0).nowPattern) * (rand() % 100);
+    double random = M_PI *  moving.at(0).random.at(moving.at(0).nowPattern) * (rand() % 100) / 18000;
     if(rand() % 2 == 1) random *= -1;
     int count = shootNum;
     double changeAngle = shootAngle * M_PI / 180;
-    double afterAngle;
+    double afterAngle, forAngle;
     pair<double, double> shooter = position;
     bullet.setFirstSituation(shooter);
-    if(moving.at(0).angles.at(moving.at(0).nowPattern) >= 0) afterAngle = moving.at(0).angles.at(moving.at(0).nowPattern) + random;
-    else afterAngle = goHero(points) + random;
+    cout << "angle:" << moving.at(0).angles.at(moving.at(0).nowPattern) << ", random:" << random << endl;
+    if(moving.at(0).angles.at(moving.at(0).nowPattern) >= 0) forAngle = moving.at(0).angles.at(moving.at(0).nowPattern) + random;
+    else forAngle = goHero(points) + random;
+    if(forAngle < 0) forAngle += 2 * M_PI;
+    if(forAngle > 2 * M_PI) forAngle -= 2 * M_PI;
+    cout << "becomeangle:" << forAngle << endl;
     if(shootNum % 2 == 1){
-        bullet.changeAngle(afterAngle);
+        bullet.changeAngle(forAngle);
         bullets.push_back(bullet);
         count = (shootNum - 1) / 2;
         while(count > 0){
-            afterAngle = afterAngle + count * changeAngle;
+            afterAngle = forAngle + count * changeAngle;
             if(afterAngle < 0) afterAngle += 2 * M_PI;
             if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
             bullet.changeAngle(afterAngle);
             bullets.push_back(bullet);
-            afterAngle = angle - count * changeAngle;
+            afterAngle = forAngle - count * changeAngle;
             if(afterAngle < 0) afterAngle += 2 * M_PI;
             if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
             bullet.changeAngle(afterAngle);
@@ -57,12 +61,12 @@ void EnemyPoint::shoot(pair<double, double> points, vector<BulletPoint> &bullets
     }else{
         count = (shootNum - 1) / 2;
         while(count > 0){
-            afterAngle = afterAngle + (count + 1 / 2) * changeAngle;
+            afterAngle = forAngle + (count + 1 / 2) * changeAngle;
             if(afterAngle < 0) afterAngle += 2 * M_PI;
             if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
             bullet.changeAngle(afterAngle);
             bullets.push_back(bullet);
-            afterAngle = afterAngle - (count + 1 / 2) * changeAngle;
+            afterAngle = forAngle - (count + 1 / 2) * changeAngle;
             if(afterAngle < 0) afterAngle += 2 * M_PI;
             if(afterAngle > 2 * M_PI) afterAngle -= 2 * M_PI;
             bullet.changeAngle(afterAngle);
@@ -86,19 +90,21 @@ void EnemyPoint::makeMove(){
             if(times >= 300){
                 times = 0;
                 shootFlag = true;
+                moving.at(0).nowLoop++;
             }
             break;
-        case 1://横移動(弾を400ms毎に発射)
+        case 1://横(上)移動(弾を400ms毎に発射)
+        case 2://横(下)移動(弾を400ms毎に発射)
             if(prepareMoving){
                 nowVelocity = 0.5 * velocity;
-                prepareMoving = goTo(-1, height / 4, directionFlag);
+                prepareMoving = goTo(-1, (4 * moving.at(0).moveId.at(moving.at(0).nowPattern) - 3) * height / 6, directionFlag);
                 directionFlag = false;
             }else{
                 nowVelocity = velocity;
                 if(moving.at(0).nowLoop % 2 == 0){
-                    if(!goTo(size, -1, true)) moving.at(0).nowLoop = 1;
+                    if(!goTo(size, -1, true)) moving.at(0).nowLoop++;
                 }else{
-                    if(!goTo(width - size, -1, true)) moving.at(0).nowLoop = 0;
+                    if(!goTo(width - size, -1, true)) moving.at(0).nowLoop++;
                 }
                 if(times >= 400){
                     times = 0;
@@ -106,7 +112,26 @@ void EnemyPoint::makeMove(){
                 }
             }
             break;
-    
+        case 3://縦(左)移動(弾を400ms毎に発射)
+        case 4://縦(右)移動(弾を400ms毎に発射)
+            if(prepareMoving){
+                nowVelocity = 0.5 * velocity;
+                prepareMoving = goTo((3 * moving.at(0).moveId.at(moving.at(0).nowPattern) - 8)width / 5,  -1, directionFlag);
+                directionFlag = false;
+            }else{
+                nowVelocity = velocity;
+                if(moving.at(0).nowLoop % 2 == 0){
+                    if(!goTo(-1, size, true)) moving.at(0).nowLoop++;
+                }else{
+                    if(!goTo(-1, height - size, true)) moving.at(0).nowLoop++;
+                }
+                if(times >= 400){
+                    times = 0;
+                    shootFlag = true;
+                }
+            }
+            break;
+        
         default:
             break;
     }

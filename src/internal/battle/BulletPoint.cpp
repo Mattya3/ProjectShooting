@@ -5,8 +5,8 @@ void BulletPoint::setting(vector<string> data){
     size = stoi(data.at(1));
     velocity = stod(data.at(2));
     canReflect = stoi(data.at(3));
-    searchLange = stod(data.at(4));
-    hormingPower = stoi(data.at(5));
+    searchLange = stoi(data.at(4));
+    hormingPower = stod(data.at(5));
 }
 
 void BulletPoint::setSize(int h, int w){

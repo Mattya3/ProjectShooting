@@ -101,8 +101,8 @@ void NormalPoint::setBullet(int bulletId){
     if(files.fail()){
         cerr << "Error: not open BulletData" << endl;//ファイル読み込みエラー発生時の処理
     }
-    getline(files, line);
     for(int i = 0; i < bulletId; i++) getline(files, line);
+     getline(files, line);
     data = split(line, ' ');
     bullet.setting(data);
     shootNum = stoi(data.at(6));
