@@ -19,8 +19,8 @@ public:
     pair<double, double> position;
     int size;
     int exp;
-    int velocity;
-    int nowVelocity;
+    double velocity;
+    double nowVelocity;
     int setHitTime;
     int hitTime = 0;
     double angle;//ラジアン表記
