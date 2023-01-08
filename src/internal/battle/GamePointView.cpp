@@ -61,7 +61,8 @@ void GamePointView::putCard(vector<Card> l){
     for(int i = 0; i < l.size(); i++){
         card.cardName = l.at(i).cardName;
         card.cardLevel = 1;
-        card.needEXP = l.at(i).needEXP;
+        if(card.cardName == "未セット") card.needEXP = -1;
+        else card.needEXP = l.at(i).needEXP;
         cards.push_back(card);
     }
 }
