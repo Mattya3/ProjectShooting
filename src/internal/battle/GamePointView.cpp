@@ -1,5 +1,9 @@
 #include <internal/battle/GamePointView.hpp>
 
+int GamePointView::callHp(){
+    return herohasHp;
+}
+
 GamePointMono GamePointView::callHero(){
     return hero;
 }
@@ -14,6 +18,14 @@ vector<GamePointMono> GamePointView::callHeroBullet(){
 
 vector<GamePointMono> GamePointView::callEnemyBullet(){
     return enemyBullets;
+}
+
+vector<GameCardMono> GamePointView::callCard(){
+    return cards;
+}
+
+void GamePointView::putHp(int hp){
+    herohasHp = hp;
 }
 
 void GamePointView::putHero(HeroPoint h, vector<BulletPoint> b){
@@ -47,3 +59,17 @@ void GamePointView::putEnemy(vector<EnemyPoint> e, vector<BulletPoint> b){
     }
 }
 
+void GamePointView::putCard(vector<Card> l){
+    GameCardMono card;
+    for(int i = 0; i < l.size(); i++){
+        card.cardName = l.at(i).cardName;
+        card.cardLevel = 1;
+        card.needEXP = l.at(i).needEXP;
+        cards.push_back(card);
+    }
+}
+
+void GamePointView::putCardLevel(int number, int count){
+    cards.at(number).cardLevel++;
+    if(count <= 0) cards.at(number).needEXP = -1;
+}

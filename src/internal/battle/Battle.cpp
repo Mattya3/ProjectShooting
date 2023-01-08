@@ -9,6 +9,7 @@ void Battle::start(int stage) {//初期設定用のメソッド, 引数はステ
     hero.setting(0);
     hero.setBullet(0);
     hero.setCardlist(list);
+    viewer.putCard(list);
     pair<double, double> z;
     z.first = battle_width / 2;
     z.second = 3 * battle_height / 4;
@@ -131,6 +132,10 @@ void Battle::inputShooting(bool flag){//操作入力の反映メソッド
 
 void Battle::inputLevelUp(int target){//操作入力の反映メソッド
     if(score >= hero.getExp()){
-        if(hero.levelUp(target)) score -= hero.getExp();
+        int up = hero.levelUp(target);
+        if(up >= 0){
+            score -= hero.getExp();
+            viewer.putCardLevel(target, up);
+        }
     }
 }

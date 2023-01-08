@@ -24,7 +24,7 @@ public:
 
     void changeDirection(double per);
 
-    bool levelUp(int target);
+    int levelUp(int target);
 
     void timer(vector<BulletPoint> &bullets);
 

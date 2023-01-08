@@ -35,12 +35,10 @@ void EnemyPoint::shoot(pair<double, double> points, vector<BulletPoint> &bullets
     double afterAngle, forAngle;
     pair<double, double> shooter = position;
     bullet.setFirstSituation(shooter);
-    cout << "angle:" << moving.at(0).angles.at(moving.at(0).nowPattern) << ", random:" << random << endl;
     if(moving.at(0).angles.at(moving.at(0).nowPattern) >= 0) forAngle = moving.at(0).angles.at(moving.at(0).nowPattern) + random;
     else forAngle = goHero(points) + random;
     if(forAngle < 0) forAngle += 2 * M_PI;
     if(forAngle > 2 * M_PI) forAngle -= 2 * M_PI;
-    cout << "becomeangle:" << forAngle << endl;
     if(shootNum % 2 == 1){
         bullet.changeAngle(forAngle);
         bullets.push_back(bullet);

@@ -16,9 +16,9 @@ void HeroPoint::setCardlist(vector<Card> sets){
     }
 }
 
-bool HeroPoint::levelUp(int target){
+int HeroPoint::levelUp(int target){
     int changedNum;
-    if(list.at(target).upNum <= 0) return false;
+    if(list.at(target).upNum <= 0) return -1;
     list.at(target).upNum--;
     if (level.at(target)++ == 1) changedNum = list.at(target).uped1;
     else changedNum = list.at(target).uped2;
@@ -61,7 +61,7 @@ bool HeroPoint::levelUp(int target){
                 break;
         }
     }
-    return true;
+    return list.at(target).upNum;
 }
 
 void HeroPoint::timer(vector<BulletPoint> &bullets){
