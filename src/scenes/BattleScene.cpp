@@ -51,6 +51,9 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     black->set_color(0.1, 0.1, 0.1);
     PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
     PngTexture sample("battle/enemy.png");
+    GamePointMono gpmtest;
+    gpmtest.position = {40, 40};
+    gpmtest.size = 32;
 
     double prev_time = glfwGetTime();
     double start_time = glfwGetTime();
@@ -61,12 +64,17 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         show_component();
         // btn_go_next_scene->button_view();
         bt.timer();
-        view_rotated_myfighter();
-
-        life.view(bt.viewer.callHp());
-        cout << "hp " << bt.viewer.callHp() << endl;
         double now_time = glfwGetTime();
         double era = now_time - start_time;
+
+        life.view(bt.viewer.callHp());
+
+
+        auto x = bt.viewer.callHero();
+        view_rotated_myfighter(x);
+        // testboss.view_clone(to_Location(x));
+        // sample.view_clone(to_Location(x));
+
         bt.viewer.callEnemy();
         auto d = bt.viewer.callHeroBullet();
         for(auto &&i : d) {
