@@ -14,7 +14,7 @@ class Location {
     Location(int sx, int sy, int xlen, int ylen);
     Location() {}
     void dump(){
-      cout << sx << "," << sy << endl;
+      // cout << sx << "," << sy << endl;
     }
     // Location(Location &c):Location(c.sx,c.sy,c.xlen,c.ylen) {}
 };

@@ -17,7 +17,7 @@ class BattleScene : Scene {
     PngTexture heart = PngTexture("status/redheart.png");
     PngTexture gray_heart = PngTexture("status/heart.png");
     RemainingStatus life =
-        RemainingStatus(DataOf2D(0.3, 0), heart, gray_heart, 5);
+        RemainingStatus(DataOf2D(0.3, 0), heart, gray_heart, 100);
     vector<Location> bullets_loc_enemy; // 敵の弾の位置
     Location game_domain = Location(SX, SY, WindowWidth, WindowHeight);
     CenterLocation domain = CenterLocation(game_domain);
@@ -43,6 +43,14 @@ class BattleScene : Scene {
         float hh = float(h) / Setting::WINDOW_height * 2;
         return Location(pp.x - ww / 2, pp.y - hh / 2, ww, hh);
     }
+    Location to_Location(GamePointMono gpm) {
+        auto pp = to_correctxy(gpm.position);
+        int w = gpm.size;
+        int h = gpm.size;
+        float ww = float(w) / Setting::WINDOW_width * 2;
+        float hh = float(h) / Setting::WINDOW_height * 2;
+        return Location(pp.x - ww / 2, pp.y - hh / 2, ww, hh);
+    }
 
   public:
     Battle bt;
@@ -52,12 +60,9 @@ class BattleScene : Scene {
     void operate_my_fighter(bool w, bool a, bool s, bool d) {
         bt.inputMoving(w, a, s, d);
     }
-    void view_rotated_myfighter() {
-        auto x = bt.viewer.callHero();
+    void view_rotated_myfighter(GamePointMono x) {
         float rotate = x.keyNum * 180 / M_PI;
-        auto [px, py] = x.position;
-        cout << px << "," << py << endl;
-        auto l = to_Location(x, x.size, x.size);
+        auto l = to_Location(x);
         glPushMatrix();
         glTranslatef(l.sx + l.xlen / 2, l.sy + l.ylen / 2, 0);
         glRotatef(rotate, 0, 0, 1);
