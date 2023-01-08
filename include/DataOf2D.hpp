@@ -51,7 +51,7 @@ class DataOf2D {
         return *this;
     }
 
-    void dump() { std::cout << x << ',' << y << std::endl; }
+    void dump() { std::cout << "Do2: " << x << ',' << y << std::endl; }
     static DataOf2D to_viewpos_from_gamepos(DataOf2D x) {
         return DataOf2D(0, 0);
     }

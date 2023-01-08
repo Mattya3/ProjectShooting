@@ -17,7 +17,7 @@ class BattleScene : Scene {
     PngTexture heart = PngTexture("status/redheart.png");
     PngTexture gray_heart = PngTexture("status/heart.png");
     RemainingStatus life =
-        RemainingStatus(DataOf2D(0.3, 0), heart, gray_heart, 5);
+        RemainingStatus(DataOf2D(0.3, 0), heart, gray_heart, 100);
     vector<Location> bullets_loc_enemy; // 敵の弾の位置
     Location game_domain = Location(SX, SY, WindowWidth, WindowHeight);
     CenterLocation domain = CenterLocation(game_domain);
@@ -56,7 +56,6 @@ class BattleScene : Scene {
         auto x = bt.viewer.callHero();
         float rotate = x.keyNum * 180 / M_PI;
         auto [px, py] = x.position;
-        cout << px << "," << py << endl;
         auto l = to_Location(x, x.size, x.size);
         glPushMatrix();
         glTranslatef(l.sx + l.xlen / 2, l.sy + l.ylen / 2, 0);
