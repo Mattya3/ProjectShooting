@@ -3,8 +3,8 @@ PointData
 2行目以降: HP size 移動スピード ダメージ硬直 EXP
 
 StageData
--なし: 出現時間 id パターン数 出現座標x 出現座標y
--あり: HP割合 パターン数 moveid bulletid ループ回数 発射角度 乱数
+// 出現時間 id パターン数 出現座標x 出現座標y
+// + HP割合 パターン数 moveid bulletid ループ回数 発射角度 乱数
 
 BulletData
 : damage size 移動スピード 反射回数 索敵範囲 索敵能力 発射数 発射角度 発射方向

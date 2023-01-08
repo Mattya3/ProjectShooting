@@ -95,6 +95,8 @@ void Battle::loading(int stage) {//ステージ読み込みのメソッド
         cerr << "Error: not open StageData/" << stage
              << endl; // ファイル読み込みエラー発生時の処理
     }
+    getline(files, line);//余分の読み込み
+    getline(files, line);//余分の読み込み
     while(getline(files, line)) {//ファイル全体を読み込む
         pattern = token.setFirst(line);//各敵の動作パターンの数を入れる
         for(int i = 0; i < pattern; i++) {//動作パターンの数だけその敵に追加する

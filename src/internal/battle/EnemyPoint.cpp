@@ -129,7 +129,49 @@ void EnemyPoint::makeMove(){
                 }
             }
             break;
-        
+        case 5://一発撃って消える(上から出てくる)
+            if(prepareMoving){
+                nowVelocity = 0.5 * velocity;
+                prepareMoving = goTo(-1, height / 6, directionFlag);
+                directionFlag = false;
+                times = 0;
+            }else{
+                if(movingUseStatus == 1){
+                    nowVelocity = 0.5 * velocity;
+                    if(!goTo(-1, size, true)){
+                        nowHP = 0;
+                    }
+                }else if(times >= 500 && movingUseStatus == 0){
+                    movingUseStatus = 1;
+                    shootFlag = true;
+                }else{
+                    nowVelocity = 0;
+                }
+            }        
+            break;    
+        case 6:
+            if(prepareMoving){
+                nowVelocity = 1.5 * velocity;
+                prepareMoving = goTo(-1, height / 6, directionFlag);
+                directionFlag = false;
+                times = 0;
+                movingUseStatus = 2;
+            }else{
+                if(movingUseStatus % 2 == 0){
+                    nowVelocity = 2 * velocity;
+                    if(!goTo((1 + 3 * movingUseStatus / 2) * width / 8, (2 - (movingUseStatus % 4) / 2) * height / 8, true)){
+                        movingUseStatus++;
+                        nowVelocity = 0;
+                    }
+                    times = 0;
+                }else{
+                    if(times >= 300){
+                        movingUseStatus = (movingUseStatus + 1) % 6;
+                        shootFlag = true;
+                    }
+                }
+            }
+            break;
         default:
             break;
     }
