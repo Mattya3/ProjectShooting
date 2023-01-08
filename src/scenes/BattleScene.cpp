@@ -63,7 +63,10 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         bt.timer();
         view_rotated_myfighter();
 
-        life.view();
+
+        // life.view(bt.viewer.);
+        life.view(bt.viewer.callHp());
+        cout << "hp " << bt.viewer.callHp()<< endl;
         double now_time = glfwGetTime();
         double era = now_time - start_time;
         bt.viewer.callEnemy();
