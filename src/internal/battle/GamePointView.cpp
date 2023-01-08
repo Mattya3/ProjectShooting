@@ -4,6 +4,14 @@ int GamePointView::callHp(){
     return heroHasHp;
 }
 
+int GamePointView::callScore(){
+    return score;
+}
+
+int GamePointView::callNeedEXP(){
+    return needLevelUpEXP;
+}
+
 GamePointMono GamePointView::callHero(){
     return hero;
 }
@@ -22,6 +30,10 @@ vector<GamePointMono> GamePointView::callEnemyBullet(){
 
 vector<GameCardMono> GamePointView::callCard(){
     return cards;
+}
+
+void GamePointView::putScore(int get){
+    score = get;
 }
 
 void GamePointView::putHero(HeroPoint h, vector<BulletPoint> b){
@@ -63,6 +75,7 @@ void GamePointView::putCard(vector<Card> l){
         card.cardLevel = 1;
         if(card.cardName == "未セット") card.needEXP = -1;
         else card.needEXP = l.at(i).needEXP;
+        needLevelUpEXP += l.at(i).needEXP;
         cards.push_back(card);
     }
 }
