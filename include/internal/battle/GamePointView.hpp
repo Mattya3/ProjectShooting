@@ -11,7 +11,7 @@ using namespace std;
 
 class GamePointView{//カードデータを保存する関数
 public:
-    int herohasHp;
+    int heroHasHp;
     GamePointMono hero;
     vector<GamePointMono> enemies;
     vector<GamePointMono> heroBullets;
@@ -29,8 +29,6 @@ public:
     vector<GamePointMono> callEnemyBullet();
 
     vector<GameCardMono> callCard();
-
-    void putHp(int hp);
 
     void putHero(HeroPoint h, vector<BulletPoint> b);
 
