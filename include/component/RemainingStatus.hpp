@@ -23,6 +23,17 @@ class RemainingStatus {
             p.x += len.x * 1.8;
         }
     }
+    void view(int having_stoc) {
+        DataOf2D p = view_start_point;
+        for(int i = 1; i < max_stock + 1; i++) {
+            if(i <= having_stoc) {
+                valid_tex.view(p);
+            } else {
+                invalid_tex.view(p);
+            }
+            p.x += len.x * 1.8;
+        }
+    }
     RemainingStatus(DataOf2D st, PngTexture &valid, PngTexture &invalid,
                     int stock)
         : view_start_point(st), valid_tex(valid), invalid_tex(invalid),
