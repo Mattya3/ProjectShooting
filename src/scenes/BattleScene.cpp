@@ -40,10 +40,6 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     register_callback_resolver::init(*this, window1); // コールバック関数を登録
     btn_go_next_scene = new NextSceneButton(Location(-0.6, -0.4, 1.2, 0.3),
                                             "test_img/go_title.png");
-    cout << "here ok " << endl;
-
-    enemies.emplace_back(make_unique<PngTexture>(
-        "battle/bulletMe.png", Location(-0.8, -0.8, 0.05, 0.05)));
     PngTexture ene("battle/bulletEnemy.png", Location(-0.8, -0.8, 0.05, 0.05));
     PngTexture mybullet("battle/bulletMe.png");
     Location g(SX, SY, WindowWidth, WindowHeight);
@@ -70,11 +66,6 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         life.view();
         double now_time = glfwGetTime();
         double era = now_time - start_time;
-        testboss.view_clone(Location(20, 20, 50, 50));
-        testboss.view_clone(Location(70, 70, 50, 50));
-
-        testboss.view_clone(Location(460, 20, 50, 50));
-
         bt.viewer.callEnemy();
         auto d = bt.viewer.callHeroBullet();
         for(auto &&i : d) {

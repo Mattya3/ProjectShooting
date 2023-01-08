@@ -11,8 +11,8 @@ class BattleScene : Scene {
 
   private:
     // キーcallback用変数
-    const int WindowWidth = 440, WindowHeight = 660;
-    const int SX = 20, SY = 20; //  左上中心座標
+    const int WindowWidth = 444, WindowHeight = 660;
+    const int SX = 18, SY = 20; //  左上中心座標
     bool wp = false, ap = false, sp = false, dp = false, spacep = false;
     PngTexture heart = PngTexture("status/redheart.png");
     PngTexture gray_heart = PngTexture("status/heart.png");
@@ -23,8 +23,6 @@ class BattleScene : Scene {
     CenterLocation domain = CenterLocation(game_domain);
 
     // 画面上の要素
-    // ポインタでないとオーバーライドができないのでスマートポインタで宣言
-    vector<unique_ptr<PngTexture>> enemies; // 敵たち
     NextSceneButton *btn_go_next_scene;
 
   private:
@@ -43,7 +41,7 @@ class BattleScene : Scene {
         auto pp = to_correctxy(gpm.position);
         float ww = float(w) / Setting::WINDOW_width * 2;
         float hh = float(h) / Setting::WINDOW_height * 2;
-        return Location(pp.x - ww / 2, pp.y - hh / 2, ww,hh);
+        return Location(pp.x - ww / 2, pp.y - hh / 2, ww, hh);
     }
 
   public:
