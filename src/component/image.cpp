@@ -117,6 +117,24 @@ void PngTexture::view_clone(Location loca) {
     glEnd();
     glDisable(GL_TEXTURE_2D);
 }
+
+void PngTexture::view_clone(Location loca, vector<double> col_vec) {
+    glColor3d(col_vec[0], col_vec[1], col_vec[2]);
+    glBindTexture(GL_TEXTURE_2D, id);
+    glEnable(GL_TEXTURE_2D);
+    glNormal3d(0.0, 0.0, 1.0);
+    glBegin(GL_QUADS);
+    glTexCoord2d(0.0, 1.0);
+    glVertex3d(loca.sx, loca.sy, 0.0);
+    glTexCoord2d(1.0, 1.0);
+    glVertex3d(loca.sx + loca.xlen, loca.sy, 0.0);
+    glTexCoord2d(1.0, 0.0);
+    glVertex3d(loca.sx + loca.xlen, loca.sy + loca.ylen, 0.0);
+    glTexCoord2d(0.0, 0.0);
+    glVertex3d(loca.sx, loca.sy + loca.ylen, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
 // void PngTexture::final() { free(data); }
 
 // unsigned char *PngTexture::rawData() { return data; }

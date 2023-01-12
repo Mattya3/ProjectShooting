@@ -40,15 +40,8 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     register_callback_resolver::init(*this, window1); // コールバック関数を登録
     btn_go_next_scene = new NextSceneButton(Location(-0.6, -0.4, 1.2, 0.3),
                                             "test_img/go_title.png");
-    PngTexture ene("battle/bulletEnemy.png", Location(-0.8, -0.8, 0.05, 0.05));
-    PngTexture mybullet("battle/bulletMe.png");
+
     Location g(SX, SY, WindowWidth, WindowHeight);
-    Button_anyTimes *game_space = new Button_anyTimes(g);
-    game_space->set_color(0, 0, 1);
-    Button_anyTimes *red = new Button_anyTimes(g);
-    red->set_color(1, 0, 0);
-    Button_anyTimes *black = new Button_anyTimes(g);
-    black->set_color(0.1, 0.1, 0.1);
     PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
     PngTexture sample("battle/enemy.png");
     GamePointMono gpmtest;
@@ -58,17 +51,20 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     double prev_time = glfwGetTime();
     double start_time = glfwGetTime();
     bt.start(0);
+    bool go_Title_by_GameOver=false;
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
         filled_view(g, 0.2, 0.2, 0.2);
         show_component();
         // btn_go_next_scene->button_view();
         bt.timer();
+
         double now_time = glfwGetTime();
         double era = now_time - start_time;
 
         life.view(bt.viewer.callHp());
-
+        life2.view(bt.viewer.callHp());
+        life3.view(bt.viewer.callHp());
 
         auto x = bt.viewer.callHero();
         view_rotated_myfighter(x);
@@ -98,8 +94,13 @@ BattleScene::BattleScene(GLFWwindow *window1) {
         if(btn_go_next_scene->next_scene) {
             break;
         }
+        if(bt.viewer.callHp() < 0) {
+            cout << "GameOver" << endl;
+            go_Title_by_GameOver=true;
+            break;
+        }
     }
-    if(btn_go_next_scene->next_scene) {
+    if(btn_go_next_scene->next_scene || go_Title_by_GameOver) {
         delete btn_go_next_scene;
         Title_scene ts(window1);
     }

@@ -18,6 +18,15 @@ class BattleScene : Scene {
     PngTexture gray_heart = PngTexture("status/heart.png");
     RemainingStatus life =
         RemainingStatus(DataOf2D(0.3, 0), heart, gray_heart, 100);
+
+    RemainingStatus life2 =
+        RemainingStatus(DataOf2D(0.3, 0.5), heart, gray_heart, 100);
+    RemainingStatus life3 =
+        RemainingStatus(DataOf2D(0.3, -0.2), heart, gray_heart, 100);
+    PngTexture ene =
+        PngTexture("battle/bulletEnemy.png", Location(-0.8, -0.8, 0.05, 0.05));
+    PngTexture mybullet = PngTexture("battle/bulletMe.png");
+
     vector<Location> bullets_loc_enemy; // 敵の弾の位置
     Location game_domain = Location(SX, SY, WindowWidth, WindowHeight);
     CenterLocation domain = CenterLocation(game_domain);
