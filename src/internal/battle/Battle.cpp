@@ -44,6 +44,7 @@ void Battle::timer() {//メイン動作用の変数、毎回呼び出す
         if(appear.size() == 0)
             break;
     } while(appear.at(0).emergeTime == 0);//同時出現する敵がいなくなるまで
+    viewer.putScore(score);
     viewer.putHero(hero, heroBullets);
     viewer.putEnemy(enemy, enemyBullets);
 }

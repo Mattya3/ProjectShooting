@@ -6,5 +6,5 @@ class GameCardMono{
 public:
     string cardName;
     int cardLevel;
-    int needEXP;
+    int needEXP; //制限回数を超えたらここが-1になる
 };

@@ -12,6 +12,8 @@ using namespace std;
 class GamePointView{//カードデータを保存する関数
 public:
     int heroHasHp;
+    int score;
+    int needLevelUpEXP = 0;
     GamePointMono hero;
     vector<GamePointMono> enemies;
     vector<GamePointMono> heroBullets;
@@ -19,6 +21,10 @@ public:
     vector<GameCardMono> cards;
 
     int callHp();
+    
+    int callScore();
+
+    int callNeedEXP();
 
     GamePointMono callHero();
 
@@ -29,6 +35,8 @@ public:
     vector<GamePointMono> callEnemyBullet();
 
     vector<GameCardMono> callCard();
+
+    void putScore(int get);
 
     void putHero(HeroPoint h, vector<BulletPoint> b);
 
