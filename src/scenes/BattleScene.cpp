@@ -6,8 +6,6 @@
 #include <scenes/Title_Scene.hpp>
 
 #include <DataOf2D.hpp>
-#include <internal/battle/GamePointMono.hpp>
-#include <internal/battle/GamePointView.hpp>
 
 void filled_view(Location l, float r, float g, float b) {
     glBegin(GL_POLYGON);
@@ -19,7 +17,7 @@ void filled_view(Location l, float r, float g, float b) {
     glEnd();
 }
 
-void show_sphere(double x, double y, char c) {
+void show_point(double x, double y, char c) {
     glBegin(GL_POLYGON);
     if(c == 'R') {
         glColor3d(1.0, 0.0, 0.0);
@@ -40,66 +38,51 @@ BattleScene::BattleScene(GLFWwindow *window1) {
     register_callback_resolver::init(*this, window1); // コールバック関数を登録
     btn_go_next_scene = new NextSceneButton(Location(-0.6, -0.4, 1.2, 0.3),
                                             "test_img/go_title.png");
-    PngTexture ene("battle/bulletEnemy.png", Location(-0.8, -0.8, 0.05, 0.05));
-    PngTexture mybullet("battle/bulletMe.png");
-    Location g(SX, SY, WindowWidth, WindowHeight);
-    Button_anyTimes *game_space = new Button_anyTimes(g);
-    game_space->set_color(0, 0, 1);
-    Button_anyTimes *red = new Button_anyTimes(g);
-    red->set_color(1, 0, 0);
-    Button_anyTimes *black = new Button_anyTimes(g);
-    black->set_color(0.1, 0.1, 0.1);
-    PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
-    PngTexture sample("battle/enemy.png");
-    GamePointMono gpmtest;
-    gpmtest.position = {40, 40};
-    gpmtest.size = 32;
+    // debug
+    // PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
+    PngTexture testboss("ic_launcher.png", Location(-0.5, -0.5, 1.0, 1.0));
+
+    // end debug
 
     double prev_time = glfwGetTime();
     double start_time = glfwGetTime();
     bt.start(0);
+    bool go_Title_by_GameOver = false;
+
     while(!glfwWindowShouldClose(window1)) {
         glClear(GL_COLOR_BUFFER_BIT);
         filled_view(g, 0.2, 0.2, 0.2);
         show_component();
-        // btn_go_next_scene->button_view();
         bt.timer();
-        double now_time = glfwGetTime();
+
+        now_time = glfwGetTime();
         double era = now_time - start_time;
 
-        life.view(bt.viewer.callHp());
-
-
-        auto x = bt.viewer.callHero();
-        view_rotated_myfighter(x);
-        // testboss.view_clone(to_Location(x));
-        // sample.view_clone(to_Location(x));
-
-        bt.viewer.callEnemy();
-        auto d = bt.viewer.callHeroBullet();
-        for(auto &&i : d) {
-            mybullet.view_clone(to_Location(i, i.size, i.size));
+        if(is_gameover) {
+            if(now_time - game_end_time > 3) {
+                go_Title_by_GameOver = true;
+            }
+            render_game_over();
+            life.view(0);
+            life2.view(0);
+            testboss.view();
+        } else {
+            render_dynamic_view();
+            life.view(bt.viewer.callHp());
+            life2.view(bt.viewer.callHp());
+            life3.view(bt.viewer.callHp());
         }
-
-        auto en = bt.viewer.callEnemy();
-        for(auto &&i : en) {
-            sample.view_clone(to_Location(i, i.size, i.size));
-        }
-
-        auto ebs = bt.viewer.callEnemyBullet();
-        for(auto &&i : ebs) {
-            ene.view_clone(to_Location(i, i.size, i.size));
-        }
-
-        operate_my_fighter(wp, ap, sp, dp);
 
         glfwSwapBuffers(window1);
         glfwPollEvents();
         if(btn_go_next_scene->next_scene) {
             break;
         }
+        if(go_Title_by_GameOver) {
+            break;
+        }
     }
-    if(btn_go_next_scene->next_scene) {
+    if(btn_go_next_scene->next_scene || go_Title_by_GameOver) {
         delete btn_go_next_scene;
         Title_scene ts(window1);
     }
@@ -127,7 +110,15 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
         // rotate_my_fighter();
         life.decrement_stock();
     }
-    if(key == GLFW_KEY_V && action == GLFW_PRESS) {}
+    if(key == GLFW_KEY_J && action == GLFW_PRESS) {
+        bt.inputLevelUp(0);
+    }
+    if(key == GLFW_KEY_K && action == GLFW_PRESS) {
+        bt.inputLevelUp(1);
+    }
+    if(key == GLFW_KEY_L && action == GLFW_PRESS) {
+        bt.inputLevelUp(2);
+    }
 }
 // void BattleScene::render(){}
 BattleScene::~BattleScene() {

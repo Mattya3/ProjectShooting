@@ -24,6 +24,7 @@ class PngTexture {
     ~PngTexture();
     void view();
     void view_clone(Location loc);
+    void view_clone(Location loca, vector<double> col_vec);
     void view(DataOf2D pos, float ratio = 1.0,
               const vector<float> &col = vector<float>(3, 1.0)) ;
     unsigned int getID();
