@@ -16,3 +16,47 @@ void PatternPoint::changeLoop(){
     nowLoop = 0;
     if(moveId.size() <= ++nowPattern) nowPattern = 0;
 }
+
+double PatternPoint::changeLine(){
+    return changeHpLine;
+}
+
+short PatternPoint::nowShootId(){
+    return shootId.at(nowPattern);
+}
+
+short PatternPoint::nowStatus(){
+    return nowPattern;
+}
+
+short PatternPoint::nowMoveId(){
+    return moveId.at(nowPattern);
+}
+
+double PatternPoint::nowAngle(){
+    return angles.at(nowPattern);
+}
+
+double PatternPoint::nowRandom(){
+    return random.at(nowPattern);
+}
+
+short PatternPoint::maxLoopNum(){
+    return loopNum.at(nowPattern);
+}
+
+void PatternPoint::upStatus(){
+    nowPattern++;
+}
+
+void PatternPoint::upLoop(){
+    nowLoop++;
+}
+
+short PatternPoint::hasMoveId(){
+    return moveId.size();
+}
+
+short PatternPoint::nowCountLoop(){
+    return nowLoop;
+}

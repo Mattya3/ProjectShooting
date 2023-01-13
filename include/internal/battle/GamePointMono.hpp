@@ -5,6 +5,6 @@ using namespace std;
 class GamePointMono{
 public:
     pair<double, double> position;
-    int size;
+    short size;
     double keyNum;//heroなら角度、enemyならid
 };

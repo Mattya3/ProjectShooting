@@ -13,8 +13,6 @@ void Battle::start(int stage) {//初期設定用のメソッド, 引数はステ
     hero.setFirstSituation(z);
     hero.changeDirection(M_PI / 2);
     loading(stage);
-    // while(hero.nowHP > 0 && (appear.size() != 0 || enemy.size() != 0));
-    // timer();
 }
 
 void Battle::timer() {//メイン動作用の変数、毎回呼び出す
@@ -38,9 +36,8 @@ void Battle::timer() {//メイン動作用の変数、毎回呼び出す
     collision(heroBulletBeforeSize);
     do {//出現処理
         encount();
-        if(appear.size() == 0)
-            break;
-    } while(appear.at(0).emergeTime == 0);//同時出現する敵がいなくなるまで
+        if(appear.size() == 0) break;
+    } while(appear.at(0).comeTime() == 0);//同時出現する敵がいなくなるまで
     viewer.putScore(score);
     viewer.putHero(hero, heroBullets);
     viewer.putEnemy(enemy, enemyBullets);
@@ -73,11 +70,11 @@ void Battle::collision(int size) {//接触判定のメソッド
 
 void Battle::encount() {//敵の出現処理メソッド
     if(appear.size() == 0) return;
-    if((time >= appear.at(0).emergeTime && appear.at(0).emergeTime != -1) || (enemy.size() == 0 && appear.at(0).emergeTime == -1)) {//出現時間で全滅条件なし、または全滅条件ありで全滅済
+    if((time >= appear.at(0).comeTime() && appear.at(0).comeTime() != -1) || (enemy.size() == 0 && appear.at(0).comeTime() == -1)) {//出現時間で全滅条件なし、または全滅条件ありで全滅済
         EnemyPoint emerge;
-        emerge.setting(appear.at(0).enemyId);
-        emerge.setFirstSituation(appear.at(0).emergePosition);
-        emerge.setPattern(appear.at(0).moving);
+        emerge.setting(appear.at(0).comeEnemyId());
+        emerge.setFirstSituation(appear.at(0).comePosition());
+        emerge.setPattern(appear.at(0).comeMovePattern());
         enemy.push_back(emerge);
         appear.erase(appear.begin());
         time = 0;//ファイル内の時間は1つ前からの経過時間であるので、タイマリセット
@@ -90,8 +87,7 @@ void Battle::loading(int stage) {//ステージ読み込みのメソッド
     int pattern;
     ifstream files((current_path() / filesystem::path("data/StageData/" + to_string(stage))).c_str()); // ファイル読み込み
     if(files.fail()) {
-        cerr << "Error: not open StageData/" << stage
-             << endl; // ファイル読み込みエラー発生時の処理
+        cerr << "Error: not open StageData/" << stage << endl; // ファイル読み込みエラー発生時の処理
     }
     getline(files, line);//余分の読み込み
     getline(files, line);//余分の読み込み

@@ -11,20 +11,20 @@ vector<Card> StructureData::callCardSets(void){//セットカードのリスト�
     if(files.fail()){
         cerr << "Error: not open CardData" << endl;//ファイル読み込みエラー発生時の処理
     }
-    getline(files, text);//一行目のカード数を記入
-    getline(files, text);//No.0のテキストの記入
-    getline(files, data);//No.0のデータの記入
-    while(!(flag.at(0) && flag.at(1) && flag.at(2))){
-        for(int i = 0; i < CardSets.size(); i++){
+    getline(files, text);
+    getline(files, text);
+    getline(files, data);
+    while(!(flag.at(0) && flag.at(1) && flag.at(2))){//全てのセットカードの反映が終了するまで
+        for(int i = 0; i < CardSets.size(); i++){//所持カード全ての探索
             if(CardSets.at(i) == j){//セットカードリストに存在する
-                nowCard.putCardText(text);//テキストデータを代入
-                nowCard.putCardData(j, data);//数値データを代入
-                cards.at(i) = nowCard;//カードをリストに入れる
+                nowCard.putCardText(text);
+                nowCard.putCardData(j, data);
+                cards.at(i) = nowCard;
                 flag.at(i) = true;
             }
         }
-        getline(files, text);//各No.のテキストの記入
-        getline(files, data);//各No.のデータの記入
+        getline(files, text);
+        getline(files, data);
         j++;
     }
     return cards;
@@ -40,10 +40,8 @@ vector<short> StructureData::readCardSets(void){//セットカードのIDのリ�
     }
     getline(files, line);
     getline(files, line);
-    puts = split(line, ' ');//putsに分割後を入れる
-    for(int i = 0; i < puts.size(); i++){//セットカードに対してリストを作成するループ処理
-        output.push_back(stoi(puts.at(i)));
-    }
+    puts = split(line, ' ');
+    for(int i = 0; i < puts.size(); i++) output.push_back(stoi(puts.at(i))); //セットカードのidのリストの作成
     return output;
 }
 

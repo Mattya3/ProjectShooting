@@ -14,9 +14,9 @@ vector<Card> CardHas::callCardLineup(void){//所持カードのリストをvecto
     for(int i = 0; i < hasFlag.size(); i++){//各カードに対してリストに入れるかのループ処理
         if(hasFlag.at(i)){//カードを所持している
             getline(files, line);
-            nowCard.putCardText(line);//テキストデータを代入
+            nowCard.putCardText(line);
             getline(files, line);
-            nowCard.putCardData(i, line);//数値データを代入
+            nowCard.putCardData(i, line);
             cards.push_back(nowCard);//カードをリストに入れる
         }else{//カードを所持していない
             getline(files, line);
@@ -35,15 +35,15 @@ vector<bool> CardHas::readHasCard(void){//カードを所持しているかの�
         cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(files, line);
-    puts = split(line, ' ');//putsに分割後を入れる
+    puts = split(line, ' ');
     for(int i = 0; i < puts.size(); i++){//各カードに対してフラグリストを作成するループ処理
-        if(puts.at(i) == "0") output.push_back(false);//所持していないことを記入
-        else output.push_back(true);//所持していることを記入
+        if(puts.at(i) == "0") output.push_back(false);//所持していない
+        else output.push_back(true);//所持している
     }
     return output;
 }
 
-void CardHas::writeHasCard(short ID){
+void CardHas::writeHasCard(short ID){//所持カードをSaveDataに反映する関数
     string line1;//変更する所持カードリストの保持用
     string line2;//変更しないセットカードの保持用
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
@@ -54,9 +54,9 @@ void CardHas::writeHasCard(short ID){
     getline(file1, line2);
     vector<string> cards = split(line1, ' ');
     line1 = cards.at(0);
-    for(int i = 1; i < cards.size(); i++){
-        if(i == ID) line1 += " 1";
-        else line1 = line1 + " " + cards.at(i);
+    for(int i = 1; i < cards.size(); i++){//全カードに対して所持状況を記録するループ処理
+        if(i == ID) line1 += " 1";//所持している
+        else line1 = line1 + " " + cards.at(i);//所持していない
     }
     ofstream file2((current_path() / filesystem::path("data/SaveData")).c_str(), ios::out);//ファイル読み込み
     if(file2.fail()){

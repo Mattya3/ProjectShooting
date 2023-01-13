@@ -1,14 +1,14 @@
 #include <internal/battle/GamePointView.hpp>
 
-int GamePointView::callHp(){
+short GamePointView::callHp(){
     return heroHasHp;
 }
 
-int GamePointView::callScore(){
+short GamePointView::callScore(){
     return score;
 }
 
-int GamePointView::callNeedEXP(){
+short GamePointView::callNeedEXP(){
     return needLevelUpEXP;
 }
 
@@ -32,7 +32,7 @@ vector<GameCardMono> GamePointView::callCard(){
     return cards;
 }
 
-void GamePointView::putScore(int get){
+void GamePointView::putScore(short get){
     score = get;
 }
 
@@ -80,7 +80,7 @@ void GamePointView::putCard(vector<Card> l){
     }
 }
 
-void GamePointView::putCardLevel(int number, int count){
+void GamePointView::putCardLevel(short number, short count){
     cards.at(number).cardLevel++;
     if(count <= 0) cards.at(number).needEXP = -1;
 }

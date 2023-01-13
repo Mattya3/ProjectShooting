@@ -1,6 +1,6 @@
 #include <internal/battle/EmergePoint.hpp>
 
-int EmergePoint::setFirst(string line){
+short EmergePoint::setFirst(string line){
     moving.clear();
     vector<string> data = split(line, ' ');
     emergeTime = stoi(data.at(0));
@@ -14,4 +14,20 @@ void EmergePoint::putPattern(string line){
     PatternPoint token;
     token.putPattern(line);
     moving.push_back(token);
+}
+
+short EmergePoint::comeTime(){
+    return emergeTime;
+}
+
+short EmergePoint::comeEnemyId(){
+    return enemyId;
+}
+
+pair<double, double> EmergePoint::comePosition(){
+    return emergePosition;
+}
+
+vector<PatternPoint> EmergePoint::comeMovePattern(){
+    return moving;
 }

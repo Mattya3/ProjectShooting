@@ -2,7 +2,6 @@
 #include <bits/stdc++.h>
 #include <internal/battle/NormalPoint.hpp>
 #include <internal/battle/PatternPoint.hpp>
-#include <internal/battle/EmergePoint.hpp>
 #include <internal/card/Card.hpp>
 
 
