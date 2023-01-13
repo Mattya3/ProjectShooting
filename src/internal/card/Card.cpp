@@ -1,14 +1,4 @@
-#include <bits/stdc++.h>
 #include <internal/card/Card.hpp>
-using namespace std;
-
-vector<string> Card::split(string str, char separator){//strをseparatorで分割する関数
-    vector<string> output;//帰り値用, 分割後の文字列のリスト
-    stringstream getString(str);//分割後の一時保存用の変数
-    string x;//分割後の一時保存用の変数
-    while(getline(getString, x, separator)) output.push_back(x);
-    return output;
-}
 
 void Card::putCardText(string line){//テキストデータを保管する関数
     vector<string> splitString = split(line, ' ');//入力内容を分割
@@ -16,7 +6,7 @@ void Card::putCardText(string line){//テキストデータを保管する関数
     cardExplain = splitString.at(1);
 }
 
-void Card::putCardData(int no, string line){//数値データを保管する関数
+void Card::putCardData(short no, string line){//数値データを保管する関数
     id = no;
     vector<string> splitString = split(line, ' ');//入力内容を分割
     typeA = stoi(splitString.at(0));

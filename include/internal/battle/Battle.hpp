@@ -8,6 +8,7 @@
 #include <internal/battle/BulletPoint.hpp>
 #include <internal/battle/EmergePoint.hpp>
 #include <internal/battle/GamePointView.hpp>
+#include <filesystem>
 using namespace std;
 
 const int battle_height = 660;

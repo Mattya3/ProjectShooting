@@ -26,14 +26,6 @@ void NormalPoint::setting(int id){//初期設定用のメソッド
     this->id = id;
 }
 
-vector<string> NormalPoint::split(string str, char separator){//strをseparatorで分割する関数
-    vector<string> output;//帰り値用, 分割後の文字列のリスト
-    stringstream getString(str);//分割後の一時保存用の変数
-    string x;//分割後の一時保存用の変数
-    while(getline(getString, x, separator)) output.push_back(x);
-    return output;
-}
-
 void NormalPoint::setFirstSituation(pair<double, double> z){
     position = z;
 }

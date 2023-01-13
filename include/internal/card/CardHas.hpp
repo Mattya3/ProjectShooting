@@ -1,6 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
 #include <internal/card/Card.hpp>
+#include <internal/Split.hpp>
 #include <filesystem>
 using std::filesystem::current_path;
 using namespace std;
@@ -11,7 +12,5 @@ public:
 
     vector<bool> readHasCard(void);
 
-    void writeHasCard(int ID);
-
-    vector<string> split(string str, char separator);
+    void writeHasCard(short ID);
 };

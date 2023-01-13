@@ -2,16 +2,16 @@
 #include <bits/stdc++.h>
 #include <internal/card/Card.hpp>
 #include <internal/card/CardHas.hpp>
-
+#include <filesystem>
+#include <internal/Split.hpp>
 using namespace std;
+using std::filesystem::current_path;
 
 class StructureData{
 public:
     vector<Card> callCardSets(void);
 
-    vector<int> readCardSets(void);
+    vector<short> readCardSets(void);
 
-    vector<string> split(string str, char separator);
-
-    void writeCardSets(vector<int> list);
+    void writeCardSets(vector<short> list);
 };

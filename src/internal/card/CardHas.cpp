@@ -43,7 +43,7 @@ vector<bool> CardHas::readHasCard(void){//カードを所持しているかの�
     return output;
 }
 
-void CardHas::writeHasCard(int ID){
+void CardHas::writeHasCard(short ID){
     string line1;//変更する所持カードリストの保持用
     string line2;//変更しないセットカードの保持用
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
@@ -65,12 +65,4 @@ void CardHas::writeHasCard(int ID){
     file2 << line1 << endl;
     file2 << line2 << endl;
     file2.close();
-}
-
-vector<string> CardHas::split(string str, char separator){//strをseparatorで分割する関数
-    vector<string> output;//帰り値用, 分割後の文字列のリスト
-    stringstream getString(str);//分割後の一時保存用の変数
-    string x;//分割後の一時保存用の変数
-    while(getline(getString, x, separator)) output.push_back(x);
-    return output;
 }

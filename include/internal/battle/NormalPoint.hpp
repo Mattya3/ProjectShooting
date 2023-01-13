@@ -1,6 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
 #include <internal/battle/BulletPoint.hpp>
+#include <internal/Split.hpp>
 #include <filesystem>
 using std::filesystem::current_path;
 using namespace std;
@@ -28,8 +29,6 @@ public:
     BulletPoint bullet;
 
     void setting(int id);
-
-    vector<string> split(string str, char separator);
 
     void setFirstSituation(pair<double, double> z);
 

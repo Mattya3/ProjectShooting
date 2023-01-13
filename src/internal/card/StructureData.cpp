@@ -1,15 +1,12 @@
 #include <internal/card/StructureData.hpp>
-#include <filesystem>
-using std::filesystem::current_path;
-using namespace std;
 
 vector<Card> StructureData::callCardSets(void){//セットカードのリストをvectorで返す関数
-    vector<int> CardSets = readCardSets();//セットしたカードIDをvectorで保持
+    vector<short> CardSets = readCardSets();//セットしたカードIDをvectorで保持
     vector<Card> cards(3);//帰り値用, カードのリスト
     vector<bool> flag(3, false);
     string text, data;//ファイル読み込み時の文字列をそのまま入れる変数
     Card nowCard;//代入用変数
-    int i = 0, j = 0;//ループ処理用変数
+    short i = 0, j = 0;//ループ処理用変数
     ifstream files((current_path() / filesystem::path("data/CardData")).c_str());//ファイル読み込み
     if(files.fail()){
         cerr << "Error: not open CardData" << endl;//ファイル読み込みエラー発生時の処理
@@ -33,8 +30,8 @@ vector<Card> StructureData::callCardSets(void){//セットカードのリスト�
     return cards;
 }
 
-vector<int> StructureData::readCardSets(void){//セットカードのIDのリストをvectorで返す関数
-    vector<int> output;//帰り値用, セットしたカードIDのリスト
+vector<short> StructureData::readCardSets(void){//セットカードのIDのリストをvectorで返す関数
+    vector<short> output;//帰り値用, セットしたカードIDのリスト
     vector<string> puts;//ファイル読み込み時の文字列を分割して入れる変数
     string line;//ファイル読み込み時の文字列をそのまま入れる変数
     ifstream files((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
@@ -50,17 +47,8 @@ vector<int> StructureData::readCardSets(void){//セットカードのIDのリス
     return output;
 }
 
-vector<string> StructureData::split(string str, char separator){//strをseparatorで分割する関数
-    vector<string> output;//帰り値用, 分割後の文字列のリスト
-    stringstream getString(str);//分割後の一時保存用の変数
-    string x;//分割後の一時保存用の変数
-    while(getline(getString, x, separator)) output.push_back(x);
-    return output;
-}
-
-void StructureData::writeCardSets(vector<int> list){//新たなセットカードをファイルに書き込む関数
+void StructureData::writeCardSets(vector<short> list){//新たなセットカードをファイルに書き込む関数
     string line1;//変更しない所持カードリストの保持用
-    
     string line2 = to_string(list.at(0)) + " " + to_string(list.at(1)) + " " + to_string(list.at(2));//変更後のセットカードリスト
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(file1.fail()){

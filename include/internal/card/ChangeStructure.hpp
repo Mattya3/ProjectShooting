@@ -2,7 +2,6 @@
 #include <bits/stdc++.h>
 #include <internal/card/Card.hpp>
 #include <internal/card/StructureData.hpp>
-
 using namespace std;
 
 class ChangeStructure {
@@ -17,7 +16,7 @@ class ChangeStructure {
 
     vector<Card> callSet3Cards();
 
-    void ChangeStructureCard(int point, int id);
+    void ChangeStructureCard(short point, short id);
 
     void registerNewCard(int id);
 

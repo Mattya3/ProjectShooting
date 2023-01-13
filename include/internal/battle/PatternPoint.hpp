@@ -1,5 +1,6 @@
 #pragma once
 #include <bits/stdc++.h>
+#include <internal/Split.hpp>
 using namespace std;
 
 class PatternPoint{//パターンデータを保存する関数
@@ -16,6 +17,4 @@ public:
     void putPattern(string line);
 
     void changeLoop();
-
-    vector<string> split(string str, char separator);
 };

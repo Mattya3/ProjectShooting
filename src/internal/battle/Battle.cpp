@@ -1,7 +1,4 @@
-#include <filesystem>
 #include <internal/battle/Battle.hpp>
-#include <bits/stdc++.h>
-using namespace std;
 
 void Battle::start(int stage) {//初期設定用のメソッド, 引数はステージ番号
     StructureData sets;
