@@ -1,6 +1,9 @@
 #include <internal/battle/Battle.hpp>
 
-void Battle::start(int stage) {//初期設定用のメソッド, 引数はステージ番号
+//ダメージ量の確認
+//ボムの確認
+
+void Battle::start(short stage) {//初期設定用のメソッド, 引数はステージ番号
     StructureData sets;
     vector<Card> list = sets.callCardSets();
     hero.setting(0);
@@ -18,9 +21,9 @@ void Battle::start(int stage) {//初期設定用のメソッド, 引数はステ
 void Battle::timer() {//メイン動作用の変数、毎回呼び出す
     int heroBulletBeforeSize = heroBullets.size();
     vector<pair<double, double>> heroPoints;//自機座標
-    vector<int> heroLarge;//自機サイズ
+    vector<short> heroLarge;//自機サイズ
     vector<pair<double, double>> enemyPoints;//敵座標列
-    vector<int> enemyLarge;//敵サイズ列
+    vector<short> enemyLarge;//敵サイズ列
     this_thread::sleep_for(chrono::milliseconds(20));//毎回20ms待機することで50fpsを再現
     time += 20;
     heroPoints.push_back(hero.getPosition());
@@ -43,8 +46,8 @@ void Battle::timer() {//メイン動作用の変数、毎回呼び出す
     viewer.putEnemy(enemy, enemyBullets);
 }
 
-void Battle::collision(int size) {//接触判定のメソッド
-    vector<int> dis;//ヒットした弾・敵がvectorのどこにいるかを保管
+void Battle::collision(short size) {//接触判定のメソッド
+    vector<short> dis;//ヒットした弾・敵がvectorのどこにいるかを保管
     dis = hero.collision(heroBullets, size);
     for(int i = 0; i < dis.size(); i++) heroBullets.erase(heroBullets.begin() + i);//自機とぶつかった自機の弾を消失
     dis = hero.collision(enemyBullets, enemyBullets.size());
@@ -81,10 +84,10 @@ void Battle::encount() {//敵の出現処理メソッド
     }
 }
 
-void Battle::loading(int stage) {//ステージ読み込みのメソッド
+void Battle::loading(short stage) {//ステージ読み込みのメソッド
     EmergePoint token;
     string line;
-    int pattern;
+    short pattern;
     ifstream files((current_path() / filesystem::path("data/StageData/" + to_string(stage))).c_str()); // ファイル読み込み
     if(files.fail()) {
         cerr << "Error: not open StageData/" << stage << endl; // ファイル読み込みエラー発生時の処理
@@ -126,7 +129,7 @@ void Battle::inputShooting(bool flag){//操作入力の反映メソッド
     hero.shooting(flag);
 }
 
-void Battle::inputLevelUp(int target){//操作入力の反映メソッド
+void Battle::inputLevelUp(short target){//操作入力の反映メソッド
     if(score >= hero.getExp()){
         int up = hero.levelUp(target);
         if(up >= 0){

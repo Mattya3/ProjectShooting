@@ -191,7 +191,7 @@ void EnemyPoint::changeBullet(){
 
 }
 
-bool EnemyPoint::goTo(int x, int y, bool flag){
+bool EnemyPoint::goTo(short x, short y, bool flag){
     if(x < 0){
         if(position.second == y) return false;
         if(position.second < y){

@@ -16,8 +16,8 @@ void HeroPoint::setCardlist(vector<Card> sets){
     }
 }
 
-int HeroPoint::levelUp(int target){
-    int changedNum;
+short HeroPoint::levelUp(short target){
+    short changedNum;
     if(list.at(target).upNum <= 0) return -1;
     list.at(target).upNum--;
     if (level.at(target)++ == 1) changedNum = list.at(target).uped1;
@@ -34,16 +34,16 @@ int HeroPoint::levelUp(int target){
     }else{
         switch (list.at(target).typeA){
             case 0:
-                bullet.velocity = changedNum;
+                bullet.changeVelocity(changedNum);
                 break;
             case 1:
-                bullet.size = changedNum;
+                bullet.changeSize(changedNum);
                 break;
             case 2:
-                bullet.attack = changedNum;
+                bullet.changeDamage(changedNum);
                 break;
             case 3:
-                bullet.canReflect = changedNum;
+                bullet.changeReflect(changedNum);
                 break;
             case 4:
                 stopShoot = changedNum;
@@ -53,8 +53,8 @@ int HeroPoint::levelUp(int target){
                 shootAngle = changedNum % 100;
                 break;
             case 6:
-                bullet.searchLange = (changedNum / 10) * 10;
-                bullet.hormingPower = (changedNum % 10) * 0.1;
+                bullet.changeSearch((changedNum / 10) * 10);
+                bullet.changeHorming((changedNum % 10) * 0.1);
                 break;
             case 7:
                 //ボムの記載、未作成
@@ -71,8 +71,8 @@ void HeroPoint::timer(vector<BulletPoint> &bullets){
     if(shootFlag) shoot(bullets);
 }
 
-void HeroPoint::contact(pair<double, double> point, int large){
-    int x, y, d, r;
+void HeroPoint::contact(pair<double, double> point, short large){
+    double x, y, d, r;
     x = position.first - point.first;
     y = position.second - point.second;
     d = x * x + y * y;
@@ -88,7 +88,7 @@ void HeroPoint::contact(pair<double, double> point, int large){
 
 void HeroPoint::shoot(vector<BulletPoint> &bullets){
     if (shootpenalty <= 0){
-        int count = shootNum;
+        short count = shootNum;
         double changeAngle = shootAngle * M_PI / 180;
         double afterAngle;
         pair<double, double> shooter = position;

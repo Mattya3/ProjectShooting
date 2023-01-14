@@ -1,7 +1,6 @@
 #include <internal/battle/NormalPoint.hpp>
 
-
-void NormalPoint::setting(int id){//初期設定用のメソッド
+void NormalPoint::setting(short id){//初期設定用のメソッド
     vector<string> data;//ファイル読み取り
     string line;//
     ifstream files((current_path() / filesystem::path("data/PointData")).c_str());
@@ -34,7 +33,7 @@ void NormalPoint::changeAngle(double per){
     angle = per;
 }
 
-int NormalPoint::getExp(){
+short NormalPoint::getExp(){
     return exp;
 }
 
@@ -42,7 +41,7 @@ pair<double, double> NormalPoint::getPosition(){
     return position;
 }
 
-int NormalPoint::getSize(){
+short NormalPoint::getSize(){
     return size;
 }
 
@@ -63,21 +62,21 @@ void NormalPoint::move(){
     position.second = min(position.second, (double)(height - 1) - (double)size / 2);
 }
 
-void NormalPoint::damage(int hit){ //ダメージ処理、HPが0以下ならtrueを返す
+void NormalPoint::damage(short hit){ //ダメージ処理、HPが0以下ならtrueを返す
     nowHP -= hit;
 }
 
-vector<int> NormalPoint::collision(vector<BulletPoint> bullets, int range){
-    vector<int> bulletId;
-    int x, y, d, r;
+vector<short> NormalPoint::collision(vector<BulletPoint> bullets, short range){
+    vector<short> bulletId;
+    double x, y, d, r;
     for(int i = 0; i < range; i++){
-        x = position.first - bullets.at(i).position.first;
-        y = position.second - bullets.at(i).position.second;
+        x = position.first - bullets.at(i).getPosition(true);
+        y = position.second - bullets.at(i).getPosition(false);
         d = sqrt(x * x + y * y);
-        r = (size + bullets.at(i).size) / 2;
+        r = (size + bullets.at(i).getSize()) / 2;
         if(d < 0.7 * r){
             if(hitTime <= 0){
-                damage(bullets.at(i).attack);
+                damage(bullets.at(i).getDamage());
                 hitTime = setHitTime;
             } 
             bulletId.push_back(i);
@@ -86,7 +85,7 @@ vector<int> NormalPoint::collision(vector<BulletPoint> bullets, int range){
     return bulletId;
 }
 
-void NormalPoint::setBullet(int bulletId){
+void NormalPoint::setBullet(short bulletId){
     string line;
     vector<string> data;
     ifstream files((current_path() / filesystem::path("data/BulletData")).c_str());//ファイル読み込み

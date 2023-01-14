@@ -9,12 +9,12 @@ void BulletPoint::setting(vector<string> data){
     hormingPower = stod(data.at(5));
 }
 
-void BulletPoint::setSize(int h, int w){
+void BulletPoint::setSize(short h, short w){
     height = h;
     width = w;
 }
 
-bool BulletPoint::reflect(int wallID){ // 0-4で→↑←↓の壁に対応, 反射不可ならtrue
+bool BulletPoint::reflect(short wallID){ // 0-4で→↑←↓の壁に対応, 反射不可ならtrue
     if (--canReflect < 0) return false;
     else{
         switch (wallID){
@@ -53,7 +53,7 @@ void BulletPoint::changeAngle(double per){
     angle = per;
 }
 
-double BulletPoint::search(vector<pair<double, double>> points, vector<int> large){
+double BulletPoint::search(vector<pair<double, double>> points, vector<short> large){
     if (searchLange == 0 || hormingPower == 0) return -1;
     double x, y, d;
     bool flag = true;
@@ -76,7 +76,7 @@ double BulletPoint::search(vector<pair<double, double>> points, vector<int> larg
     return angle;
 }
 
-void BulletPoint::move(vector<pair<double, double>> points, vector<int> large){//接触を内部にしているが、縁に移すかは未定
+void BulletPoint::move(vector<pair<double, double>> points, vector<short> large){//接触を内部にしているが、縁に移すかは未定
     double x, y, d;
     double per = search(points, large);
     if(per >= 0){
@@ -105,11 +105,52 @@ void BulletPoint::move(vector<pair<double, double>> points, vector<int> large){/
     }
 }
 
-void BulletPoint::timer(vector<pair<double, double>> points, vector<int> large){
+void BulletPoint::timer(vector<pair<double, double>> points, vector<short> large){
     move(points, large);
 }
 
 bool BulletPoint::nonReflect(){
     if(canReflect < 0) return true;
     else return false;
+}
+
+pair<double, double> BulletPoint::get2Position(){
+    return position;
+}
+
+double BulletPoint::getPosition(bool isX){
+    if(isX) return position.first;
+    else return position.second;
+}
+
+short BulletPoint::getSize(){
+    return size;
+}
+
+short BulletPoint::getDamage(){
+    return attack;
+}
+
+void BulletPoint::changeVelocity(short changed){
+    velocity = changed;
+}
+
+void BulletPoint::changeSize(short changed){
+    size = changed;
+}
+
+void BulletPoint::changeDamage(short changed){
+    attack = changed;
+}
+
+void BulletPoint::changeReflect(short changed){
+    canReflect = changed;
+}
+
+void BulletPoint::changeSearch(double changed){
+    searchLange = changed;
+}
+
+void BulletPoint::changeHorming(double changed){
+    hormingPower = changed;
 }

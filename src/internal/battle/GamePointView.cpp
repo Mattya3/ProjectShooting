@@ -43,8 +43,8 @@ void GamePointView::putHero(HeroPoint h, vector<BulletPoint> b){
     hero.size = h.size;
     hero.keyNum = h.direction;
     for(int i = 0; i < b.size(); i++){
-        bullet.position = b.at(i).position;
-        bullet.size = b.at(i).size;
+        bullet.position = b.at(i).get2Position();
+        bullet.size = b.at(i).getSize();
         heroBullets.push_back(bullet);
     }
     heroHasHp = h.nowHP;
@@ -62,8 +62,8 @@ void GamePointView::putEnemy(vector<EnemyPoint> e, vector<BulletPoint> b){
         enemies.push_back(enemy);
     }
     for(int i = 0; i < b.size(); i++){
-        bullet.position = b.at(i).position;
-        bullet.size = b.at(i).size;
+        bullet.position = b.at(i).get2Position();
+        bullet.size = b.at(i).getSize();
         enemyBullets.push_back(bullet);
     }
 }

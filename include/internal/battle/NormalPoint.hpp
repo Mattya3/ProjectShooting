@@ -10,33 +10,33 @@ using namespace std;
 
 class NormalPoint{
 public:
-    int id;
-    int height;
-    int width;
-    int shootNum;
+    short id;
+    short height;
+    short width;
+    short shootNum;
     double shootAngle;
-    int nowHP;
-    int maxHP;
+    short nowHP;
+    short maxHP;
     pair<double, double> position;
-    int size;
-    int exp;
+    short size;
+    short exp;
     double velocity;
     double nowVelocity;
-    int setHitTime;
-    int hitTime = 0;
+    short setHitTime;
+    short hitTime = 0;
     double angle;//ラジアン表記
     double direction;//ラジアン表記
     BulletPoint bullet;
 
-    void setting(int id);
+    void setting(short id);
 
     void setFirstSituation(pair<double, double> z);
 
-    int getExp();
+    short getExp();
 
     pair<double, double> getPosition();
 
-    int getSize();
+    short getSize();
 
     double getAngle();
 
@@ -46,11 +46,11 @@ public:
 
     void move();
 
-    void damage(int hit);
+    void damage(short hit);
 
-    vector<int> collision(vector<BulletPoint> bullets, int range);
+    vector<short> collision(vector<BulletPoint> bullets, short range);
 
-    void setBullet(int bulletId);
+    void setBullet(short bulletId);
 
     bool alive();
 };

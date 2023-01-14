@@ -8,14 +8,15 @@ using namespace std;
 #define M_PI 3.14159265358979323846264338327950288
 
 class HeroPoint : public NormalPoint{
-public:
+private:
     bool shootFlag = false;
-    vector<int> level;
+    vector<short> level;
     vector<Card> list;
     bool moveFlag = false;
-    int stopShoot = 240;
-    int shootpenalty = 0;
+    short stopShoot = 240;
+    short shootpenalty = 0;
 
+public:
     void shooting(bool flag);
     
     void moving(bool flag);
@@ -24,11 +25,11 @@ public:
 
     void changeDirection(double per);
 
-    int levelUp(int target);
+    short levelUp(short target);
 
     void timer(vector<BulletPoint> &bullets);
 
-    void contact(pair<double, double> point, int large);
+    void contact(pair<double, double> point, short large);
 
     void shoot(vector<BulletPoint> &bullets);
 };

@@ -10,7 +10,7 @@ using namespace std;
 #define M_PI 3.14159265358979323846264338327950288
 
 class EnemyPoint : public NormalPoint{
-public:
+private:
     bool directionFlag = true;
     bool prepareMoving = true;
     bool shootFlag = false;
@@ -18,6 +18,7 @@ public:
     int times = 0;
     vector<PatternPoint> moving;
 
+public:
     void setPattern(vector<PatternPoint> move);
 
     void timer(vector<pair<double, double>> points, vector<BulletPoint> &bullets);
@@ -32,7 +33,7 @@ public:
 
     void changeBullet();
 
-    bool goTo(int x, int y, bool flag);
+    bool goTo(short x, short y, bool flag);
 
     double goHero(pair<double, double> points);
 };

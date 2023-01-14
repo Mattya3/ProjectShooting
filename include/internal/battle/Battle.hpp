@@ -11,33 +11,35 @@
 #include <filesystem>
 using namespace std;
 
-const int battle_height = 660;
-const int battle_width = 440;
+const short battle_height = 660;
+const short battle_width = 440;
 
 class Battle{
-public:
+private:
     HeroPoint hero;
     vector<EnemyPoint> enemy;
     vector<BulletPoint> heroBullets;
     vector<BulletPoint> enemyBullets;
-    GamePointView viewer;
     vector<EmergePoint> appear;
-    int score = 0;
+    short score = 0;
     int time = 0;
 
-    void start(int stage);
+public:
+    GamePointView viewer;
+
+    void start(short stage);
 
     void timer();
 
-    void collision(int size);
+    void collision(short size);
 
     void encount();
 
-    void loading(int stage);
+    void loading(short stage);
 
     void inputMoving(bool w, bool a, bool s, bool d);
 
     void inputShooting(bool flag);
 
-    void inputLevelUp(int target);
+    void inputLevelUp(short target);
 };
