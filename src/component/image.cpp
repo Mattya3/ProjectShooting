@@ -54,7 +54,12 @@ void PngTexture::view() {
 void PngTexture::init() {
     // png画像ファイルのロード
     vector<unsigned char> image;
+    if(!std::filesystem::exists(filename)) {
+        std::cerr << "Not found " << filename << '\n';
+        exit(1);
+    }
     unsigned error = lodepng::decode(image, width, height, filename);
+
     if(error != 0) {
         std::cout << "error " << error << ": " << lodepng_error_text(error)
                   << std::endl;

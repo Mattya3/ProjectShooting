@@ -7,6 +7,9 @@ project(shooting
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_COMPILER "/opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 
 # guard against in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -15,6 +18,11 @@ endif()
 
 include_directories(./include)
 include_directories(./externsrc)
+include_directories(SBFW)
+include_directories(SBFW/include/scene)
+
+
+
 
 if(APPLE)
     include_directories(/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers)
@@ -40,7 +48,6 @@ set(LIBS glfw GL GLU)
 
 link_libraries(${OPENGL_glu_LIBRARY} ${OPENGL_gl_LIBRARY})
 link_libraries(glfw)
-link_libraries(png)
 
 add_subdirectory(externsrc)
 add_subdirectory(src/component)
@@ -50,7 +57,12 @@ add_subdirectory(src/internal/battle)
 add_subdirectory(src/internal/card)
 add_subdirectory(src/GameEngine)
 
+
 add_executable(main main.cpp)
+
+add_subdirectory(SBFW)
+target_link_libraries(main sbfw)
+
 
 if(APPLE)
     target_link_libraries(main "-framework OpenGL" glfw)
@@ -64,7 +76,4 @@ endif()
 target_link_libraries(main )
 target_link_libraries(main Setting)
 target_link_libraries(main component)
-target_link_libraries(main scene lodepng) 
-
-
-
+target_link_libraries(main scene) 
