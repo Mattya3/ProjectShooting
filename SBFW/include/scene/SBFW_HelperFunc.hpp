@@ -22,18 +22,18 @@ template <int n> std::array<shared_ptr<SimpleScene>, n> prepare_scenes() {
 }
 auto prepare_scene() { return std::make_shared<SimpleScene>(); }
 // T is derived SceneBase
-// template <class T, int n> std::array<shared_ptr<T>, n> prepare_scenes() {
-//     // if(static_pointer_cast<SceneBase>(shared_ptr<T>()) == nullptr) {
-//     //     std::cerr << "class not heritaging SceneBase is argument in "
-//     //                  "prepare_scenes()\n";
-//     //     exit(1);
-//     // }
+template <class T, int n> std::array<shared_ptr<T>, n> prepare_scenes() {
+    // if(static_pointer_cast<SceneBase>(shared_ptr<T>()) == nullptr) {
+    //     std::cerr << "class not heritaging SceneBase is argument in "
+    //                  "prepare_scenes()\n";
+    //     exit(1);
+    // }
 
-//     std::array<shared_ptr<T>, n> res;
-//     for(int i = 0; i < n; i++)
-//         res[i] = std::make_shared<T>();
-//     return res;
-// }
+    std::array<shared_ptr<T>, n> res;
+    for(int i = 0; i < n; i++)
+        res[i] = std::make_shared<T>();
+    return res;
+}
 shared_ptr<SimpleScene> prepare_end() { return shared_ptr<SimpleScene>(); }
 
 } // namespace scene

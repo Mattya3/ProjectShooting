@@ -1,16 +1,56 @@
 #include <component/Image.hpp>
 #include <component/RemainingStatus.hpp>
-#include <internal/battle/Battle.hpp>
 
+#include <internal/battle/Battle.hpp>
 #include <internal/battle/GamePointMono.hpp>
 #include <internal/battle/GamePointView.hpp>
 
 #include <GameEngine/CenterLocation.hpp>
 #include <bits/stdc++.h>
 #include <scenes/Scene.hpp>
+
+#include <sbfw.hpp>
+
 using namespace std;
-class BattleScene : Scene {
-    using Scene::Scene;
+class BattleScene : public sbfw::scene::SimpleScene {
+  public:
+    // BattleScene(GLFWwindow *window1);
+    // ~BattleScene();
+
+    PngTexture testboss{"ic_launcher.png", Location(-0.5, -0.5, 1.0, 1.0)};
+    double prev_time;
+    double start_time;
+    bool go_Title_by_GameOver = false;
+
+  protected:
+    void layer_front() {
+        filled_view___(g, 0.2, 0.2, 0.2);
+        bt.timer();
+
+        now_time = glfwGetTime();
+        double era = now_time - start_time;
+
+        if(is_gameover) {
+            if(now_time - game_end_time > 3) {
+                go_Title_by_GameOver = true;
+            }
+            render_game_over();
+            life.view(0);
+            life2.view(0);
+            testboss.view();
+        } else {
+            render_dynamic_view();
+            life.view(bt.viewer.callHp());
+            life2.view(bt.viewer.callHp());
+            life3.view(bt.viewer.callHp());
+        }
+    }
+    void init() override {
+        prev_time = glfwGetTime();
+        start_time = glfwGetTime();
+        bt.start(0);
+        go_Title_by_GameOver = false;
+    }
 
   private:
     // キーcallback用変数
@@ -24,7 +64,7 @@ class BattleScene : Scene {
 
     double game_end_time;
     double now_time;
-    bool is_gameover=false;
+    bool is_gameover = false;
     bool wp = false, ap = false, sp = false, dp = false, spacep = false;
     PngTexture heart = PngTexture("status/redheart.png");
     PngTexture gray_heart = PngTexture("status/heart.png");
@@ -55,24 +95,24 @@ class BattleScene : Scene {
         pii.second += 20;
         float x = float(pii.first);
         float y = float(pii.second);
-        x /= Setting::WINDOW_width / 2;
-        y /= Setting::WINDOW_height / 2;
+        x /= sbfw::setting.WINDOW_width / 2;
+        y /= sbfw::setting.WINDOW_height / 2;
         y = 1 - y;
         x = x - 1;
         return {x, y};
     }
     Location to_Location(GamePointMono gpm, int w, int h) {
         auto pp = to_correctxy(gpm.position);
-        float ww = float(w) / Setting::WINDOW_width * 2;
-        float hh = float(h) / Setting::WINDOW_height * 2;
+        float ww = float(w) / sbfw::setting.WINDOW_width * 2;
+        float hh = float(h) / sbfw::setting.WINDOW_height * 2;
         return Location(pp.x - ww / 2, pp.y - hh / 2, ww, hh);
     }
     Location to_Location(GamePointMono gpm) {
         auto pp = to_correctxy(gpm.position);
         int w = gpm.size;
         int h = gpm.size;
-        float ww = float(w) / Setting::WINDOW_width * 2;
-        float hh = float(h) / Setting::WINDOW_height * 2;
+        float ww = float(w) / sbfw::setting.WINDOW_width * 2;
+        float hh = float(h) / sbfw::setting.WINDOW_height * 2;
         return Location(pp.x - ww / 2, pp.y - hh / 2, ww, hh);
     }
     void render_dynamic_view();
@@ -98,11 +138,7 @@ class BattleScene : Scene {
         glPopMatrix();
     }
 
-  private:
-  public:
+  protected:
     void key_callback(GLFWwindow *window, int key, int scancode, int action,
                       int mods) override;
-
-    BattleScene(GLFWwindow *window1);
-    ~BattleScene();
 };

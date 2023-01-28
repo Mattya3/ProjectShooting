@@ -1,3 +1,4 @@
+#pragma once
 #include <bits/stdc++.h>
 
 #include <GLFW/glfw3.h>
@@ -34,7 +35,7 @@ class PngData {
             exit(1);
         }
         len_data[id] = make_len(width, height);
-
+      std::cout << fullpath_fname << " as " << id << std::endl;
         // テクスチャへの登録
         glBindTexture(GL_TEXTURE_2D, id);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

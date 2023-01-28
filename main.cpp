@@ -1,8 +1,9 @@
-#include <scenes/Title_Scene.hpp>
+// #include <scenes/Title_Scene.hpp>
 #include <setting.hpp>
 using namespace std;
 #include "SBFW/sbfw.hpp"
 #include "filename.hpp"
+#include <scenes/BattleScene.hpp>
 
 int main() {
     GLFWwindow *window;
@@ -13,7 +14,6 @@ int main() {
                               sbfw::setting.WINDOW_height, "Hello World", NULL,
                               NULL);
     assert(window);
-
     if(!window) {
         glfwTerminate();
         return -1;
@@ -48,16 +48,16 @@ int main() {
         // d.dump();
     }
 
-    auto [title, select, game, score] = sbfw::scene::prepare_scenes<4>();
+    auto [title, select, score] = sbfw::scene::prepare_scenes<3>();
     auto [sub1, sub2, sub3] = sbfw::scene::prepare_scenes<3>();
-
+    auto [game] = sbfw::scene::prepare_scenes<BattleScene, 1>();
     title->set_window_name("Title");
     select->set_window_name("select");
     sub1->set_window_name("sub1");
     sub2->set_window_name("sub2");
     sub3->set_window_name("sub3");
 
-    game->set_window_name("game");
+    // game->set_window_name("game");
     score->set_window_name("score");
 
     title->add_button(elback_arrow, []() { cout << "hello" << endl; });

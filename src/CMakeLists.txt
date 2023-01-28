@@ -4,3 +4,5 @@ add_library(Setting
 target_include_directories(Setting
     PUBLIC ${PROJECT_SOURCE_DIR}/include
 )
+target_include_directories(Setting PUBLIC ${PROJECT_SOURCE_DIR}/SBFW)
+target_link_libraries(Setting sbfw)

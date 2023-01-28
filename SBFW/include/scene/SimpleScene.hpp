@@ -9,7 +9,6 @@
 #include <element/texture/ImgUnit.hpp>
 #include <scene/Setting.hpp>
 
-
 namespace sbfw {
 
 template <class T> using sp = shared_ptr<T>;
@@ -41,7 +40,11 @@ class SimpleScene : public SceneBase {
             }
         } catch(const std::exception &e) { std::cerr << e.what() << '\n'; }
     }
+    virtual void layer_front() {}
+    virtual void layer_back() {}
+
     inline void render() override final {
+        layer_back();
         for(auto &&e : contents._get_imgs()) {
             e.view();
         }
@@ -51,7 +54,9 @@ class SimpleScene : public SceneBase {
             //     btn.action_when_pushed();
             // }
         }
+        layer_front();
     }
+
     void init() override {}
     inline void mouse_button_callback(GLFWwindow *pwin, int button, int action,
                                       int mods) override {

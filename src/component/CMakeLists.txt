@@ -11,6 +11,10 @@ link_directories(/opt/homebrew/Cellar/libpng/1.6.39/lib)
 # message(STATUS "!!! this is ${LIST}")
 # greetingライブラリのインクルードディレクトリを教えてあげる
 # PROJECT_SOURCE_DIRはこのプロジェクトのルートディレクトリの絶対パス
+
+target_include_directories(component PUBLIC ${PROJECT_SOURCE_DIR}/SBFW)
+target_link_libraries(component sbfw)
+
 target_include_directories(component
     PUBLIC ${PROJECT_SOURCE_DIR}/include/component
 )
