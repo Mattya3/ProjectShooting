@@ -1,15 +1,19 @@
+#pragma once
 #include <DataOf2D.hpp>
 
-namespace sbfw{
+namespace sbfw {
 
 class ElemInfo {
   public:
-    ElemInfo(DataOf2D pos, std::string fname) : pos(pos), img_fname(fname),scale(1.0f) {}
-    ElemInfo(DataOf2D pos, std::string fname, float scale) : pos(pos), img_fname(fname),scale(scale) {}
+    ElemInfo() = default;
+    ElemInfo(DataOf2D pos, std::string fname)
+        : pos(pos), img_fname(fname), scale(1.0f) {}
+    ElemInfo(DataOf2D pos, std::string fname, float scale)
+        : pos(pos), img_fname(fname), scale(scale) {}
 
-    const DataOf2D pos;
-    const std::string img_fname;
-    const float scale;
+    DataOf2D pos;
+    std::string img_fname;
+    float scale;
 };
 
 } // namespace sbfw

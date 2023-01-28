@@ -1,9 +1,9 @@
 #pragma once
 #include "ElemInfo.hpp"
 #include <GLFW/glfw3.h>
-#include <element/ViewContent.hpp>
 #include <bits/stdc++.h>
-namespace sbfw{
+#include <element/ViewContent.hpp>
+namespace sbfw {
 
 using std::shared_ptr;
 namespace scene {
@@ -30,9 +30,6 @@ class SceneBase {
     inline int add_button(ElemInfo ei, std::function<void(void)> action) {
         return contents.add_button(ei.img_fname, ei.pos, ei.scale, action);
     }
-
-      
-
     inline void change_image(int i, ElemInfo e) {
         contents.change_image(i, e.img_fname);
     }
@@ -47,6 +44,12 @@ class SceneBase {
         contents.add_button(ei.img_fname, ei.pos, ei.scale,
                             [&]() { this->go_next_scene(next_scene); });
     }
+    inline void set_window_name(std::string window_name_) {
+        window_name = window_name_;
+    }
+
+  private:
+    std::string window_name = "";
 
   protected:
     ViewContent contents;
@@ -55,6 +58,9 @@ class SceneBase {
     void start(GLFWwindow *window) {
         if(is_terminate_scene) {
             return;
+        }
+        if(window_name!=""){
+          glfwSetWindowTitle(window, window_name.c_str() );
         }
         detail::register_callbackfunc(*this, window);
         next_scene = nullptr;

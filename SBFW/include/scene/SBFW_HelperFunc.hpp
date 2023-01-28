@@ -1,7 +1,6 @@
 #pragma once
 #include "SimpleScene.hpp"
 #include <Setting.hpp>
-#include <Setting.hpp>
 
 
 

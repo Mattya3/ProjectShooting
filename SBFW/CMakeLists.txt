@@ -36,6 +36,6 @@ if(APPLE)
     target_link_libraries(sbfw "-framework OpenGL")
 endif()
 
-target_link_libraries(sbfw scene)
+target_link_libraries(sbfw sbfw_scene)
 target_link_libraries(sbfw element)
 target_link_libraries(sbfw sbfw_lodepng)

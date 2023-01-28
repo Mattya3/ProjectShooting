@@ -3,8 +3,8 @@
 #include <GLFW/glfw3.h>
 
 #include <DataOf2D.hpp>
-#include <scene/Setting.hpp>
 #include <lodepng.h>
+#include <scene/Setting.hpp>
 
 namespace sbfw {
 
@@ -19,8 +19,8 @@ class PngData {
     PngData() : imgs_data(50), len_data(50) {}
     DataOf2D get_len(int bind_id) { return len_data[bind_id]; }
     DataOf2D make_len(uint32_t w, uint32_t h) {
-        return {w / float(800),
-                h / float(700)};
+        return {w / float(setting.WINDOW_width) * 2.0f, h / float(setting.WINDOW_height) * 2.0f};
+
     }
     void load_png(std::string const &fullpath_fname, int id) {
         unsigned int width, height;
