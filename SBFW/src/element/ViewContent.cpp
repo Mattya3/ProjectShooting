@@ -25,10 +25,12 @@ int ViewContent::add_button(string fname, DataOf2D pos, float scale,
 }
 void ViewContent::change_image(int i, string fname) {
     auto [id, len] = texture::img_manager.provide_png(fname);
-    texs[i] = texture::ImgUnit(texs[i].pos, id, len, texs[i].scale);
+    // texs[i] = texture::ImgUnit(texs[i].pos, id, len, texs[i].scale);
+    texs[i].change(id, len);
 }
-
-// int ViewContent::add_button(DataOf2D pos, DataOf2D len,
-//                              std::function<void(void)> action) {}
+void ViewContent::change_btn_image(int i, string fname) {
+    auto [id, len] = texture::img_manager.provide_png(fname);
+    btns[i].tex.change(id, len);
+}
 
 } // namespace sbfw

@@ -19,15 +19,7 @@ using std::vector;
 // ボタンを有するScene
 class SimpleScene : public SceneBase {
   public:
-    SimpleScene() {
-        // vector<pair<shared_ptr<ButtonBase>, Scene_ptr>> content;
-        // 上記を引数で貰えれば任意のボタンとシーン遷移ができるシーンが作れる。
-        // auto btn = make_shared<NextSceneButton>(-0.9, -0.9, 0.49, 0.49);
-        // btn->set_color(0.5, 0.5, 0.0);
-        // auto back_arrow = make_shared<PngTexture>(
-        //     "test_img/back.png", Location(-0.9, -0.9, 0.49, 0.49));
-        // content.emplace_back(btn, back_arrow, nullptr);
-    }
+    SimpleScene() {}
 
   protected:
     bool is1_clicked = false;
@@ -39,6 +31,14 @@ class SimpleScene : public SceneBase {
                 }
             }
         } catch(const std::exception &e) { std::cerr << e.what() << '\n'; }
+    }
+    inline void draw_btn_touched() {
+        auto [mousex, mousey] = get_cursor_pos();
+        for(auto &&btn : contents.get_btns()) {
+            if(btn.valid_push_location(mousex, mousey)) {
+                btn.action_when_cursor_touched();
+            }
+        }
     }
     virtual void layer_front() {}
     virtual void layer_back() {}
@@ -54,20 +54,24 @@ class SimpleScene : public SceneBase {
             //     btn.action_when_pushed();
             // }
         }
+        draw_btn_touched();
         layer_front();
     }
 
     void init() override {}
+    // イベントが起きたときしか呼び出されない無いっぽい
+    // touchedはrenderで判定しよう
     inline void mouse_button_callback(GLFWwindow *pwin, int button, int action,
                                       int mods) override {
         double mousex, mousey;
+        glfwGetCursorPos(pwin, &mousex, &mousey);
+        setting.to_canonical_xy(mousex, mousey);
+
         if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
             is1_clicked = true;
         } else if(is1_clicked && button == GLFW_MOUSE_BUTTON_LEFT &&
                   action == GLFW_RELEASE) {
             is1_clicked = false;
-            glfwGetCursorPos(pwin, &mousex, &mousey);
-            setting.to_canonical_xy(mousex, mousey);
             judege_btn_pushed(mousex, mousey);
         }
     }

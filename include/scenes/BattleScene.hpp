@@ -24,7 +24,6 @@ class BattleScene : public sbfw::scene::SimpleScene {
 
   protected:
     void layer_front() {
-        filled_view___(g, 0.2, 0.2, 0.2);
         bt.timer();
 
         now_time = glfwGetTime();
@@ -45,6 +44,7 @@ class BattleScene : public sbfw::scene::SimpleScene {
             life3.view(bt.viewer.callHp());
         }
     }
+    void layer_back() override { filled_view___(g, 0.2, 0.2, 0.2); }
     void init() override {
         prev_time = glfwGetTime();
         start_time = glfwGetTime();

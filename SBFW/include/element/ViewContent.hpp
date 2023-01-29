@@ -25,8 +25,7 @@ class ViewContent {
     int add_button(string fname, DataOf2D pos, float scale,
                    std::function<void(void)> action);
     void change_image(int i, string fname);
-    // int add_button(DataOf2D pos, DataOf2D len,
-    //                 std::function<void(void)> action);
+    void change_btn_image(int i, string fname);
 
   private:
     vector<Button> btns;

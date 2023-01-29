@@ -1,5 +1,6 @@
 #pragma once
 #include "ElemInfo.hpp"
+#include "Setting.hpp"
 #include <GLFW/glfw3.h>
 #include <bits/stdc++.h>
 #include <element/ViewContent.hpp>
@@ -24,25 +25,33 @@ class SceneBase {
     SceneBase(bool b) : is_terminate_scene(b) {}
 
   public:
-    inline int add_image(ElemInfo ei) {
-        return contents.add_image(ei.img_fname, ei.pos, ei.scale);
+    inline ElemKey add_image(ElemInfo ei) {
+        return ElemKey(ElemKey::ele_type::img,
+                       contents.add_image(ei.img_fname, ei.pos, ei.scale));
     }
-    inline int add_button(ElemInfo ei, std::function<void(void)> action) {
-        return contents.add_button(ei.img_fname, ei.pos, ei.scale, action);
+    inline ElemKey add_button(ElemInfo ei, std::function<void(void)> action) {
+        return ElemKey(
+            ElemKey::ele_type::btn,
+            contents.add_button(ei.img_fname, ei.pos, ei.scale, action));
     }
-    inline void change_image(int i, ElemInfo e) {
-        contents.change_image(i, e.img_fname);
+   
+    inline void change_image(ElemKey i, ElemInfo e) {
+        if(i.e == ElemKey::ele_type::img)
+            contents.change_image(i.key_id, e.img_fname);
+        else if(i.e == ElemKey::ele_type::btn) {
+            contents.change_btn_image(i.key_id, e.img_fname);
+        }
     }
-    inline void def_transtion_to(ElemInfo ei,
-                                 shared_ptr<SceneBase> next_scene) {
+    inline ElemKey def_transtion_to(ElemInfo ei,
+                                    shared_ptr<SceneBase> next_scene) {
+        // 同じシーンへの遷移は不可能
         if(this == next_scene.get()) {
             std::cerr << "Can't go to same scene in def_transition_to()\n";
             std::cerr
                 << "your code may be 'aiueo.def_transtion_to(el, aiueo);'??\n";
             exit(1);
         }
-        contents.add_button(ei.img_fname, ei.pos, ei.scale,
-                            [&]() { this->go_next_scene(next_scene); });
+        return add_button(ei, [&]() { this->go_next_scene(next_scene); });
     }
     inline void set_window_name(std::string window_name_) {
         window_name = window_name_;
@@ -53,17 +62,19 @@ class SceneBase {
 
   protected:
     ViewContent contents;
+    GLFWwindow *_win;
 
   public:
     void start(GLFWwindow *window) {
         if(is_terminate_scene) {
             return;
         }
-        if(window_name!=""){
-          glfwSetWindowTitle(window, window_name.c_str() );
+        if(window_name != "") {
+            glfwSetWindowTitle(window, window_name.c_str());
         }
         detail::register_callbackfunc(*this, window);
         next_scene = nullptr;
+        _win = window;
         init();
         std::cout << "come new scene" << std::endl;
         glEnable(GL_BLEND);
@@ -101,6 +112,12 @@ class SceneBase {
 
   protected:
     void go_next_scene(shared_ptr<SceneBase> next_sc) { next_scene = next_sc; }
+    DataOf2D get_cursor_pos() {
+        double x, y;
+        glfwGetCursorPos(_win, &x, &y);
+        setting.to_canonical_xy(x, y);
+        return {float(x), float(y)};
+    }
 };
 
 using Scene_ptr = shared_ptr<SceneBase>;

@@ -20,8 +20,8 @@ class PngData {
     PngData() : imgs_data(50), len_data(50) {}
     DataOf2D get_len(int bind_id) { return len_data[bind_id]; }
     DataOf2D make_len(uint32_t w, uint32_t h) {
-        return {w / float(setting.WINDOW_width) * 2.0f, h / float(setting.WINDOW_height) * 2.0f};
-
+        return {w / float(setting.WINDOW_width) * 2.0f,
+                h / float(setting.WINDOW_height) * 2.0f};
     }
     void load_png(std::string const &fullpath_fname, int id) {
         unsigned int width, height;
@@ -35,7 +35,6 @@ class PngData {
             exit(1);
         }
         len_data[id] = make_len(width, height);
-      std::cout << fullpath_fname << " as " << id << std::endl;
         // テクスチャへの登録
         glBindTexture(GL_TEXTURE_2D, id);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

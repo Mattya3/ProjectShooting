@@ -1,7 +1,7 @@
 #pragma once
 #include <DataOf2D.hpp>
 #include <GLFW/glfw3.h>
-namespace sbfw{
+namespace sbfw {
 
 // Atlas UNItも作る texposも入れて
 // Shape Unit も作る opengの単純な図形を描画できる
@@ -24,10 +24,10 @@ class ImgUnit {
 
     void view() {
         // glColor3d(1.0, 1.0, 1.0);
-        if(current_bind_id != this_id) {
+        // if(current_bind_id != this_id) {
             glBindTexture(GL_TEXTURE_2D, this_id);
-            current_bind_id = this_id;
-        }
+            // current_bind_id = this_id;
+        // }
         glColor3d(1.0, 1.0, 1.0);
 
         glEnable(GL_TEXTURE_2D);
@@ -45,6 +45,10 @@ class ImgUnit {
         glTranslatef(pos.x - len.x / 2, pos.y - len.y, 0);
         glEnd();
         glDisable(GL_TEXTURE_2D);
+    }
+    void change(int new_id, DataOf2D len_) {
+        this_id=new_id;
+        len = len_;
     }
 };
 

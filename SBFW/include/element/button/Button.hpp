@@ -6,7 +6,7 @@
 #include <DataOf2D.hpp>
 
 #include "../texture/ImgUnit.hpp"
-namespace sbfw{
+namespace sbfw {
 class Button {
   public:
     // 画像無し
@@ -20,8 +20,8 @@ class Button {
           left(pos.x - len.x / 2 * tex.scale),
           right(pos.x + len.x / 2 * tex.scale) {}
 
-  protected:
     texture::ImgUnit tex;
+  protected:
     bool has_texture = false;
 
     DataOf2D pos; // 中心座標
@@ -36,22 +36,24 @@ class Button {
     float left, right, up, low;
 
   public:
-    virtual inline void set_color(std::vector<float> &color_vec) {
+    inline void set_color(std::vector<float> &color_vec) {
         assert(color_vec.size() == 3);
         col = std::vector<float>(color_vec);
     }
 
     // ボタンが押された時trueを返す (インスタンス外で解決したい処理がある時)
     // ボタンの種類による挙動の変化は子クラスでoverrideすることで対応
-    virtual inline bool is_pushed() { return btn_enable; }
+    inline bool is_pushed() { return btn_enable; }
 
     // ボタンが押されたときの処理
     // すなわちvalid_push_locationだったときにmouse_callbackで使われる
-    virtual void action_when_pushed() {
+    void action_when_pushed() {
         btn_enable = true;
         action();
     }
-
+    // カーソルが上に来たが押下されていない時
+    bool is_cursor_touched = false;
+    void action_when_cursor_touched() { is_cursor_touched = true; }
     // 引数(x,y)がボタンの領域にあるときtrue
     inline bool valid_push_location(float x, float y) {
         return (left <= x && x <= right && low <= y && y <= up);
@@ -64,15 +66,21 @@ class Button {
         } else {
             glBegin(GL_LINE_LOOP);
         }
-        glColor3d(col[0], col[1], col[2]);
-        glVertex3d(pos.x - len.x / 2 * tex.scale, pos.y - len.y / 2 * tex.scale,
-                   0);
-        glVertex3d(pos.x + len.x / 2 * tex.scale, pos.y - len.y / 2 * tex.scale,
-                   0);
-        glVertex3d(pos.x + len.x / 2 * tex.scale, pos.y + len.y / 2 * tex.scale,
-                   0);
-        glVertex3d(pos.x - len.x / 2 * tex.scale, pos.y + len.y / 2 * tex.scale,
-                   0);
+        if(is_cursor_touched) {
+            glColor3d(0, 1, 0);
+            is_cursor_touched = false;
+        } else {
+            glColor3d(col[0], col[1], col[2]);
+        }
+        float ratio = 1.2;
+        glVertex3d(pos.x - len.x / 2 * tex.scale * ratio,
+                   pos.y - len.y / 2 * tex.scale * ratio, 0);
+        glVertex3d(pos.x + len.x / 2 * tex.scale * ratio,
+                   pos.y - len.y / 2 * tex.scale * ratio, 0);
+        glVertex3d(pos.x + len.x / 2 * tex.scale * ratio,
+                   pos.y + len.y / 2 * tex.scale * ratio, 0);
+        glVertex3d(pos.x - len.x / 2 * tex.scale * ratio,
+                   pos.y + len.y / 2 * tex.scale * ratio, 0);
         glEnd();
         if(has_texture) {
             tex.view();
