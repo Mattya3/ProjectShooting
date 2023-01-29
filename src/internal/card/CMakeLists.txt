@@ -7,6 +7,8 @@ add_library(card
     ${LIST}
 )
 target_link_libraries(card component)
+target_link_libraries(card Setting)
+
 
 target_include_directories(card
     PUBLIC ${PROJECT_SOURCE_DIR}/include/internal/card
