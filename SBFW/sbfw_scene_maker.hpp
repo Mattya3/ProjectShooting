@@ -1,3 +1,4 @@
+#pragma once
 /**
  * SimpleSceneを継承した独自のSceneクラスを定義するためのヘッダ
  * 隠蔽を維持した上でImgUnitを使うことができる。
