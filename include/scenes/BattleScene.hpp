@@ -1,3 +1,4 @@
+#pragma once
 #include <component/Image.hpp>
 #include <component/RemainingStatus.hpp>
 
