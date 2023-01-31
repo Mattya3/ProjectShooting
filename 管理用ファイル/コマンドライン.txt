@@ -1,0 +1,2 @@
+g++ main.cpp -std=c++17 src/internal/*.cpp src/internal/battle/*.cpp src/internal/card/*.cpp src/scenes/*.cpp src/component/*.cpp src/GameEngine/*.cpp src/*.cpp -o b.exe -I./include/ -lopengl32 -lglfw3 -lgdi32
+./b.exe
