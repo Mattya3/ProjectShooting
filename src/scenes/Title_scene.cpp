@@ -53,7 +53,7 @@ Title_scene::Title_scene(GLFWwindow *window1) {
     if(b->next_scene) {
         SelectCards_Scene csv(window1);
     } else if(btn_go_battle->next_scene) {
-        BattleScene bs(window1);
+        // BattleScene bs(window1);
     }
 }
 void Title_scene::render(GLFWwindow *window1) {}
