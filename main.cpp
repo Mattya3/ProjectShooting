@@ -5,7 +5,10 @@ using namespace std;
 #include "filename.hpp"
 #include <internal/card/ChangeStructure.hpp>
 #include <scenes/BattleScene.hpp>
+#include <scene/SimpleScene.hpp>
 
+#include <DataOf2D.hpp>
+#include <scene/ElemInfo.hpp>
 class functor {
   private:
     int idx;
