@@ -1,3 +1,4 @@
+#pragma once
 #include "PngData.hpp"
 #include <bits/stdc++.h>
 #include <filesystem>

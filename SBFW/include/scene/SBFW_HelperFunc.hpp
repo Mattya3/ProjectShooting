@@ -1,8 +1,8 @@
 #pragma once
+#ifndef SBFW_HELPER_FUNC
+#define SBFW_HELPER_FUNC
 #include "SimpleScene.hpp"
 #include <Setting.hpp>
-
-
 
 // ヘルパ関数を定義する
 namespace sbfw {
@@ -39,3 +39,4 @@ shared_ptr<SimpleScene> prepare_end() { return shared_ptr<SimpleScene>(); }
 } // namespace scene
 
 } // namespace sbfw
+#endif
