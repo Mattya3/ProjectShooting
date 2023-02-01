@@ -17,3 +17,4 @@ test/
 externsrc/
 debug_build/
 *.o
+CMakeLists.txt
