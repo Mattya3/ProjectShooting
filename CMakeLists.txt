@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.24)
-projectshooting(
+project( shooting
     VERSION 1.0
     DESCRIPTION "Shooting Game"
     LANGUAGES CXX
 )
 
+set(CMAKE_CXX_COMPILER "/opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_COMPILER "/opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <fast_sqrt.hpp>
+#include "fast_sqrt.hpp"
 
 #include <bits/stdc++.h>
 #include <initializer_list>

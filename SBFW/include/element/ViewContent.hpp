@@ -4,6 +4,7 @@
 
 // ここは前方宣言にしたい
 #include <element/button/Button.hpp>
+#include <element/texture/ImageManager.hpp>
 #include <element/texture/ImgUnit.hpp>
 
 namespace sbfw {
@@ -14,10 +15,12 @@ class ImgUnit;
 } // namespace texture
 
 class ViewContent {
+
   private:
     using string = std::string;
     template <class T> using vector = std::vector<T>;
     template <class T> using sp = std::shared_ptr<T>;
+    static texture::ImageManager img_manager;
 
   public:
     ViewContent();
@@ -35,5 +38,4 @@ class ViewContent {
     vector<texture::ImgUnit> &_get_imgs() { return texs; }
     auto &get_btns() { return btns; }
 };
-
 } // namespace sbfw

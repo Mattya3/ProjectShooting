@@ -17,7 +17,7 @@ class ImageManager {
 
   public:
     std::pair<int, DataOf2D> provide_png(std::string fname);
-} img_manager;
+} ;
 
 } // namespace texture
 

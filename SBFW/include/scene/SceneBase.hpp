@@ -34,7 +34,7 @@ class SceneBase {
             ElemKey::ele_type::btn,
             contents.add_button(ei.img_fname, ei.pos, ei.scale, action));
     }
-   
+
     inline void change_image(ElemKey i, ElemInfo e) {
         if(i.e == ElemKey::ele_type::img)
             contents.change_image(i.key_id, e.img_fname);
@@ -109,6 +109,7 @@ class SceneBase {
   private:
     shared_ptr<SceneBase> next_scene;
     bool is_terminate_scene = false;
+    Setting setting;
 
   protected:
     void go_next_scene(shared_ptr<SceneBase> next_sc) { next_scene = next_sc; }

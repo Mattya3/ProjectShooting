@@ -1,4 +1,5 @@
 file(GLOB LIST "*/*.cpp")
+set(CMAKE_CXX_COMPILER "/opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12")
 
 add_library(sbfw
     SHARED

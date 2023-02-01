@@ -6,6 +6,7 @@
 #include <DataOf2D.hpp>
 
 #include "../texture/ImgUnit.hpp"
+#include <scene/Setting.hpp>
 namespace sbfw {
 class Button {
   public:
@@ -21,6 +22,8 @@ class Button {
           right(pos.x + len.x / 2 * tex.scale) {}
 
     texture::ImgUnit tex;
+    Setting setting{};
+
   protected:
     bool has_texture = false;
 

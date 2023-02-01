@@ -4,8 +4,11 @@
 #include <GLFW/glfw3.h>
 
 #include <DataOf2D.hpp>
-#include <lodepng.h>
+// #include <lodepng.h>
+#include "../../../lodepng/lodepng.h"
+
 #include <scene/Setting.hpp>
+
 
 namespace sbfw {
 
@@ -15,6 +18,7 @@ class PngData {
     using ubyte_t = unsigned char;
     std::vector<std::vector<ubyte_t>> imgs_data; // 画像のデータ
     std::vector<DataOf2D> len_data;
+    Setting setting;
 
   public:
     PngData() : imgs_data(50), len_data(50) {}

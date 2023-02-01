@@ -2,17 +2,17 @@
 #ifndef SBFW_HELPER_FUNC
 #define SBFW_HELPER_FUNC
 #include "SimpleScene.hpp"
-#include <Setting.hpp>
+#include "Setting.hpp"
 
 // ヘルパ関数を定義する
 namespace sbfw {
 
 // void set_window_sz(int wwidth, int wheight);
 
-void set_window_sz(int wwidth, int wheight) {
-    setting.WINDOW_width = wwidth;
-    setting.WINDOW_height = wheight;
-}
+// void set_window_sz(int wwidth, int wheight) {
+//     setting.WINDOW_width = wwidth;
+//     setting.WINDOW_height = wheight;
+// }
 namespace scene {
 template <int n> std::array<shared_ptr<SimpleScene>, n> prepare_scenes() {
     std::array<shared_ptr<SimpleScene>, n> res;

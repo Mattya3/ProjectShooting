@@ -61,6 +61,7 @@ class SimpleScene : public SceneBase {
     void init() override {}
     // イベントが起きたときしか呼び出されない無いっぽい
     // touchedはrenderで判定しよう
+    Setting setting;
     inline void mouse_button_callback(GLFWwindow *pwin, int button, int action,
                                       int mods) override {
         double mousex, mousey;

@@ -3,9 +3,10 @@
 namespace sbfw {
 
 class Setting {
+
   private:
   public:
-    Setting(/* args */) = default;
+    Setting() = default;
     int WINDOW_width = 800, WINDOW_height = 700;
     inline void to_canonical_xy(float &x, float &y) {
         x /= WINDOW_width / 2;
@@ -19,7 +20,6 @@ class Setting {
         y = 1 - y;
         x = x - 1;
     }
-
-} setting;
+};
 
 } // namespace sbfw

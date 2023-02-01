@@ -37,8 +37,8 @@ int main() {
     if(!glfwInit())
         return -1;
 
-    window = glfwCreateWindow(sbfw::setting.WINDOW_width,
-                              sbfw::setting.WINDOW_height, "Hello World", NULL,
+    window = glfwCreateWindow(800,
+                              700, "Hello World", NULL,
                               NULL);
     assert(window);
     if(!window) {
