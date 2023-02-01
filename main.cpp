@@ -3,9 +3,8 @@
 using namespace std;
 #include "SBFW/sbfw.hpp"
 #include "filename.hpp"
+#include <internal/card/ChangeStructure.hpp>
 #include <scenes/BattleScene.hpp>
-
-
 
 class functor {
   private:
@@ -33,6 +32,7 @@ int functor::selected_key = 0;
 int allocator_btn_pos::selected_key = 0;
 
 int main() {
+
     GLFWwindow *window;
     if(!glfwInit())
         return -1;
@@ -48,6 +48,15 @@ int main() {
     // 作成したウィンドウを，OpenGLの描画関数のターゲットに
     glfwMakeContextCurrent(window);
 
+    // internalとの結合を行う
+    ChangeStructure cs;
+
+    /******************
+     * 画面に登場する要素の定義
+     *******************/
+    // コンストラクタは(設置位置,画像ファイル名,倍率)
+    // 画像ファイル名はimgにあること前提
+    // 設置位置は中心を0,0とし、左端をx=-1, 右端をx=1とする
     sbfw::ElemInfo elgo_battle({0, 0.5}, "title/goBattle.png", 0.3);
     sbfw::ElemInfo elgo_select({0, -0.5}, "title/goSelectCard.png", 0.3);
     sbfw::ElemInfo elgo_back({-0.5, -0.5}, "test_img/go_title.png");
@@ -58,7 +67,6 @@ int main() {
         eldroid[i] =
             sbfw::ElemInfo({0.35f + i * 0.2f, -0.7f}, "ic_launcher.png", 0.5);
     }
-
     vector<sbfw::ElemInfo> el_allocate(3);
     for(int i = 0; i < 3; i++)
         el_allocate[i] =
@@ -86,6 +94,9 @@ int main() {
         // d.dump();
     }
 
+    /******************
+     * 以下はシーンの準備
+     *******************/
     auto [title, select, score] =
         sbfw::scene::prepare_scenes<3>();        // 構造化束縛で1つずつ
     auto sub = sbfw::scene::prepare_scenes<3>(); // 配列arrayで受け取る
@@ -100,6 +111,9 @@ int main() {
     game->set_window_name("game");
     score->set_window_name("score");
 
+    /******************
+     * シーンに要素=button or imageを貼り付ける
+     *******************/
     for(int i = 0; i < card_num; i++) {
         switch(i / each_scene_num) {
         case 0:
@@ -141,6 +155,7 @@ int main() {
         game->change_image(
             alloc_key_in_gamescene[allocator_btn_pos::selected_key],
             elcards[functor::selected_key]);
+        cs.ChangeStructureCard(0, functor::selected_key);
     });
     sub[1]->def_transtion_to(elback_arrow, select);
     sub[1]->def_transtion_to(elOK, select);
@@ -152,6 +167,7 @@ int main() {
         game->change_image(
             alloc_key_in_gamescene[allocator_btn_pos::selected_key],
             elcards[functor::selected_key]);
+        cs.ChangeStructureCard(1, functor::selected_key);
     });
 
     sub[2]->def_transtion_to(elback_arrow, select);
@@ -163,6 +179,7 @@ int main() {
         game->change_image(
             alloc_key_in_gamescene[allocator_btn_pos::selected_key],
             elcards[functor::selected_key]);
+        cs.ChangeStructureCard(2, functor::selected_key);
     });
 
     // game->def_transtion_to(elback_arrow, title);
