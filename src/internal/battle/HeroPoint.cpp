@@ -23,16 +23,18 @@ short HeroPoint::levelUp(short target){
     if (level.at(target)++ == 1) changedNum = list.at(target).uped1;
     else changedNum = list.at(target).uped2;
     if (list.at(target).typeA == 0){
-        switch (list.at(target).typeA){
+        switch (list.at(target).typeB){
             case 0:
                 velocity = changedNum;
+                nowVelocity = velocity;
                 break;
             case 1:
+                setHitTime *= (double)changedNum / (double)size;
                 size = changedNum;
                 break;
         }
     }else{
-        switch (list.at(target).typeA){
+        switch (list.at(target).typeB){
             case 0:
                 bullet.changeVelocity(changedNum);
                 break;
@@ -54,10 +56,10 @@ short HeroPoint::levelUp(short target){
                 break;
             case 6:
                 bullet.changeSearch((changedNum / 10) * 10);
-                bullet.changeHorming((changedNum % 10) * 0.1);
+                bullet.changeHorming((changedNum % 10) * 0.05);
                 break;
             case 7:
-                //ボムの記載、未作成
+                bomb.push_back(changedNum);
                 break;
         }
     }
@@ -114,7 +116,7 @@ void HeroPoint::shoot(vector<BulletPoint> &bullets){
                 count--;
             }
         }else{
-            count = (shootNum - 1) / 2;
+            count = shootNum / 2;
             while(count > 0){
                 afterAngle = angle + (count + 1 / 2) * changeAngle;
                 if(afterAngle < 0) afterAngle += 2 * M_PI;
@@ -136,4 +138,11 @@ void HeroPoint::shoot(vector<BulletPoint> &bullets){
 void HeroPoint::changeDirection(double per){
     direction = per;
     changeAngle(per);
+}
+
+short HeroPoint::getBomb(){
+    if(bomb.size() == 0) return 0;
+    short out = bomb.at(0);
+    bomb.erase(bomb.begin());
+    return out;
 }

@@ -46,6 +46,8 @@ public:
 
     void move();
 
+    void heal(short up);
+
     void damage(short hit);
 
     vector<short> collision(vector<BulletPoint> bullets, short range);

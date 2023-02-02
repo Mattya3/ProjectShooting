@@ -62,6 +62,11 @@ void NormalPoint::move(){
     position.second = min(position.second, (double)(height - 1) - (double)size / 2);
 }
 
+void NormalPoint::heal(short up){
+    nowHP += up;
+    if(maxHP < nowHP) nowHP = maxHP;
+}
+
 void NormalPoint::damage(short hit){ //ダメージ処理、HPが0以下ならtrueを返す
     nowHP -= hit;
 }
