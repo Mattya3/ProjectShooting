@@ -2,3 +2,8 @@ g++ main.cpp -std=c++17 src/internal/*.cpp src/internal/battle/*.cpp src/interna
 ./b.exe
 
 g++ main.cpp -std=c++17 src/internal/*.cpp src/internal/battle/*.cpp src/internal/card/*.cpp src/scenes/*.cpp src/component/*.cpp src/GameEngine/*.cpp src/*.cpp SBFW/ext_math/*.cpp SBFW/src/*.cpp SBFW/src/element/*.cpp SBFW/src/scene/*.cpp -o b.exe -I./include/ -I./SBFW/ -I./SBFW/ext_math/ -I./SBFW/include/ -lopengl32 -lglfw3 -lgdi32
+
+
+
+
+g++ main.cpp -std=c++17 src/internal/.cpp src/internal/battle/.cpp src/internal/card/.cpp src/scenes/.cpp src/component/.cpp src/GameEngine/.cpp src/.cpp -o b.exe -I./include/　././SBFW/libsbw.a -lopengl32 -lglfw3 -lgdi32
