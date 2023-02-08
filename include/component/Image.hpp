@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <component/Location.hpp>
 #include <string>
+#include <DataOf2D.hpp>
 typedef unsigned char ubyte_t;
 // imgディレクトリであることは前提とする
 class PngTexture {

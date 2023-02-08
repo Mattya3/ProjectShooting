@@ -1,5 +1,6 @@
 #pragma once
 #include <component/ButtonBase.hpp>
+#include <DataOf2D.hpp>
 using namespace std;
 
 class Button_ONOF : public ButtonBase {

@@ -34,21 +34,21 @@ int allocator_btn_pos::selected_key = 0;
 
 int main() {
 
-    GLFWwindow *window;
-    if(!glfwInit())
-        return -1;
+    // GLFWwindow *window;
+    // if(!glfwInit())
+    //     return -1;
 
-    window = glfwCreateWindow(800,
-                              700, "Hello World", NULL,
-                              NULL);
-    assert(window);
-    if(!window) {
-        glfwTerminate();
-        return -1;
-    }
-    // 作成したウィンドウを，OpenGLの描画関数のターゲットに
-    glfwMakeContextCurrent(window);
-
+    // window = glfwCreateWindow(800,
+    //                           700, "Hello World", NULL,
+    //                           NULL);
+    // assert(window);
+    // if(!window) {
+    //     glfwTerminate();
+    //     return -1;
+    // }
+    // // 作成したウィンドウを，OpenGLの描画関数のターゲットに
+    // glfwMakeContextCurrent(window);
+    sbfw::InitSBFW(800, 700);
     // internalとの結合を行う
     ChangeStructure cs;
 
@@ -152,7 +152,7 @@ int main() {
     sub[0]->DefTranstionTo(elright_arrow, sub[1]);
     sub[0]->AddButton(elOK, [&]() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
-                             elcards[functor::selected_key]);
+                            elcards[functor::selected_key]);
         game->ChangeImage(
             alloc_key_in_gamescene[allocator_btn_pos::selected_key],
             elcards[functor::selected_key]);
@@ -164,7 +164,7 @@ int main() {
     sub[1]->DefTranstionTo(elleft_arrow, sub[0]);
     sub[1]->AddButton(elOK, [&]() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
-                             elcards[functor::selected_key]);
+                            elcards[functor::selected_key]);
         game->ChangeImage(
             alloc_key_in_gamescene[allocator_btn_pos::selected_key],
             elcards[functor::selected_key]);
@@ -176,7 +176,7 @@ int main() {
     sub[2]->DefTranstionTo(elleft_arrow, sub[1]);
     sub[2]->AddButton(elOK, [&]() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
-                             elcards[functor::selected_key]);
+                            elcards[functor::selected_key]);
         game->ChangeImage(
             alloc_key_in_gamescene[allocator_btn_pos::selected_key],
             elcards[functor::selected_key]);

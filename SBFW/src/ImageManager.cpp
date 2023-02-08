@@ -3,6 +3,8 @@
 #include "math2D/DataOf2D.hpp"
 
 #include <GLFW/glfw3.h>
+#include <filesystem>
+#include <string>
 
 namespace sbfw {
 extern int window_width, window_height;
@@ -11,7 +13,7 @@ namespace texture {
 std::pair<int, DataOf2D> ImageManager::ProvideImage(string const &fname) {
     using std::filesystem::current_path;
     string filename =
-        (current_path() / std::filesystem::path("img/" + fname)).c_str();
+        (current_path() / std::filesystem::path("img/" + fname)).string().c_str();
 
     if(!std::filesystem::exists(filename)) {
         std::cerr << "Not found " << filename << '\n';

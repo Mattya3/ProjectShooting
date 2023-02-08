@@ -31,7 +31,8 @@ class RemainingStatus {
             valid_tex.view(p);
             p.x += len.x * ratio;
         }
-        DataOf2D tm(view_start_point.x - len.x, view_start_point.y - len.y);
+// (view_start_point.x - len.x, view_start_point.y - len.y);
+        DataOf2D tm;
         Location l(tm.x + float(having_stoc) / float(max_stock) *
                               render_width,
                    tm.y,
@@ -44,7 +45,7 @@ class RemainingStatus {
                     int stock)
         : view_start_point(st), valid_tex(valid), invalid_tex(invalid),
           max_stock(stock), now_stock(stock) {
-        len = DataOf2D(valid_tex.getWidth(), valid_tex.getHeight(), 1.0);
+        // len = DataOf2D(valid_tex.getWidth(), valid_tex.getHeight(), 1.0);
     }
     inline void decrement_stock() { now_stock = max(0, now_stock - 1); }
     inline void increment_stock() { now_stock = min(max_stock, now_stock + 1); }

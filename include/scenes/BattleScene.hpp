@@ -58,7 +58,8 @@ class BattleScene : public sbfw::scene::SimpleScene {
         }
     }
     void layer_back() override { filled_view___(g, 0.2, 0.2, 0.2); }
-    void init() override {
+
+    void InitAfterTransition() override {
         prev_time = glfwGetTime();
         start_time = glfwGetTime();
         bt.start(0);
