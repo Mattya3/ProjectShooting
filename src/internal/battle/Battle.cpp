@@ -1,8 +1,5 @@
 #include <internal/battle/Battle.hpp>
 
-//ダメージ量の確認
-//ボムの確認
-
 void Battle::start(short stage) {//初期設定用のメソッド, 引数はステージ番号
     StructureData sets;
     vector<Card> list = sets.callCardSets();
