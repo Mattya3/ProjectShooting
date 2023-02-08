@@ -4,11 +4,11 @@ short GamePointView::callHp(){
     return heroHasHp;
 }
 
-short GamePointView::callScore(){
-    return score;
+short GamePointView::callExp(){
+    return exp;
 }
 
-short GamePointView::callNeedEXP(){
+short GamePointView::callNeedExp(){
     return needLevelUpEXP;
 }
 
@@ -32,8 +32,12 @@ vector<GameCardMono> GamePointView::callCard(){
     return cards;
 }
 
-void GamePointView::putScore(short get){
-    score = get;
+void GamePointView::putNeedExp(short need){
+    needLevelUpEXP = need;
+}
+
+void GamePointView::putExp(short get){
+    exp = get;
 }
 
 void GamePointView::putHero(HeroPoint h, vector<BulletPoint> b){

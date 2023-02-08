@@ -12,7 +12,7 @@ using namespace std;
 class GamePointView{//カードデータを保存する関数
 private:
     short heroHasHp;
-    short score;
+    short exp;
     short needLevelUpEXP = 0;
     GamePointMono hero;
     vector<GamePointMono> enemies;
@@ -22,10 +22,10 @@ private:
 
 public:
     short callHp();
-    
-    short callScore();
 
-    short callNeedEXP();
+    short callNeedExp();//必要経験値　3枚のカードの上に表示
+    
+    short callExp();//所持経験値　HPの↓に表示
 
     GamePointMono callHero();
 
@@ -37,7 +37,9 @@ public:
 
     vector<GameCardMono> callCard();
 
-    void putScore(short get);
+    void putNeedExp(short need);
+
+    void putExp(short get);
 
     void putHero(HeroPoint h, vector<BulletPoint> b);
 
