@@ -5,10 +5,8 @@ using namespace std;
 #include "filename.hpp"
 #include <internal/card/ChangeStructure.hpp>
 #include <scenes/BattleScene.hpp>
-#include <scene/SimpleScene.hpp>
 
 #include <DataOf2D.hpp>
-#include <scene/ElemInfo.hpp>
 class functor {
   private:
     int idx;
@@ -105,14 +103,14 @@ int main() {
     auto sub = sbfw::scene::prepare_scenes<3>(); // 配列arrayで受け取る
     auto [game] =
         sbfw::scene::prepare_scenes<BattleScene, 1>(); // ユーザ定義のSceneもok
-    title->set_window_name("title");
-    select->set_window_name("select");
-    sub[0]->set_window_name("sub[0]");
-    sub[1]->set_window_name("sub[1]");
-    sub[2]->set_window_name("sub[2]");
+    title->SetWindowName("title");
+    select->SetWindowName("select");
+    sub[0]->SetWindowName("sub[0]");
+    sub[1]->SetWindowName("sub[1]");
+    sub[2]->SetWindowName("sub[2]");
 
-    game->set_window_name("game");
-    score->set_window_name("score");
+    game->SetWindowName("game");
+    score->SetWindowName("score");
 
     /******************
      * シーンに要素=button or imageを貼り付ける
@@ -120,76 +118,76 @@ int main() {
     for(int i = 0; i < card_num; i++) {
         switch(i / each_scene_num) {
         case 0:
-            sub[0]->add_button(elcards[i], functor(i));
+            sub[0]->AddButton(elcards[i], functor(i));
             break;
         case 1:
-            sub[1]->add_button(elcards[i], functor(i));
+            sub[1]->AddButton(elcards[i], functor(i));
             break;
         case 2:
-            sub[2]->add_button(elcards[i], functor(i));
+            sub[2]->AddButton(elcards[i], functor(i));
             break;
         default:
             break;
         }
     }
 
-    title->def_transtion_to(elgo_select, select);
-    title->def_transtion_to(elgo_battle, game);
+    title->DefTranstionTo(elgo_select, select);
+    title->DefTranstionTo(elgo_battle, game);
 
-    select->def_transtion_to(elback_arrow, title);
+    select->DefTranstionTo(elback_arrow, title);
 
     vector<sbfw::ElemKey> alloc_key_in_gamescene(3);
     for(int i = 0; i < 3; i++) {
-        alloc_key_in_gamescene[i] = game->add_image(eldroid[i]);
+        alloc_key_in_gamescene[i] = game->AddImage(eldroid[i]);
     }
 
     vector<sbfw::ElemKey> alloc_key(3);
     for(int i = 0; i < 3; i++) {
-        select->def_transtion_to(el_allocate[i], sub[0]);
-        alloc_key[i] = select->add_button(el_allocate[i], allocator_btn_pos(i));
+        select->DefTranstionTo(el_allocate[i], sub[0]);
+        alloc_key[i] = select->AddButton(el_allocate[i], allocator_btn_pos(i));
     }
 
-    sub[0]->def_transtion_to(elback_arrow, select);
-    sub[0]->def_transtion_to(elOK, select);
-    sub[0]->def_transtion_to(elright_arrow, sub[1]);
-    sub[0]->add_button(elOK, [&]() {
-        select->change_image(alloc_key[allocator_btn_pos::selected_key],
+    sub[0]->DefTranstionTo(elback_arrow, select);
+    sub[0]->DefTranstionTo(elOK, select);
+    sub[0]->DefTranstionTo(elright_arrow, sub[1]);
+    sub[0]->AddButton(elOK, [&]() {
+        select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                              elcards[functor::selected_key]);
-        game->change_image(
+        game->ChangeImage(
             alloc_key_in_gamescene[allocator_btn_pos::selected_key],
             elcards[functor::selected_key]);
         cs.ChangeStructureCard(0, functor::selected_key);
     });
-    sub[1]->def_transtion_to(elback_arrow, select);
-    sub[1]->def_transtion_to(elOK, select);
-    sub[1]->def_transtion_to(elright_arrow, sub[2]);
-    sub[1]->def_transtion_to(elleft_arrow, sub[0]);
-    sub[1]->add_button(elOK, [&]() {
-        select->change_image(alloc_key[allocator_btn_pos::selected_key],
+    sub[1]->DefTranstionTo(elback_arrow, select);
+    sub[1]->DefTranstionTo(elOK, select);
+    sub[1]->DefTranstionTo(elright_arrow, sub[2]);
+    sub[1]->DefTranstionTo(elleft_arrow, sub[0]);
+    sub[1]->AddButton(elOK, [&]() {
+        select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                              elcards[functor::selected_key]);
-        game->change_image(
+        game->ChangeImage(
             alloc_key_in_gamescene[allocator_btn_pos::selected_key],
             elcards[functor::selected_key]);
         cs.ChangeStructureCard(1, functor::selected_key);
     });
 
-    sub[2]->def_transtion_to(elback_arrow, select);
-    sub[2]->def_transtion_to(elOK, select);
-    sub[2]->def_transtion_to(elleft_arrow, sub[1]);
-    sub[2]->add_button(elOK, [&]() {
-        select->change_image(alloc_key[allocator_btn_pos::selected_key],
+    sub[2]->DefTranstionTo(elback_arrow, select);
+    sub[2]->DefTranstionTo(elOK, select);
+    sub[2]->DefTranstionTo(elleft_arrow, sub[1]);
+    sub[2]->AddButton(elOK, [&]() {
+        select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                              elcards[functor::selected_key]);
-        game->change_image(
+        game->ChangeImage(
             alloc_key_in_gamescene[allocator_btn_pos::selected_key],
             elcards[functor::selected_key]);
         cs.ChangeStructureCard(2, functor::selected_key);
     });
 
-    // game->def_transtion_to(elback_arrow, title);
-    // game->add_image()
+    // game->DefTranstionTo(elback_arrow, title);
+    // game->AddImage()
 
     // シーンの処理をスタートさせる。最初に表示したいシーンのstart()を呼び出すこと
-    title->start(window);
+    title->Start();
 
     glfwTerminate();
     return 0;
