@@ -1,4 +1,4 @@
-#include <component/Location.hpp>
+#include <Location.hpp>
 Location::Location(int sx, int sy, int xlen, int ylen) {
     double x = sx;
     double y = sy + ylen;

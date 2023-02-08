@@ -1,9 +1,5 @@
-#include <component/Button_anyTimes.hpp>
-#include <component/Image.hpp>
-#include <component/NextSceneButton.hpp>
+#include <Image.hpp>
 #include <app_sbfw/BattleScene.hpp>
-// #include <scenes/ResolverCallbackFunc.hpp>
-// #include <scenes/Title_Scene.hpp>
 
 #include <DataOf2D.hpp>
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <DataOf2D.hpp>
 #include <bits/stdc++.h>
-#include <component/Image.hpp>
+#include <Image.hpp>
 using namespace std;
 
 static void filled_view___(Location l, float r, float g, float b) {

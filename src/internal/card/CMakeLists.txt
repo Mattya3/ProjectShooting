@@ -8,9 +8,6 @@ add_library(card
     ${LIST}
     ${Split}
 )
-target_link_libraries(card component)
-
-
 target_include_directories(card
     PUBLIC ${PROJECT_SOURCE_DIR}/include/internal/card
 )

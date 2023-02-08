@@ -1,6 +1,6 @@
 #pragma once
-#include <component/Image.hpp>
-#include <component/RemainingStatus.hpp>
+#include <Image.hpp>
+#include <RemainingStatus.hpp>
 
 #include <internal/battle/Battle.hpp>
 #include <internal/battle/GamePointMono.hpp>
@@ -8,7 +8,7 @@
 
 #include <bits/stdc++.h>
 
-#include <component/NextSceneButton.hpp>
+// #include <component/NextSceneButton.hpp>
 #include <sbfw.hpp>
 
 using namespace std;
@@ -97,10 +97,7 @@ class BattleScene : public sbfw::scene::SimpleScene {
 
     vector<Location> bullets_loc_enemy; // 敵の弾の位置
     Location game_domain = Location(SX, SY, WindowWidth, WindowHeight);
-    // CenterLocation domain = CenterLocation(game_domain);
 
-    // 画面上の要素
-    NextSceneButton *btn_go_next_scene;
 
   private:
     DataOf2D to_correctxy(pair<int, int> pii) {

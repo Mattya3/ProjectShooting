@@ -1,7 +1,6 @@
 #include <GLFW/glfw3.h>
-// #include <OpenGL/glu.h>
 #include <bits/stdc++.h>
-#include <component/Image.hpp>
+#include <Image.hpp>
 #include <filesystem>
 #include <DataOf2D.hpp>
 #include <stdexcept>

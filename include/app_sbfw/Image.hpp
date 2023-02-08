@@ -1,7 +1,7 @@
 #pragma once
 #include <DataOf2D.hpp>
 #include <GLFW/glfw3.h>
-#include <component/Location.hpp>
+#include <Location.hpp>
 #include <string>
 #include <DataOf2D.hpp>
 typedef unsigned char ubyte_t;
