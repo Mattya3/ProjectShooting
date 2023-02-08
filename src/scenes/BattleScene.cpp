@@ -3,7 +3,7 @@
 #include <component/NextSceneButton.hpp>
 #include <scenes/BattleScene.hpp>
 #include <scenes/ResolverCallbackFunc.hpp>
-#include <scenes/Title_Scene.hpp>
+// #include <scenes/Title_Scene.hpp>
 
 #include <DataOf2D.hpp>
 
@@ -34,59 +34,7 @@ void show_point(double x, double y, char c) {
     glEnd();
 }
 
-BattleScene::BattleScene(GLFWwindow *window1) {
-    register_callback_resolver::init(*this, window1); // コールバック関数を登録
-    btn_go_next_scene = new NextSceneButton(Location(-0.6, -0.4, 1.2, 0.3),
-                                            "test_img/go_title.png");
-    // debug
-    // PngTexture testboss("ic_launcher.png", Location(-0.3, 0.6, 0.2, 0.2));
-    PngTexture testboss("ic_launcher.png", Location(-0.5, -0.5, 1.0, 1.0));
 
-    // end debug
-
-    double prev_time = glfwGetTime();
-    double start_time = glfwGetTime();
-    bt.start(0);
-    bool go_Title_by_GameOver = false;
-
-    while(!glfwWindowShouldClose(window1)) {
-        glClear(GL_COLOR_BUFFER_BIT);
-        filled_view(g, 0.2, 0.2, 0.2);
-        show_component();
-        bt.timer();
-
-        now_time = glfwGetTime();
-        double era = now_time - start_time;
-
-        if(is_gameover) {
-            if(now_time - game_end_time > 3) {
-                go_Title_by_GameOver = true;
-            }
-            render_game_over();
-            life.view(0);
-            life2.view(0);
-            testboss.view();
-        } else {
-            render_dynamic_view();
-            life.view(bt.viewer.callHp());
-            life2.view(bt.viewer.callHp());
-            life3.view(bt.viewer.callHp());
-        }
-
-        glfwSwapBuffers(window1);
-        glfwPollEvents();
-        if(btn_go_next_scene->next_scene) {
-            break;
-        }
-        if(go_Title_by_GameOver) {
-            break;
-        }
-    }
-    if(btn_go_next_scene->next_scene || go_Title_by_GameOver) {
-        delete btn_go_next_scene;
-        Title_scene ts(window1);
-    }
-}
 
 void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
                                int action, int mods) {
@@ -120,7 +68,52 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
         bt.inputLevelUp(2);
     }
 }
-// void BattleScene::render(){}
-BattleScene::~BattleScene() {
-    // delete btn_go_next_scene;
+
+void BattleScene::render_dynamic_view() {
+    auto x = bt.viewer.callHero();
+    view_rotated_myfighter(x);
+
+    bt.viewer.callEnemy();
+    auto d = bt.viewer.callHeroBullet();
+    for(auto &&i : d) {
+        mybullet.view_clone(to_Location(i, i.size, i.size));
+    }
+
+    auto en = bt.viewer.callEnemy();
+    for(auto &&i : en) {
+        enemy_tex.view_clone(to_Location(i, i.size, i.size));
+    }
+
+    auto ebs = bt.viewer.callEnemyBullet();
+    for(auto &&i : ebs) {
+        ene_bullet.view_clone(to_Location(i, i.size, i.size));
+    }
+
+    operate_my_fighter(wp, ap, sp, dp);
+
+    if(bt.viewer.callHp() < 0) {
+        game_end_time = now_time;
+        is_gameover = true;
+
+        buf_hero = x;
+        buf_enemy = en;
+        buf_hero_bullet = d;
+        buf_enemy_bullet = ebs;
+    }
 }
+void BattleScene::render_game_over() {
+    view_rotated_myfighter(buf_hero);
+
+    for(auto &&i : buf_hero_bullet) {
+        mybullet.view_clone(to_Location(i, i.size, i.size));
+    }
+
+    for(auto &&i : buf_enemy) {
+        enemy_tex.view_clone(to_Location(i, i.size, i.size));
+    }
+
+    for(auto &&i : buf_enemy_bullet) {
+        ene_bullet.view_clone(to_Location(i, i.size, i.size));
+    }
+}
+void BattleScene::render_static_view() {}
