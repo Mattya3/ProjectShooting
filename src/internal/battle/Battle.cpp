@@ -1,8 +1,5 @@
 #include <internal/battle/Battle.hpp>
 
-//ダメージ量の確認
-//ボムの確認
-
 void Battle::start(short stage) {//初期設定用のメソッド, 引数はステージ番号
     StructureData sets;
     vector<Card> list = sets.callCardSets();
@@ -49,12 +46,12 @@ void Battle::timer() {//メイン動作用の変数、毎回呼び出す
 void Battle::collision(short size) {//接触判定のメソッド
     vector<short> dis;//ヒットした弾・敵がvectorのどこにいるかを保管
     dis = hero.collision(heroBullets, size);
-    for(int i = 0; i < dis.size(); i++) heroBullets.erase(heroBullets.begin() + i);//自機とぶつかった自機の弾を消失
+    for(int i = 0; i < dis.size(); i++) heroBullets.erase(heroBullets.begin() + dis.at(i));//自機とぶつかった自機の弾を消失
     dis = hero.collision(enemyBullets, enemyBullets.size());
-    for(int i = 0; i < dis.size(); i++) enemyBullets.erase(enemyBullets.begin() + i);//自機とぶつかった敵の弾を消失
+    for(int i = 0; i < dis.size(); i++) enemyBullets.erase(enemyBullets.begin() + dis.at(i));//自機とぶつかった敵の弾を消失
     for(int j = 0; j < enemy.size(); j++) {//敵とぶつかった際の上記の処理
         dis = enemy.at(j).collision(heroBullets, heroBullets.size());
-        for(int i = 0; i < dis.size(); i++) heroBullets.erase(heroBullets.begin() + i);
+        for(int i = 0; i < dis.size(); i++) heroBullets.erase(heroBullets.begin() + dis.at(i));
     }
     for(int i = heroBullets.size() - 1; i >= 0; i--){//反射回数をオーバーした自機の弾を消失
         if(heroBullets.at(i).nonReflect()) heroBullets.erase(heroBullets.begin() + i);
@@ -131,10 +128,34 @@ void Battle::inputShooting(bool flag){//操作入力の反映メソッド
 
 void Battle::inputLevelUp(short target){//操作入力の反映メソッド
     if(score >= hero.getExp()){
-        int up = hero.levelUp(target);
+        short up = hero.levelUp(target);
         if(up >= 0){
             score -= hero.getExp();
             viewer.putCardLevel(target, up);
         }
+    }
+}
+
+void Battle::inputBomb(){//ボム発射用のメソッド
+    switch(hero.getBomb()){
+        case 1:
+            hero.hitTime = 5000;
+            break;
+        case 2:
+            for(int i = enemy.size() - 1; i >= 0; i--){
+                enemy.at(i).damage(100);
+                if(!enemy.at(i).alive()){//敵のHP0による消失判定
+                    score += enemy.at(i).getExp();
+                    enemy.erase(enemy.begin() + i);
+                }
+            }
+            break;
+        case 3:
+            heroBullets.clear();
+            enemyBullets.clear();
+            break;
+        case 4:
+            hero.heal(100);
+            break;
     }
 }

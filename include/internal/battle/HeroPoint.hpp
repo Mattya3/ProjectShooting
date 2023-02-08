@@ -11,6 +11,7 @@ class HeroPoint : public NormalPoint{
 private:
     bool shootFlag = false;
     vector<short> level;
+    vector<short> bomb;
     vector<Card> list;
     bool moveFlag = false;
     short stopShoot = 240;
@@ -32,4 +33,6 @@ public:
     void contact(pair<double, double> point, short large);
 
     void shoot(vector<BulletPoint> &bullets);
+
+    short getBomb();
 };

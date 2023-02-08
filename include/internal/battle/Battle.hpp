@@ -42,4 +42,6 @@ public:
     void inputShooting(bool flag);
 
     void inputLevelUp(short target);
+
+    void inputBomb();
 };

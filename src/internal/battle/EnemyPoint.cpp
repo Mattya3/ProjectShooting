@@ -142,6 +142,7 @@ void EnemyPoint::makeMove(){
                     nowVelocity = 0.5 * velocity;
                     if(!goTo(-1, size, true)){
                         nowHP = 0;
+                        exp = 0;
                     }
                 }else if(times >= 500 && movingUseStatus == 0){
                     movingUseStatus = 1;

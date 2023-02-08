@@ -16,7 +16,7 @@ void Card::putCardData(short no, string line){//数値データを保管する�
     if(upNum > 0){//レベルアップ回数が1回以上かどうか
         uped1 = stoi(splitString.at(4));
         if(upNum > 1){//レベルアップ回数が2回以上かどうか
-            uped1 = stoi(splitString.at(5));
+            uped2 = stoi(splitString.at(5));
         }
     }
 }
