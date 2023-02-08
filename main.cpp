@@ -1,12 +1,15 @@
-// #include <scenes/Title_Scene.hpp>
 #include <setting.hpp>
-using namespace std;
 #include "SBFW/sbfw.hpp"
+
 #include "filename.hpp"
+
 #include <internal/card/ChangeStructure.hpp>
-#include <scenes/BattleScene.hpp>
+#include <app_sbfw/BattleScene.hpp>
 
 #include <DataOf2D.hpp>
+
+
+using namespace std;
 class functor {
   private:
     int idx;

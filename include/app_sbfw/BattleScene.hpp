@@ -6,9 +6,8 @@
 #include <internal/battle/GamePointMono.hpp>
 #include <internal/battle/GamePointView.hpp>
 
-#include <GameEngine/CenterLocation.hpp>
 #include <bits/stdc++.h>
-// #include <scenes/Scene.hpp>
+
 #include <component/NextSceneButton.hpp>
 #include <sbfw.hpp>
 

@@ -1,7 +1,7 @@
 #include <component/Button_anyTimes.hpp>
 #include <component/Image.hpp>
 #include <component/NextSceneButton.hpp>
-#include <scenes/BattleScene.hpp>
+#include <app_sbfw/BattleScene.hpp>
 // #include <scenes/ResolverCallbackFunc.hpp>
 // #include <scenes/Title_Scene.hpp>
 

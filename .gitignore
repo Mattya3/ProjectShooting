@@ -19,3 +19,4 @@ debug_build/
 *.o
 CMakeLists.txt
 libsbfw.a
+_other_include/

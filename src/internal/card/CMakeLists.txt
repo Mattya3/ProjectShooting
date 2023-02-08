@@ -1,13 +1,14 @@
 file(GLOB LIST "*.cpp")
+file(GLOB Split "../Split.cpp")
 
 set(CMAKE_CXX_STANDARD 20)
 
 add_library(card
     SHARED
     ${LIST}
+    ${Split}
 )
 target_link_libraries(card component)
-target_link_libraries(card Setting)
 
 
 target_include_directories(card
