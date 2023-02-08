@@ -1,4 +1,4 @@
-
+#pragma once
 namespace optm {
 inline float fast_sqrt(const float &x) {
     float xHalf = 0.5f * x;

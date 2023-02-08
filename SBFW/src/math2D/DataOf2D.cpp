@@ -1,4 +1,5 @@
 #include "DataOf2D.hpp"
+#include <bits/stdc++.h>
 
 float DataOf2D::norm_pow2(DataOf2D const &p) {
     return (this->x - p.x) * (this->x - p.x) +
@@ -37,3 +38,4 @@ DataOf2D operator*(const float lhs, const DataOf2D &rhs) {
 DataOf2D DataOf2D::by_andgle_radius(float r, float theta) {
     return DataOf2D(r * cos(theta), r * sin(theta));
 }
+void DataOf2D::dump() { std::cout << x << ", " << y << std::endl; }

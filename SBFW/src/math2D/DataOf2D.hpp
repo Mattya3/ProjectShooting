@@ -1,7 +1,6 @@
 #pragma once
 #include "fast_sqrt.hpp"
 
-#include <bits/stdc++.h>
 #include <initializer_list>
 
 class DataOf2D {
@@ -69,7 +68,7 @@ class DataOf2D {
     DataOf2D operator*(const float rhs) const { return DataOf2D(*this) *= rhs; }
     DataOf2D operator/(const float rhs) const { return DataOf2D(*this) /= rhs; }
 
-    void dump() { std::cout << x << ',' << y << std::endl; }
+    void dump();
 };
 // 左からの掛け算
 DataOf2D operator*(const float lhs, const DataOf2D &rhs);
