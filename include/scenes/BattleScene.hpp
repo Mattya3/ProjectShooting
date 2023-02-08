@@ -8,8 +8,8 @@
 
 #include <GameEngine/CenterLocation.hpp>
 #include <bits/stdc++.h>
-#include <scenes/Scene.hpp>
-
+// #include <scenes/Scene.hpp>
+#include <component/NextSceneButton.hpp>
 #include <sbfw.hpp>
 
 using namespace std;
@@ -98,7 +98,7 @@ class BattleScene : public sbfw::scene::SimpleScene {
 
     vector<Location> bullets_loc_enemy; // 敵の弾の位置
     Location game_domain = Location(SX, SY, WindowWidth, WindowHeight);
-    CenterLocation domain = CenterLocation(game_domain);
+    // CenterLocation domain = CenterLocation(game_domain);
 
     // 画面上の要素
     NextSceneButton *btn_go_next_scene;

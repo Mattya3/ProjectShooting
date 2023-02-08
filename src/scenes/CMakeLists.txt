@@ -13,7 +13,6 @@ target_link_libraries(scene component)
 target_link_libraries(scene card)
 target_link_libraries(scene GameEngine)
 target_link_libraries(scene battle_inner)
-
 target_include_directories(scene PUBLIC ${PROJECT_SOURCE_DIR}/SBFW)
 target_link_libraries(scene sbfw)
 

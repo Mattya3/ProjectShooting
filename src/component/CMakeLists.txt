@@ -13,4 +13,4 @@ target_link_libraries(component sbfw)
 target_include_directories(component
     PUBLIC ${PROJECT_SOURCE_DIR}/include/component
 )
-target_link_libraries(component lodepng)
+target_link_libraries(component sbfw)

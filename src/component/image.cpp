@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 #include <component/Image.hpp>
 #include <filesystem>
-#include <lodepng.h>
+#include <DataOf2D.hpp>
 #include <stdexcept>
 
 using namespace std;
