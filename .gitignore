@@ -18,3 +18,4 @@ externsrc/
 debug_build/
 *.o
 CMakeLists.txt
+libsbfw.a
