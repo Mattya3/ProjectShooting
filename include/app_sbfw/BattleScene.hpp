@@ -1,4 +1,6 @@
 #pragma once
+#include <sbfw.hpp>
+
 #include <Image.hpp>
 #include <RemainingStatus.hpp>
 
@@ -8,14 +10,11 @@
 
 #include <bits/stdc++.h>
 
-// #include <component/NextSceneButton.hpp>
-#include <sbfw.hpp>
-
 using namespace std;
 class BattleScene : public sbfw::scene::SimpleScene {
   public:
-    // BattleScene(GLFWwindow *window1);
-    // ~BattleScene();
+    RemainingStatus life{5, {0.2, -0.2}, img_manager.ProvideImage("status/redheart.png")};
+
     PngTexture testboss{"ic_launcher.png", Location(-0.5, -0.5, 1.0, 1.0)};
     double prev_time;
     double start_time;
@@ -46,14 +45,11 @@ class BattleScene : public sbfw::scene::SimpleScene {
                 go_Title_by_GameOver = true;
             }
             render_game_over();
-            life.view(0);
-            life2.view(0);
             testboss.view();
         } else {
             render_dynamic_view();
-            life.view(bt.viewer.callHp());
-            life2.view(bt.viewer.callHp());
-            life3.view(bt.viewer.callHp());
+            // life.view(bt.viewer.callHp());
+            life.Draw(bt.viewer.callHp());
         }
     }
     void layer_back() override { filled_view___(g, 0.2, 0.2, 0.2); }
@@ -81,14 +77,6 @@ class BattleScene : public sbfw::scene::SimpleScene {
     bool wp = false, ap = false, sp = false, dp = false, spacep = false;
     PngTexture heart = PngTexture("status/redheart.png");
     PngTexture gray_heart = PngTexture("status/heart.png");
-
-    RemainingStatus life =
-        RemainingStatus(DataOf2D(0.3, 0), heart, gray_heart, 100);
-
-    RemainingStatus life2 =
-        RemainingStatus(DataOf2D(0.3, 0.5), heart, gray_heart, 100);
-    RemainingStatus life3 =
-        RemainingStatus(DataOf2D(0.3, -0.2), heart, gray_heart, 100);
     PngTexture ene_bullet =
         PngTexture("battle/bulletEnemy.png", Location(-0.8, -0.8, 0.05, 0.05));
     PngTexture enemy_tex = PngTexture("battle/enemy.png");
@@ -97,7 +85,6 @@ class BattleScene : public sbfw::scene::SimpleScene {
 
     vector<Location> bullets_loc_enemy; // 敵の弾の位置
     Location game_domain = Location(SX, SY, WindowWidth, WindowHeight);
-
 
   private:
     DataOf2D to_correctxy(pair<int, int> pii) {

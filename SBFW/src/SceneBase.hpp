@@ -1,18 +1,16 @@
 #pragma once
 #include "ElemInfo.hpp"
-#include "ViewContent.hpp"
 #include "math2D/DataOf2D.hpp"
 
-#include <bits/stdc++.h>
 #include "detail.hpp"
+#include <bits/stdc++.h>
 namespace sbfw {
 using std::shared_ptr;
-
+/// @brief GLFWのWindow制御を隠蔽するクラス コールバック登録も行う
 namespace scene {
 class SceneBase {
   public:
     SceneBase() {}
-    // static SceneBase make_end_scene() { return SceneBase(true); }
 
   private:
     SceneBase(bool b) : is_terminate_scene(b) {}

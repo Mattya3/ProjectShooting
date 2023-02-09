@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 
 #include "SceneBase.hpp"
-#include "ViewContent.hpp"
+#include "ImageManager.hpp"
 
 #include "Button.hpp"
 #include "ImgUnit.hpp"
@@ -20,44 +20,17 @@ using std::vector;
 class SimpleScene : public SceneBase {
   public:
     SimpleScene() {}
-    inline ElemKey AddImage(ElemInfo ei) {
-        return ElemKey(ElemKey::ele_type::img,
-                       contents.AddImage(ei.img_fname, ei.pos, ei.scale));
-    }
-    inline ElemKey AddButton(ElemInfo ei, std::function<void(void)> action) {
-        return ElemKey(
-            ElemKey::ele_type::btn,
-            contents.AddButton(ei.img_fname, ei.pos, ei.scale, action));
-    }
-
-    inline void ChangeImage(ElemKey i, ElemInfo e) {
-        if(i.e == ElemKey::ele_type::img)
-            contents.ChangeImage(i.key_id, e.img_fname);
-        else if(i.e == ElemKey::ele_type::btn) {
-            contents.ChangeBtnImage(i.key_id, e.img_fname);
-        }
-    }
-    inline ElemKey DefTranstionTo(ElemInfo ei,
-                                  shared_ptr<SceneBase> next_scene) {
-        // 同じシーンへの遷移は不可能
-        if(this == next_scene.get()) {
-            std::cerr << "Can't go to same scene in def_transition_to()\n";
-            exit(1);
-        }
-        return AddButton(ei, [&]() { this->GoNextScene(next_scene); });
-    }
-    inline void SetWindowName(std::string window_name_) {
-        window_name = window_name_;
-    }
-
-  protected:
-    ViewContent contents;
+    ElemKey AddImage(ElemInfo ei);
+    ElemKey AddButton(ElemInfo ei, std::function<void(void)> action);
+    void ChangeImage(ElemKey i, ElemInfo e);
+    ElemKey DefTranstionTo(ElemInfo ei, shared_ptr<SceneBase> next_scene);
+    void SetWindowName(std::string window_name_);
 
   private:
     bool is1_clicked = false;
     inline void judege_btn_pushed(float x, float y) {
         try {
-            for(auto &&btn : contents.get_btns()) {
+            for(auto &&btn : btns) {
                 if(btn.valid_push_location(x, y)) {
                     btn.action_when_pushed();
                 }
@@ -66,7 +39,7 @@ class SimpleScene : public SceneBase {
     }
     inline void draw_btn_touched() {
         auto [mousex, mousey] = GetCursorRegularPos();
-        for(auto &&btn : contents.get_btns()) {
+        for(auto &&btn : btns) {
             if(btn.valid_push_location(mousex, mousey)) {
                 btn.action_when_cursor_touched();
             }
@@ -77,10 +50,10 @@ class SimpleScene : public SceneBase {
 
     inline void Render() override final {
         layer_back();
-        for(auto &&e : contents._get_imgs()) {
+        for(auto &&e : texs) {
             e.Draw();
         }
-        for(auto &&btn : contents.get_btns()) {
+        for(auto &&btn : btns) {
             btn.draw();
         }
         draw_btn_touched();
@@ -88,12 +61,16 @@ class SimpleScene : public SceneBase {
     }
 
     void InitAfterTransition() override {}
-    // イベントが起きたときしか呼び出されない無いっぽい
-    // touchedはrenderで判定しよう
     void mouse_button_callback(GLFWwindow *pwin, int button, int action,
                                int mods) override;
     void key_callback(GLFWwindow *window, int key, int scancode, int action,
                       int mods) override {}
+
+  protected:
+    vector<Button> btns;
+    vector<texture::ImgUnit> texs;
+
+    static texture::ImageManager img_manager;
 };
 
 } // namespace scene

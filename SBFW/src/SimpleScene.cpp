@@ -1,7 +1,9 @@
 #include "SimpleScene.hpp"
 #include <GLFW/glfw3.h>
 namespace sbfw {
+texture::ImageManager scene::SimpleScene::img_manager;
 namespace scene {
+
 void SimpleScene::mouse_button_callback(GLFWwindow *pwin, int button,
                                         int action, int mods) {
     double mousex, mousey;
@@ -16,6 +18,41 @@ void SimpleScene::mouse_button_callback(GLFWwindow *pwin, int button,
         judege_btn_pushed(mousex, mousey);
     }
 }
+ElemKey SimpleScene::AddImage(ElemInfo ei) {
+    auto [id, len] = img_manager.ProvideImage(ei.img_fname);
+    texs.emplace_back(ei.pos, id, len, ei.scale);
+    return ElemKey(ElemKey::ele_type::img, texs.size() - 1);
+}
+ElemKey SimpleScene::AddButton(ElemInfo ei, std::function<void(void)> action) {
+    auto [id, len] = img_manager.ProvideImage(ei.img_fname);
+    texture::ImgUnit t(ei.pos, id, len, ei.scale);
+    Button btn(t, action);
+    btns.emplace_back(btn);
+    return ElemKey(ElemKey::ele_type::btn, btns.size() - 1);
+}
+
+void SimpleScene::ChangeImage(ElemKey i, ElemInfo e) {
+    if(i.e == ElemKey::ele_type::img) {
+        auto [id, len] = img_manager.ProvideImage(e.img_fname);
+        texs[i.key_id].change(id, len);
+    } else if(i.e == ElemKey::ele_type::btn) {
+        auto [id, len] = img_manager.ProvideImage(e.img_fname);
+        btns[i.key_id].tex.change(id, len);
+    }
+}
+ElemKey SimpleScene::DefTranstionTo(ElemInfo ei,
+                                    shared_ptr<SceneBase> next_scene) {
+    // 同じシーンへの遷移は不可能
+    if(this == next_scene.get()) {
+        std::cerr << "Can't go to same scene in def_transition_to()\n";
+        exit(1);
+    }
+    return AddButton(ei, [&]() { this->GoNextScene(next_scene); });
+}
+void SimpleScene::SetWindowName(std::string window_name_) {
+    window_name = window_name_;
+}
+
 } // namespace scene
 
 } // namespace sbfw

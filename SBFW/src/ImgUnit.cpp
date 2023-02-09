@@ -21,7 +21,6 @@ void ImgUnit::Draw() {
     glVertex3d(pos.x + len.x / 2 * scale, pos.y + len.y / 2 * scale, 0.0);
     glTexCoord2d(0.0, 0.0);
     glVertex3d(pos.x - len.x / 2 * scale, pos.y + len.y / 2 * scale, 0.0);
-
     glTranslatef(pos.x - len.x / 2, pos.y - len.y, 0);
     glEnd();
     glDisable(GL_TEXTURE_2D);

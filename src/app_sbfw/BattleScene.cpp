@@ -83,7 +83,7 @@ void BattleScene::render_dynamic_view() {
 
     operate_my_fighter(wp, ap, sp, dp);
 
-    if(bt.viewer.callHp() < 0) {
+    if(bt.viewer.callHp() <= 0) {
         game_end_time = now_time;
         is_gameover = true;
 
