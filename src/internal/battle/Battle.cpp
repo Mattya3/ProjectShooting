@@ -7,6 +7,7 @@ void Battle::start(short stage) {//初期設定用のメソッド, 引数はス�
     hero.setBullet(0);
     hero.setCardlist(list);
     viewer.putCard(list);
+    viewer.putNeedExp(hero.getExp());
     pair<double, double> z;
     z.first = battle_width / 2;
     z.second = 3 * battle_height / 4;
@@ -38,7 +39,7 @@ void Battle::timer() {//メイン動作用の変数、毎回呼び出す
         encount();
         if(appear.size() == 0) break;
     } while(appear.at(0).comeTime() == 0);//同時出現する敵がいなくなるまで
-    viewer.putScore(score);
+    viewer.putExp(score);
     viewer.putHero(hero, heroBullets);
     viewer.putEnemy(enemy, enemyBullets);
 }
