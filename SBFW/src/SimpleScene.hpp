@@ -7,7 +7,6 @@
 
 #include "Button.hpp"
 #include "ImgUnit.hpp"
-#include "Setting.hpp"
 #include "detail.hpp"
 
 namespace sbfw {

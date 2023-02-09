@@ -50,10 +50,6 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     control_key_flag(GLFW_KEY_SPACE, spacep);
     bt.inputShooting(spacep);
 
-    if(key == GLFW_KEY_R && action == GLFW_PRESS) {
-        // rotate_my_fighter();
-        life.decrement_stock();
-    }
     if(key == GLFW_KEY_J && action == GLFW_PRESS) {
         bt.inputLevelUp(0);
     }

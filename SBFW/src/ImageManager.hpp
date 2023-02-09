@@ -1,5 +1,4 @@
 #pragma once
-#include "Setting.hpp"
 #include "math2D/DataOf2D.hpp"
 
 #include <bits/stdc++.h>

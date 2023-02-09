@@ -4,7 +4,6 @@
 #include "math2D/DataOf2D.hpp"
 
 #include "ImgUnit.hpp"
-#include "Setting.hpp"
 
 namespace sbfw {
 /**

@@ -1,6 +1,5 @@
 #pragma once
 #include "ElemInfo.hpp"
-#include "Setting.hpp"
 #include "ViewContent.hpp"
 #include "math2D/DataOf2D.hpp"
 
