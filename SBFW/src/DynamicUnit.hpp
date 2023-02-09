@@ -5,14 +5,16 @@ namespace sbfw {
 namespace texture {
 
 class DynamicUnit {
-  private:
+  public:
+
     DataOf2D len;
     float scale;
-    DataOf2D pos;
     int this_id;
 
-  public:
     DynamicUnit();
+    void Draw(DataOf2D p){
+      ;
+    }
 };
 
 } // namespace draw
