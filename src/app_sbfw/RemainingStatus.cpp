@@ -8,8 +8,8 @@ void RemainingStatus::Draw(int now_stock) {
         p += {img.len.x + interval, 0};
     }
     // 座標の用意
-    float left = view_start_point.x - img.len.x/2;
-    float lenx_drawing = img.len.x * object_num;
+    float left = view_start_point.x - img.len.x / 2;
+    float lenx_drawing = img.len.x * object_num + interval * (object_num - 1);
     float right = left + lenx_drawing;
     float begin_hide_x =
         left + float(now_stock) / float(max_stock) * lenx_drawing;

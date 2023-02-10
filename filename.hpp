@@ -1,5 +1,43 @@
 #include <bits/stdc++.h>
+#include <string.h>
+#include <string>
 
+#include <bits/stdc++.h>
+using namespace std;
+
+using dict = std::map<string, string>;
+// {日本語入カード名, ANSIカード名}
+dict true_card_fname = {{"HP回復ボム追加.png", "card1.png"},
+                        {"弾2way化(広).png", "card2.png"},
+                        {"弾2way化(狭).png", "card3.png"},
+                        {"弾3way化(広).png", "card4.png"},
+                        {"弾3way化(狭).png", "card5.png"},
+                        {"弾巨大化(中).png", "card6.png"},
+                        {"弾巨大化(大).png", "card7.png"},
+                        {"弾縮小化(小).png", "card8.png"},
+                        {"弾速上昇(中).png", "card9.png"},
+                        {"弾速上昇(大).png", "card10.png"},
+                        {"弾速減少(小).png", "card11.png"},
+                        {"自機巨大化(中).png", "card12.png"},
+                        {"自機巨大化(小).png", "card13.png"},
+                        {"自機縮小化(大).png", "card14.png"},
+                        {"弾反射数増加(+1).png", "card15.png"},
+                        {"弾反射数増加(+2).png", "card16.png"},
+                        {"移動速度上昇(大).png", "card17.png"},
+                        {"移動速度上昇(小).png", "card18.png"},
+                        {"移動速度減少(中).png", "card19.png"},
+                        {"弾連射速度増加(中).png", "card20.png"},
+                        {"弾連射速度増加(大).png", "card21.png"},
+                        {"弾連射速度減少(小).png", "card22.png"},
+                        {"弾ダメージ増加.png", "card23.png"},
+                        {"弾ダメージ減少.png", "card24.png"},
+                        {"弾消失ボム追加.png", "card25.png"},
+                        {"無敵化ボム追加.png", "card26.png"},
+                        {"ダメージボム追加.png", "card27.png"},
+                        {"弾低範囲ホーミング化(弱).png", "card28.png"},
+                        {"弾低範囲ホーミング化(強).png", "card29.png"},
+                        {"弾広範囲ホーミング化(弱).png", "card30.png"},
+                        {"弾広範囲ホーミング化(強).png", "card31.png"}};
 std::vector<std::string> card_fnames = {
     "SpeedUp(S).png",
     "SpeedUp(L).png",
