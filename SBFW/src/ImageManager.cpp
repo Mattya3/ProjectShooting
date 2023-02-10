@@ -13,22 +13,28 @@ namespace texture {
 std::pair<int, DataOf2D> ImageManager::ProvideImage(string const &fname) {
     using std::filesystem::current_path;
     string filename =
-        (current_path() / std::filesystem::path("img/" + fname)).string().c_str();
+        (current_path() / std::filesystem::path("img/" + fname)).string();
 
     if(!std::filesystem::exists(filename)) {
         std::cerr << "Not found " << filename << '\n';
         exit(1);
     }
     if(int bind_id = IsAlreadyLoaded(fname); bind_id != -1) {
-        // printf("%s has loaded already as %d, (w, h) = (%f, %f)\n", fname.c_str(),
-        //        bind_id, len_data[bind_id].x, len_data[bind_id].y);
+#ifdef IMAGE_MANAGER_DEBUGMODE
+        printf("%s has loaded already as %d, (w, h) = (%f, %f)\n",
+               fname.c_str(), bind_id, len_data[bind_id].x,
+               len_data[bind_id].y);
+#endif
         return {bind_id, len_data[bind_id]};
     } else {
         ++id;
         loaded_pngs.emplace(fname, id);
         DataOf2D t = LoadPng(filename, id);
         len_data.emplace_back(t);
-        // printf("%s is loading as %d, (w, h) = (%f, %f)\n", fname.c_str(), id, t.x, t.y);
+#ifdef IMAGE_MANAGER_DEBUGMODE
+        printf("%s is loading as %d, (w, h) = (%f, %f)\n", fname.c_str(), id,
+               t.x, t.y);
+#endif
         return {id, t};
     }
 }
@@ -50,7 +56,8 @@ DataOf2D ImageManager::LoadPng(std::string const &fullpath_fname, int id) {
     unsigned int width, height;
     std::vector<ubyte_t> data;
 
-    unsigned error = lodepng::decode(data, width, height, fullpath_fname);
+    unsigned error =
+        lodepng::decode(data, width, height, fullpath_fname.c_str());
 
     if(error != 0) {
         std::cout << "Deconding PNG, error " << error << ": "
