@@ -67,6 +67,7 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     }
 }
 
+
 void BattleScene::render_dynamic_view() {
     auto x = bt.viewer.callHero();
     view_rotated_myfighter(x);

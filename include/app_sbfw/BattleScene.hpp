@@ -13,7 +13,9 @@
 using namespace std;
 class BattleScene : public sbfw::scene::SimpleScene {
   public:
-    RemainingStatus life{5, {0.2, -0.2}, img_manager.ProvideImage("status/redheart.png")};
+    RemainingStatus life{
+        5, {0.2, -0.2}, img_manager.ProvideImage("status/redheart.png")};
+    shared_ptr<sbfw::scene::SimpleScene> result_scene = nullptr;
 
     PngTexture testboss{"ic_launcher.png", Location(-0.5, -0.5, 1.0, 1.0)};
     double prev_time;
@@ -41,8 +43,9 @@ class BattleScene : public sbfw::scene::SimpleScene {
         double era = now_time - start_time;
 
         if(is_gameover) {
-            if(now_time - game_end_time > 3) {
+            if(now_time - game_end_time > 2) {
                 go_Title_by_GameOver = true;
+                GoNextScene(result_scene);
             }
             render_game_over();
             testboss.view();
@@ -59,6 +62,7 @@ class BattleScene : public sbfw::scene::SimpleScene {
         start_time = glfwGetTime();
         bt.start(0);
         go_Title_by_GameOver = false;
+        is_gameover = false;
     }
 
   private:
