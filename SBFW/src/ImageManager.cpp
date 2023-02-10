@@ -12,8 +12,11 @@ extern int window_width, window_height;
 namespace texture {
 std::pair<int, DataOf2D> ImageManager::ProvideImage(string const &fname) {
     using std::filesystem::current_path;
+    printf("before %s\n", fname.c_str());
     string filename =
         (current_path() / std::filesystem::path("img/" + fname)).string();
+    printf("after %s\n", filename.c_str());
+
 
     if(!std::filesystem::exists(filename)) {
         std::cerr << "Not found " << filename << '\n';
@@ -55,6 +58,7 @@ DataOf2D ImageManager::LoadPng(std::string const &fullpath_fname, int id) {
 
     unsigned int width, height;
     std::vector<ubyte_t> data;
+    printf("will Load %s\n", fullpath_fname.c_str());
 
     unsigned error =
         lodepng::decode(data, width, height, fullpath_fname.c_str());
