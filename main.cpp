@@ -81,7 +81,7 @@ int main() {
         int one_scene_idx = i % each_scene_num;
         DataOf2D d = {sx + one_scene_idx % columns * 0.4f,
                       sy - one_scene_idx / columns * 0.4f};
-        string card_fname = "ansicard/" + true_card_fname[card_fnames[i]];
+        string card_fname = "ansicard/" + true_card_fname[japanese_card_fnames[i]];
         cout << "this is !!!!" << card_fname << endl;
         elcards[i] = sbfw::ElemInfo(d, card_fname, 0.6);
     }
