@@ -59,6 +59,12 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     if(key == GLFW_KEY_L && action == GLFW_PRESS) {
         bt.inputLevelUp(2);
     }
+    if(key == GLFW_KEY_E && action == GLFW_PRESS) {
+        bt.inputBomb();
+    }
+    if(key == GLFW_KEY_Q && action == GLFW_PRESS) {
+        bt.inputSpeed();
+    }
 }
 
 void BattleScene::render_dynamic_view() {

@@ -44,4 +44,6 @@ public:
     void inputLevelUp(short target);
 
     void inputBomb();
+
+    void inputSpeed();
 };

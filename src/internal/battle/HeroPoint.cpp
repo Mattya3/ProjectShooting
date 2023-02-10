@@ -135,9 +135,15 @@ void HeroPoint::shoot(vector<BulletPoint> &bullets){
     }
 }
 
+void HeroPoint::changeMode(){
+    if(speedMode) nowVelocity = velocity / 2;
+    else nowVelocity = velocity;
+    speedMode != speedMode;
+}
+
 void HeroPoint::changeDirection(double per){
     direction = per;
-    changeAngle(per);
+    if(speedMode) changeAngle(per);
 }
 
 short HeroPoint::getBomb(){
