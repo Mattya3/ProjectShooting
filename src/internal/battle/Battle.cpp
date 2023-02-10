@@ -160,3 +160,7 @@ void Battle::inputBomb(){//ボム発射用のメソッド
             break;
     }
 }
+
+void Battle::inputSpeed(){
+    hero.changeMode();
+}

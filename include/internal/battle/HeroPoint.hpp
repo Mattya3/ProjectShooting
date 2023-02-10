@@ -9,6 +9,7 @@ using namespace std;
 
 class HeroPoint : public NormalPoint{
 private:
+    bool speedMode = true;
     bool shootFlag = false;
     vector<short> level;
     vector<short> bomb;
@@ -23,6 +24,8 @@ public:
     void moving(bool flag);
 
     void setCardlist(vector<Card> sets);
+
+    void changeMode();
 
     void changeDirection(double per);
 
