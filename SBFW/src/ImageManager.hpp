@@ -2,7 +2,7 @@
 #include "math2D/DataOf2D.hpp"
 
 #include <bits/stdc++.h>
-#define IMAGE_MANAGER_DEBUGMODE
+// #define IMAGE_MANAGER_DEBUGMODE
 namespace sbfw {
 
 namespace texture {

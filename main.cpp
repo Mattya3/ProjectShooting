@@ -47,11 +47,16 @@ int main() {
     // 設置位置は中心を0,0とし、左端をx=-1, 右端をx=1とする
     sbfw::ElemInfo elgo_battle({0, 0.5}, "title/goBattle.png", 0.3);
     sbfw::ElemInfo elgo_select({0, -0.5}, "title/goSelectCard.png", 0.3);
-    sbfw::ElemInfo elgo_back({-0.5, -0.5}, "test_img/go_title.png");
+    sbfw::ElemInfo elgo_title({0, -0.7}, "test_img/go_title.png", 0.2);
     vector<sbfw::ElemInfo> card_img_in_battle(3);
     for(int i = 0; i < 3; i++) {
         card_img_in_battle[i] =
-            sbfw::ElemInfo({0.25f, -0.4f + -0.2f * i}, "ic_launcher.png", 0.5);
+            sbfw::ElemInfo({0.35f, -0.4f + -0.2f * i}, "ic_launcher.png", 0.5);
+    }
+    vector<sbfw::ElemInfo> card_img_in_result(3);
+    for(int i = 0; i < 3; i++) {
+        card_img_in_result[i] =
+            sbfw::ElemInfo({-0.8f + 0.2f * i, -0.4f}, "ic_launcher.png", 0.7);
     }
     vector<sbfw::ElemInfo> el_allocate(3);
     for(int i = 0; i < 3; i++)
@@ -81,7 +86,8 @@ int main() {
         int one_scene_idx = i % each_scene_num;
         DataOf2D d = {sx + one_scene_idx % columns * 0.4f,
                       sy - one_scene_idx / columns * 0.4f};
-        string card_fname = "ansicard/" + true_card_fname[japanese_card_fnames[i]];
+        string card_fname =
+            "ansicard/" + true_card_fname[japanese_card_fnames[i]];
         cout << "this is !!!!" << card_fname << endl;
         elcards[i] = sbfw::ElemInfo(d, card_fname, 0.6);
     }
@@ -89,8 +95,8 @@ int main() {
     /******************
      * 以下はシーンの準備
      *******************/
-    auto [title, select, score] =
-        sbfw::scene::prepare_scenes<3>();        // 構造化束縛で1つずつ
+    auto [title, select, score, result] =
+        sbfw::scene::prepare_scenes<4>();        // 構造化束縛で1つずつ
     auto sub = sbfw::scene::prepare_scenes<3>(); // 配列arrayで受け取る
     auto [game] = sbfw::scene::prepare_scenes<BattleScene, 1>();
 
@@ -100,6 +106,7 @@ int main() {
     sub[1]->SetWindowName("sub[1]");
     sub[2]->SetWindowName("sub[2]");
     game->SetWindowName("game");
+    result->SetWindowName("Result");
     score->SetWindowName("score");
 
     /******************
@@ -172,6 +179,16 @@ int main() {
             elcards[functor::selected_key]);
         cs.ChangeStructureCard(2, functor::selected_key);
     });
+
+    game->result_scene = result;
+
+    // result->AddButton()
+    vector<sbfw::ElemKey> alloc_key_in_result(3);
+
+    result->DefTranstionTo(elgo_title, title);
+    for(int i = 0; i < 3; i++) {
+        alloc_key_in_result[i] = result->AddImage(card_img_in_result[i]);
+    }
 
     // シーンの処理をスタートさせる。最初に表示したいシーンのstart()を呼び出すこと
     title->Start();
