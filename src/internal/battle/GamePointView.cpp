@@ -45,7 +45,7 @@ void GamePointView::putHero(HeroPoint h, vector<BulletPoint> b){
     heroBullets.clear();
     hero.position = h.position;
     hero.size = h.size;
-    hero.keyNum = h.direction;
+    hero.keyNum = h.getAngle();
     for(int i = 0; i < b.size(); i++){
         bullet.position = b.at(i).get2Position();
         bullet.size = b.at(i).getSize();

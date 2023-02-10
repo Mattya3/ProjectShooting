@@ -94,8 +94,8 @@ void HeroPoint::shoot(vector<BulletPoint> &bullets){
         double changeAngle = shootAngle * M_PI / 180;
         double afterAngle;
         pair<double, double> shooter = position;
-        shooter.first += size * cos(direction);
-        shooter.second -= size * sin(direction);
+        shooter.first += size * cos(angle);
+        shooter.second -= size * sin(angle);
         bullet.setSize(height, width);
         bullet.setFirstSituation(shooter);
         if(shootNum % 2 == 1){
@@ -138,7 +138,7 @@ void HeroPoint::shoot(vector<BulletPoint> &bullets){
 void HeroPoint::changeMode(){
     if(speedMode) nowVelocity = velocity / 2;
     else nowVelocity = velocity;
-    speedMode != speedMode;
+    speedMode = !speedMode;
 }
 
 void HeroPoint::changeDirection(double per){

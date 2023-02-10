@@ -162,5 +162,6 @@ void Battle::inputBomb(){//ボム発射用のメソッド
 }
 
 void Battle::inputSpeed(){
+    cout << "comeChange" << endl;
     hero.changeMode();
 }
