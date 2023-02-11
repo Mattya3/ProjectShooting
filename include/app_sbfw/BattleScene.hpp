@@ -1,4 +1,5 @@
 #pragma once
+#include <extension/NumberDisplay.hpp>
 #include <sbfw.hpp>
 
 #include <Image.hpp>
@@ -16,8 +17,10 @@ class BattleScene : public sbfw::scene::SimpleScene {
     RemainingStatus life{
         5, {0.2, -0.2}, img_manager.ProvideImage("status/redheart.png")};
     shared_ptr<sbfw::scene::SimpleScene> result_scene = nullptr;
+    sbfw::texture::DynamicUnit all;
 
     PngTexture testboss{"ic_launcher.png", Location(-0.5, -0.5, 1.0, 1.0)};
+    sbfw::ext::NumberDisplay numdisplay;
     double prev_time;
     double start_time;
     bool go_Title_by_GameOver = false;
@@ -51,8 +54,8 @@ class BattleScene : public sbfw::scene::SimpleScene {
             testboss.view();
         } else {
             render_dynamic_view();
-            // life.view(bt.viewer.callHp());
             life.Draw(bt.viewer.callHp());
+            numdisplay.Draw("0123456789", {0.4f, 0.8f}, 1.0,11);
         }
     }
     void layer_back() override { filled_view___(g, 0.2, 0.2, 0.2); }

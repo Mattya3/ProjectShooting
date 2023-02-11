@@ -7,7 +7,7 @@
 
 using namespace std;
 using std::filesystem::current_path;
-int PngTexture::tid = 120;
+int PngTexture::tid = 130;
 
 PngTexture::PngTexture(const string &fname, Location loc) : loc(loc) {
     filename =

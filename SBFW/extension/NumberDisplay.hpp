@@ -6,26 +6,26 @@ namespace sbfw::ext {
 
 class NumberDisplay {
   private:
-    using Tex = sbfw::texture::PartialDynamicUnit;
+    using Pdu = sbfw::texture::PartialDynamicUnit;
     template <class T> using vector = std::vector<T>;
 
   public:
     NumberDisplay() {
         for(size_t i = 0; i < 4; i++) {
-            nums[i + 1] = Tex(160 + i * 29, 0, 29, 42, atlas);
+            nums[i + 1] = Pdu(160 + i * 29, 0, 29, 42, atlas);
         }
         for(size_t i = 0; i < 4; i++) {
-            nums[i + 5] = Tex(160 + i * 29, 42, 29, 43, atlas);
+            nums[i + 5] = Pdu(160 + i * 29, 42, 29, 43, atlas);
         }
         for(size_t i = 0; i < 4; i++) {
             if(i == 0)
-                nums[9] = Tex(160 + i * 29, 86, 29, 43, atlas);
+                nums[9] = Pdu(160 + i * 29, 86, 29, 43, atlas);
             else if(i == 1) {
-                nums[0] = Tex(160 + i * 29, 86, 29, 43, atlas);
+                nums[0] = Pdu(160 + i * 29, 86, 29, 43, atlas);
             } else if(i == 2) {
-                minus = Tex(160 + i * 29, 86, 29, 43, atlas);
+                minus = Pdu(160 + i * 29, 86, 29, 43, atlas);
             } else if(i == 3) {
-                dark_zero = Tex(160 + i * 29, 86, 29, 43, atlas);
+                dark_zero = Pdu(160 + i * 29, 86, 29, 43, atlas);
             }
         }
     }
@@ -49,11 +49,11 @@ class NumberDisplay {
         }
     }
 
-  private:
+//   private:
     std::tuple<int, DataOf2D, int, int> atlas =
         sbfw::scene::SimpleScene::img_manager.ProvideImageGetWH("atlasv2.png");
-    vector<Tex> nums = vector<Tex>(10);
-    Tex minus, dark_zero;
+    vector<Pdu> nums = vector<Pdu>(10);
+    Pdu minus, dark_zero;
     const float num_interval = 0.065;
 };
 } // namespace sbfw::ext

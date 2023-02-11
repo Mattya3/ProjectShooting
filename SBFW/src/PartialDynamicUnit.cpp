@@ -31,6 +31,8 @@ PartialDynamicUnit::PartialDynamicUnit(
 void PartialDynamicUnit::Draw(DataOf2D pos) { Draw(pos, 1.0f); }
 
 void PartialDynamicUnit::Draw(DataOf2D pos, float ratio) {
+    glBindTexture(GL_TEXTURE_2D, this_id);
+
     glEnable(GL_TEXTURE_2D);
     glNormal3d(0.0, 0.0, 1.0);
     glBegin(GL_QUADS);
