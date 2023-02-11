@@ -19,7 +19,7 @@ vector<Card> ChangeStructure::callSet3Cards(){//セットカードをvectorで�
 void ChangeStructure::ChangeStructureCard(short point, short id){//セットカードを一カ所変更する関数
     short i;
     for(i = 0; i < hasAllCards.size(); i++) if(hasAllCards.at(i).id == id) break;//変更先カードの特定
-    this->set3Cards.at(point) = hasAllCards.at(i);
+    set3Cards.at(point) = hasAllCards.at(i);
 }
 
 void ChangeStructure::registerNewCard(int id){//新たな入手カードを反映する関数
