@@ -1,8 +1,7 @@
 #include "DynamicUnit.hpp"
 
 #include <GLFW/glfw3.h>
-namespace sbfw {
-namespace texture {
+namespace sbfw::texture {
 
 DynamicUnit::DynamicUnit() {}
 void DynamicUnit::Draw(DataOf2D pos) { Draw(pos, 1.0f); }
@@ -30,5 +29,4 @@ void DynamicUnit::Draw(DataOf2D pos, float scale) {
     glDisable(GL_TEXTURE_2D);
 }
 
-} // namespace texture
-} // namespace sbfw
+} // namespace sbfw::texture

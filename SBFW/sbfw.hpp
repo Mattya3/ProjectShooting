@@ -5,5 +5,4 @@
 #include "src/SimpleScene.hpp"
 #include "src/SBFWInterface.hpp"
 
-#include "src/DynamicUnit.hpp"
 #include "src/draw.hpp"

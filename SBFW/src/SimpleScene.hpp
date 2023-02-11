@@ -2,8 +2,8 @@
 
 #include <bits/stdc++.h>
 
-#include "SceneBase.hpp"
 #include "ImageManager.hpp"
+#include "SceneBase.hpp"
 
 #include "Button.hpp"
 #include "ImgUnit.hpp"
@@ -70,6 +70,7 @@ class SimpleScene : public SceneBase {
     vector<Button> btns;
     vector<texture::ImgUnit> texs;
 
+  public:
     static texture::ImageManager img_manager;
 };
 

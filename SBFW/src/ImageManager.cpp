@@ -11,34 +11,36 @@ extern int window_width, window_height;
 
 namespace texture {
 std::pair<int, DataOf2D> ImageManager::ProvideImage(string const &fname) {
+    auto [bind_id, len, w, h] = ProvideImageGetWH(fname);
+    return {bind_id, len};
+}
+std::tuple<int, DataOf2D, int, int>
+ImageManager::ProvideImageGetWH(string const &fname) {
     using std::filesystem::current_path;
-    printf("before %s\n", fname.c_str());
-    string filename =
-        (current_path() / std::filesystem::path("img/" + fname)).string();
-    printf("after %s\n", filename.c_str());
-
+    string filename = (current_path() / std::filesystem::path("img/" + fname))
+                          .string()
+                          .c_str();
 
     if(!std::filesystem::exists(filename)) {
         std::cerr << "Not found " << filename << '\n';
         exit(1);
     }
     if(int bind_id = IsAlreadyLoaded(fname); bind_id != -1) {
-#ifdef IMAGE_MANAGER_DEBUGMODE
-        printf("%s has loaded already as %d, (w, h) = (%f, %f)\n",
-               fname.c_str(), bind_id, len_data[bind_id].x,
-               len_data[bind_id].y);
-#endif
-        return {bind_id, len_data[bind_id]};
+        // printf("%s has loaded already as %d, (w, h) = (%f, %f)\n",
+        // fname.c_str(),
+        //        bind_id, len_data[bind_id].x, len_data[bind_id].y);
+        return {bind_id, len_data[bind_id], len_data_un_reg[bind_id].first,
+                len_data_un_reg[bind_id].second};
     } else {
         ++id;
         loaded_pngs.emplace(fname, id);
-        DataOf2D t = LoadPng(filename, id);
+        auto [w, h] = LoadPng(filename, id);
+        len_data_un_reg.emplace_back(w, h);
+        DataOf2D t = GetRegularLen(w, h);
         len_data.emplace_back(t);
-#ifdef IMAGE_MANAGER_DEBUGMODE
-        printf("%s is loading as %d, (w, h) = (%f, %f)\n", fname.c_str(), id,
-               t.x, t.y);
-#endif
-        return {id, t};
+        // printf("%s is loading as %d, (w, h) = (%f, %f)\n", fname.c_str(), id,
+        // t.x, t.y);
+        return {id, t, w, h};
     }
 }
 
@@ -53,15 +55,14 @@ int ImageManager::IsAlreadyLoaded(string const &fname) {
 inline DataOf2D ImageManager::GetRegularLen(uint32_t w, uint32_t h) {
     return {w / float(window_width) * 2.0f, h / float(window_height) * 2.0f};
 }
-DataOf2D ImageManager::LoadPng(std::string const &fullpath_fname, int id) {
+std::pair<int, int> ImageManager::LoadPng(std::string const &fullpath_fname,
+                                          int id) {
     using ubyte_t = unsigned char;
 
     unsigned int width, height;
     std::vector<ubyte_t> data;
-    printf("will Load %s\n", fullpath_fname.c_str());
 
-    unsigned error =
-        lodepng::decode(data, width, height, fullpath_fname.c_str());
+    unsigned error = lodepng::decode(data, width, height, fullpath_fname);
 
     if(error != 0) {
         std::cout << "Deconding PNG, error " << error << ": "
@@ -74,7 +75,7 @@ DataOf2D ImageManager::LoadPng(std::string const &fullpath_fname, int id) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
                  GL_UNSIGNED_BYTE, &data[0]);
-    return GetRegularLen(width, height);
+    return {width, height};
 }
 } // namespace texture
 
