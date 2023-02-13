@@ -63,7 +63,7 @@ int main() {
     vector<sbfw::ElemInfo> el_allocate(3);
     for(int i = 0; i < 3; i++)
         el_allocate[i] =
-            sbfw::ElemInfo({-0.6f + i * 0.6f, 0.3f}, "ic_launcher.png");
+            sbfw::ElemInfo({-0.6f + i * 0.6f, 0.3f}, "card/NoCard.png");
 
     struct ElementDefnition {
         sbfw::ElemInfo boss{{0, 0.5}, "status/redstar.png", 3};
@@ -84,6 +84,7 @@ int main() {
     int columns = 4, sub_scene_num = 3, each_scene_num = 12;
     printf("%d, %d\n", each_scene_num, card_fnames.size());
     float sx = -0.7, sy = 0.7; // 31 = 12 + 12 + 7;
+    auto x=cs.callHasAllCards();
     for(int i = 0; i < card_num; i++) {
         int one_scene_idx = i % each_scene_num;
         DataOf2D d = {sx + one_scene_idx % columns * 0.4f,
@@ -152,9 +153,6 @@ int main() {
     sub[0]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                             elcards[functor::selected_key]);
-        // game->ChangeImage(
-        //     alloc_key_in_gamescene[allocator_btn_pos::selected_key],
-        //     elcards[functor::selected_key]);
         cs.ChangeStructureCard(0, functor::selected_key);
     });
     sub[1]->DefTranstionTo(el_general.back_arrow, select);
@@ -164,9 +162,6 @@ int main() {
     sub[1]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                             elcards[functor::selected_key]);
-        // game->ChangeImage(
-        // alloc_key_in_gamescene[allocator_btn_pos::selected_key],
-        // elcards[functor::selected_key]);
         cs.ChangeStructureCard(1, functor::selected_key);
     });
 
@@ -176,15 +171,11 @@ int main() {
     sub[2]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                             elcards[functor::selected_key]);
-        // game->ChangeImage(
-        //     alloc_key_in_gamescene[allocator_btn_pos::selected_key],
-        //     elcards[functor::selected_key]);
         cs.ChangeStructureCard(2, functor::selected_key);
     });
 
     game->result_scene = result;
 
-    // result->AddButton()
     vector<sbfw::ElemKey> alloc_key_in_result(3);
 
     result->DefTranstionTo(elgo_title, title);

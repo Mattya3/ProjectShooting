@@ -99,7 +99,7 @@ void BattleScene::render_dynamic_view() {
         buf_hero_bullet = d;
         buf_enemy_bullet = ebs;
     }
-    frame_num_display.Draw(GetFrameCnt(), {0.4, 0.5}, 1.0);
+    // frame_num_display.Draw(GetFrameCnt(), {0.4, 0.5}, 1.0);
 }
 void BattleScene::render_game_over() {
     view_rotated_myfighter(buf_hero);

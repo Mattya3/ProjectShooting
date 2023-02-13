@@ -70,7 +70,11 @@ class SimpleScene : public SceneBase {
         layer_front();
     }
 
-    void InitAfterTransition() override {}
+    void InitAfterTransition() override {
+        for(auto &&btn : btns) {
+            btn.Reset();
+        }
+    }
     void mouse_button_callback(GLFWwindow *pwin, int button, int action,
                                int mods) override;
     void key_callback(GLFWwindow *window, int key, int scancode, int action,
