@@ -20,6 +20,15 @@ using std::vector;
 class SimpleScene : public SceneBase {
   public:
     SimpleScene() {}
+    /// @brief 不動の画像を画面に追加する
+    /// @param img_fname 画像のファイル名
+    /// @param pos 画像の設置位置
+    /// @param scale 画像の拡大率
+    /// @return ElemKey あとから画像を差し替える時にこれを指定する
+    ElemKey AddImage(std::string img_fname, DataOf2D pos, float scale = 1.0);
+    /// @brief 不動の画像を画面に追加する
+    /// @param ei 画像のファイル名、設置位置、拡大率の情報を含む構造体
+    /// @return ElemKey あとから画像を差し替える時にこれを指定する
     ElemKey AddImage(ElemInfo ei);
     ElemKey AddButton(ElemInfo ei, std::function<void(void)> action);
     void ChangeImage(ElemKey i, ElemInfo e);

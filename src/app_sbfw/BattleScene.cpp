@@ -30,8 +30,6 @@ void show_point(double x, double y, char c) {
     glEnd();
 }
 
-
-
 void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
                                int action, int mods) {
     auto control_key_flag = [&](int key_id, bool &flag) {
@@ -67,7 +65,6 @@ void BattleScene::key_callback(GLFWwindow *window, int key, int scancode,
     }
 }
 
-
 void BattleScene::render_dynamic_view() {
     auto x = bt.viewer.callHero();
     view_rotated_myfighter(x);
@@ -99,6 +96,7 @@ void BattleScene::render_dynamic_view() {
         buf_hero_bullet = d;
         buf_enemy_bullet = ebs;
     }
+    frame_num_display.Draw(GetFrameCnt(), {0.4, 0.5}, 1.0);
 }
 void BattleScene::render_game_over() {
     view_rotated_myfighter(buf_hero);

@@ -35,35 +35,36 @@ class NumberDisplay {
     /// @brief 数字を桁数指定して描画する
     /// @param num 描画したい数字(int)
     /// @param draw_start_pos 描画の開始位置つまり最も左の桁の座標
-    /// @param ratio 拡大率
+    /// @param scale 拡大率
     /// @param digit_num ゼロ埋め桁数
-    void Draw(int num, DataOf2D draw_start_pos, float ratio = 1.0f,
-              int digit_num = 5) {
-        Draw(std::to_string(num), draw_start_pos, ratio, digit_num);
+    inline void Draw(int num, DataOf2D draw_start_pos, float scale = 1.0f,
+                     int digit_num = 5) {
+        Draw(std::to_string(num), draw_start_pos, scale, digit_num);
     }
     /// @brief 数字を桁数指定して描画する
     /// @param num 描画したい数字(string)
     /// @param draw_start_pos 描画の開始位置つまり最も左の桁の座標
-    /// @param ratio 拡大率
+    /// @param scale 拡大率
     /// @param digit_num ゼロ埋め桁数
-    void Draw(std::string const &numbers, DataOf2D start_pos,
-              float ratio = 1.0f, int digit_num = 5, bool is_zero_fill = true) {
+    inline void Draw(std::string const &numbers, DataOf2D start_pos,
+                     float scale = 1.0f, int digit_num = 5,
+                     bool is_zero_fill = true) {
         auto sz = numbers.size();
         if(is_zero_fill && sz < digit_num) {
             for(size_t i = 0; i < digit_num - sz; i++) {
-                dark_zero.Draw(start_pos);
-                start_pos.x += 0.07f;
+                dark_zero.Draw(start_pos, scale);
+                start_pos.x += 0.07f * scale;
             }
         }
         // 数字を描画
         for(auto &&e : numbers) {
             int i = (e - '0');
-            nums[i].Draw(start_pos);
-            start_pos.x += 0.07f;
+            nums[i].Draw(start_pos, scale);
+            start_pos.x += 0.07f * scale;
         }
     }
 
-    //   private:
+  private:
     std::tuple<int, DataOf2D, int, int> atlas =
         sbfw::scene::SimpleScene::img_manager.ProvideImageGetWH("atlasv2.png");
     vector<Tex> nums = vector<Tex>(10);

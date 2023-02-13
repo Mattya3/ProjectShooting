@@ -21,6 +21,7 @@ class BattleScene : public sbfw::scene::SimpleScene {
 
     PngTexture testboss{"ic_launcher.png", Location(-0.5, -0.5, 1.0, 1.0)};
     sbfw::ext::NumberDisplay numdisplay;
+    sbfw::ext::NumberDisplay frame_num_display;
     double prev_time;
     double start_time;
     bool go_Title_by_GameOver = false;
@@ -55,7 +56,7 @@ class BattleScene : public sbfw::scene::SimpleScene {
         } else {
             render_dynamic_view();
             life.Draw(bt.viewer.callHp());
-            numdisplay.Draw("0123456789", {0.4f, 0.8f}, 1.0,11);
+            numdisplay.Draw("0123456789", {0.4f, 0.8f}, 1.0, 11);
         }
     }
     void layer_back() override { filled_view___(g, 0.2, 0.2, 0.2); }

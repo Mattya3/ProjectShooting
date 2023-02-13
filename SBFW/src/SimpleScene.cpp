@@ -23,6 +23,13 @@ ElemKey SimpleScene::AddImage(ElemInfo ei) {
     texs.emplace_back(ei.pos, id, len, ei.scale);
     return ElemKey(ElemKey::ele_type::img, texs.size() - 1);
 }
+ElemKey SimpleScene::AddImage(std::string img_fname, DataOf2D pos,
+                              float scale) {
+    auto [id, len] = img_manager.ProvideImage(img_fname);
+    texs.emplace_back(pos, id, len, scale);
+    return ElemKey(ElemKey::ele_type::img, texs.size() - 1);
+}
+
 ElemKey SimpleScene::AddButton(ElemInfo ei, std::function<void(void)> action) {
     auto [id, len] = img_manager.ProvideImage(ei.img_fname);
     texture::ImgUnit t(ei.pos, id, len, ei.scale);
