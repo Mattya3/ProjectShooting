@@ -8,6 +8,7 @@
 #include <internal/battle/Battle.hpp>
 #include <internal/battle/GamePointMono.hpp>
 #include <internal/battle/GamePointView.hpp>
+#include <internal/card/ChangeStructure.hpp>
 
 #include <bits/stdc++.h>
 
@@ -55,9 +56,9 @@ class BattleScene : public sbfw::scene::SimpleScene {
             testboss.view();
         } else {
             render_dynamic_view();
-            life.Draw(bt.viewer.callHp());//
-            numdisplay.Draw(bt.viewer.callExp(), {0.3f, 0.6f}, 1.0,5);
-            numdisplay.Draw(bt.viewer.callNeedExp(), {0.7f, -0.1f}, 1.0,3);
+            life.Draw(bt.viewer.callHp()); //
+            numdisplay.Draw(bt.viewer.callExp(), {0.3f, 0.6f}, 1.0, 5);
+            numdisplay.Draw(bt.viewer.callNeedExp(), {0.7f, -0.1f}, 1.0, 3);
         }
     }
     void layer_back() override { filled_view___(g, 0.2, 0.2, 0.2); }
@@ -65,9 +66,15 @@ class BattleScene : public sbfw::scene::SimpleScene {
     void InitAfterTransition() override {
         prev_time = glfwGetTime();
         start_time = glfwGetTime();
-        bt.start(0);
         go_Title_by_GameOver = false;
         is_gameover = false;
+        bt.start(0);
+        auto card_img = bt.viewer.callCard();
+        for(int i = 0; i < 3; i++) {
+            auto const &e = card_img[i];
+            this->AddImage("card/" + card_img[i].cardName + ".png",
+                           {0.35f, -0.4f + -0.2f * i});
+        }
     }
 
   private:

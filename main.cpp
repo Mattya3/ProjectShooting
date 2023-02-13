@@ -4,6 +4,7 @@
 #include "filename.hpp"
 
 #include <app_sbfw/BattleScene.hpp>
+#include <app_sbfw/ResultScene.hpp>
 #include <internal/card/ChangeStructure.hpp>
 
 #include <DataOf2D.hpp>
@@ -45,14 +46,16 @@ int main() {
     // コンストラクタは(設置位置,画像ファイル名,倍率)
     // 画像ファイル名はimgにあること前提
     // 設置位置は中心を0,0とし、左端をx=-1, 右端をx=1とする
-    sbfw::ElemInfo elgo_battle({0, 0.5}, "title/goBattle.png", 0.3);
+    sbfw::ElemInfo elgo_battle(sbfw::ToRegularXYpos(400, 350),
+                               "title/goBattle.png", 0.3);
     sbfw::ElemInfo elgo_select({0, -0.5}, "title/goSelectCard.png", 0.3);
     sbfw::ElemInfo elgo_title({0, -0.7}, "test_img/go_title.png", 0.2);
-    vector<sbfw::ElemInfo> card_img_in_battle(3);
-    for(int i = 0; i < 3; i++) {
-        card_img_in_battle[i] =
-            sbfw::ElemInfo({0.35f, -0.4f + -0.2f * i}, "ic_launcher.png", 0.5);
-    }
+    // vector<sbfw::ElemInfo> card_img_in_battle(3);
+    // for(int i = 0; i < 3; i++) {
+    //     card_img_in_battle[i] =
+    //         sbfw::ElemInfo({0.35f, -0.4f + -0.2f * i}, "ic_launcher.png",
+    //         0.5);
+    // }
     vector<sbfw::ElemInfo> card_img_in_result(3);
     for(int i = 0; i < 3; i++) {
         card_img_in_result[i] =
@@ -88,17 +91,17 @@ int main() {
                       sy - one_scene_idx / columns * 0.4f};
         string card_fname =
             "ansicard/" + true_card_fname[japanese_card_fnames[i]];
-        cout << "this is !!!!" << card_fname << endl;
         elcards[i] = sbfw::ElemInfo(d, card_fname, 0.6);
     }
 
     /******************
      * 以下はシーンの準備
      *******************/
-    auto [title, select, score, result] =
-        sbfw::scene::prepare_scenes<4>();        // 構造化束縛で1つずつ
+    auto [title, select, score] =
+        sbfw::scene::prepare_scenes<3>();        // 構造化束縛で1つずつ
     auto sub = sbfw::scene::prepare_scenes<3>(); // 配列arrayで受け取る
     auto [game] = sbfw::scene::prepare_scenes<BattleScene, 1>();
+    auto [result] = sbfw::scene::prepare_scenes<ResultScene, 1>();
 
     title->SetWindowName("title");
     select->SetWindowName("select");
@@ -116,8 +119,9 @@ int main() {
     title->DefTranstionTo(elgo_select, select);
     title->DefTranstionTo(elgo_battle, game);
     select->DefTranstionTo(el_general.back_arrow, title);
+    select->AddButton(elgo_battle, [&]() { cs.registerStructure(); });
 
-    for(int i = 0; i < card_num; i++) {
+        for(int i = 0; i < card_num; i++) {
         switch(i / each_scene_num) {
         case 0:
             sub[0]->AddButton(elcards[i], functor(i));
@@ -133,10 +137,10 @@ int main() {
         }
     }
 
-    vector<sbfw::ElemKey> alloc_key_in_gamescene(3);
-    for(int i = 0; i < 3; i++) {
-        alloc_key_in_gamescene[i] = game->AddImage(card_img_in_battle[i]);
-    }
+    // vector<sbfw::ElemKey> alloc_key_in_gamescene(3);
+    // for(int i = 0; i < 3; i++) {
+    //     alloc_key_in_gamescene[i] = game->AddImage(card_img_in_battle[i]);
+    // }
 
     vector<sbfw::ElemKey> alloc_key(3);
     for(int i = 0; i < 3; i++) {
@@ -150,9 +154,9 @@ int main() {
     sub[0]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                             elcards[functor::selected_key]);
-        game->ChangeImage(
-            alloc_key_in_gamescene[allocator_btn_pos::selected_key],
-            elcards[functor::selected_key]);
+        // game->ChangeImage(
+        //     alloc_key_in_gamescene[allocator_btn_pos::selected_key],
+        //     elcards[functor::selected_key]);
         cs.ChangeStructureCard(0, functor::selected_key);
     });
     sub[1]->DefTranstionTo(el_general.back_arrow, select);
@@ -162,9 +166,9 @@ int main() {
     sub[1]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                             elcards[functor::selected_key]);
-        game->ChangeImage(
-            alloc_key_in_gamescene[allocator_btn_pos::selected_key],
-            elcards[functor::selected_key]);
+        // game->ChangeImage(
+        // alloc_key_in_gamescene[allocator_btn_pos::selected_key],
+        // elcards[functor::selected_key]);
         cs.ChangeStructureCard(1, functor::selected_key);
     });
 
@@ -174,9 +178,9 @@ int main() {
     sub[2]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                             elcards[functor::selected_key]);
-        game->ChangeImage(
-            alloc_key_in_gamescene[allocator_btn_pos::selected_key],
-            elcards[functor::selected_key]);
+        // game->ChangeImage(
+        //     alloc_key_in_gamescene[allocator_btn_pos::selected_key],
+        //     elcards[functor::selected_key]);
         cs.ChangeStructureCard(2, functor::selected_key);
     });
 
