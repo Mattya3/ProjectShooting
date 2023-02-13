@@ -56,12 +56,9 @@ class BattleScene : public sbfw::scene::SimpleScene {
             testboss.view();
         } else {
             render_dynamic_view();
-            life.Draw(bt.viewer.callHp());//
-            numdisplay.Draw(bt.viewer.callExp(), {0.3f, 0.6f}, 1.0,5);
-            numdisplay.Draw(bt.viewer.callNeedExp(), {0.8f, 0.25f}, 0.75,3);
             life.Draw(bt.viewer.callHp()); //
-            numdisplay.Draw(bt.viewer.callExp(), {0.3f, 0.6f}, 1.0, 5);
-            numdisplay.Draw(bt.viewer.callNeedExp(), {0.7f, -0.1f}, 1.0, 3);
+            numdisplay.Draw(bt.viewer.callExp(), {0.3f, 0.6f}, 1.0, 0.5);
+            numdisplay.Draw(bt.viewer.callNeedExp(), {0.8f, 0.25f}, 0.75, 3);
         }
     }
     void layer_back() override { filled_view___(g, 0.2, 0.2, 0.2); }
