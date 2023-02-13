@@ -51,7 +51,7 @@ int main() {
     vector<sbfw::ElemInfo> card_img_in_battle(3);
     for(int i = 0; i < 3; i++) {
         card_img_in_battle[i] =
-            sbfw::ElemInfo({0.35f, -0.4f + -0.2f * i}, "ic_launcher.png", 0.5);
+            sbfw::ElemInfo({0.45f, -0.4f + -0.4f * i + 0.4f}, "ic_launcher.png", 1.0);
     }
     vector<sbfw::ElemInfo> card_img_in_result(3);
     for(int i = 0; i < 3; i++) {
