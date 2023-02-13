@@ -6,7 +6,7 @@ namespace sbfw::texture {
 
 PartialDynamicUnit::PartialDynamicUnit(
     int sx, int sy, int w, int h, std::tuple<int, DataOf2D, int, int> info) {
-    auto [bind_id, _, whole_w, whole_h] = info;
+    auto [bind_id, img_reg_len_data, whole_w, whole_h] = info;
     this_id = bind_id;
 
     tleft = float(sx) / float(whole_w);
@@ -17,21 +17,15 @@ PartialDynamicUnit::PartialDynamicUnit(
     tup = tdown + th;
 
     partial_img_len = GetRegularLen(w, h);
+    len=partial_img_len;
+    // len = img_reg_len_data;
 }
 
-// void cut_atlas(unsigned sx, unsigned sy, unsigned w, unsigned h) {
-//     float tsx = float(sx) / float(width);
-//     float tw = float(w) / float(width);
-//     float tsy = float(sy) / float(height);
-//     float th = float(h) / float(height);
-//     return Tex(Location(tsx, tsy, tw, th),
-//                DataOf2D(w / float(Setting::WINDOW_width),
-//                         h / float(Setting::WINDOW_height)));
-// }
 void PartialDynamicUnit::Draw(DataOf2D pos) { Draw(pos, 1.0f); }
 
 void PartialDynamicUnit::Draw(DataOf2D pos, float ratio) {
     glBindTexture(GL_TEXTURE_2D, this_id);
+    glColor3d(1.0, 1.0, 1.0);
 
     glEnable(GL_TEXTURE_2D);
     glNormal3d(0.0, 0.0, 1.0);
