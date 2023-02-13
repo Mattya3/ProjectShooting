@@ -16,6 +16,7 @@ class PartialDynamicUnit {
     DataOf2D len;
     int this_id;
     float tright, tdown, tup, tleft;
+    DataOf2D img_center_pos, partial_img_len;
 
     void view(DataOf2D p, float s = 1.0) {}
 
@@ -25,17 +26,7 @@ class PartialDynamicUnit {
 
   private:
     inline DataOf2D GetRegularLen(int w, int h) {
-        return {w / float(window_width) ,
-                h / float(window_height)};
+        return {w / float(window_width), h / float(window_height)};
     }
-    inline DataOf2D ToRegularXYpos(unsigned x, unsigned y) {
-        float tx = x, ty = y;
-        tx /= window_width / 2;
-        ty /= window_height / 2;
-        ty = 1 - ty;
-        tx = tx - 1;
-        return {tx, ty};
-    }
-    DataOf2D img_center_pos, partial_img_len;
 };
 } // namespace sbfw::texture

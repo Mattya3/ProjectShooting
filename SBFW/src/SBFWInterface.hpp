@@ -6,6 +6,7 @@
 namespace sbfw {
 void InitSBFW(int width, int height);
 void TerminateSBFW();
+DataOf2D ToRegularXYpos(unsigned x, unsigned y);
 namespace scene {
 
 shared_ptr<SimpleScene> prepare_scene();

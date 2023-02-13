@@ -37,6 +37,15 @@ class SceneBase {
     std::string window_name = "";
 
   private:
+    int frame_cnt;
+    float elapsed_time_this_scene;
+    const int frame_per_sec = 60;
+
+  protected:
+    inline int GetFrameCnt() { return frame_cnt; }
+    inline float GetElapsedTime() { return elapsed_time_this_scene; }
+
+  private:
     shared_ptr<SceneBase> next_scene;
     bool is_terminate_scene = false;
 

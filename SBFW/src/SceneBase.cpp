@@ -25,8 +25,22 @@ void SceneBase::Start() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDisable(GL_CULL_FACE);
-
+    frame_cnt = 0;
+    const float interval_time_each_loop = 1.0f / float(frame_per_sec);
+    float start_time = glfwGetTime();
+    float prev_frame_time = glfwGetTime();
     while(!glfwWindowShouldClose(detail::window)) {
+        float now_time = glfwGetTime();
+        // 60fpsに固定する
+        float this_interval = now_time - prev_frame_time;
+        elapsed_time_this_scene = now_time - start_time;
+        if(this_interval < interval_time_each_loop) {
+            continue;
+        } else {
+            prev_frame_time = now_time;
+        }
+        ++frame_cnt;
+
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 

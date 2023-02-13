@@ -30,6 +30,14 @@ void sbfw::detail::CheckInited() {
         exit(1);
     }
 }
+inline DataOf2D sbfw::ToRegularXYpos(unsigned x, unsigned y) {
+    float tx = x, ty = y;
+    tx /= sbfw::window_width / 2;
+    ty /= sbfw::window_height / 2;
+    ty = 1 - ty;
+    tx = tx - 1;
+    return {tx, ty};
+}
 namespace sbfw {
 namespace scene {
 shared_ptr<SimpleScene> prepare_scene() {
