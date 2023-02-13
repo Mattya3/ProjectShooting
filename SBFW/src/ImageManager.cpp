@@ -33,8 +33,6 @@ ImageManager::ProvideImageGetWH(string const &fname) {
                 len_data_un_reg[bind_id].second};
     } else {
         ++id;
-        std::cout << fname << " as  " << id << std::endl;
-
         loaded_pngs.emplace(fname, id);
         auto [w, h] = LoadPng(filename, id);
         len_data_un_reg.emplace_back(w, h);

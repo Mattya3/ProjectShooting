@@ -52,8 +52,8 @@ int main() {
     sbfw::ElemInfo elgo_title({0, -0.7}, "test_img/go_title.png", 0.2);
     vector<sbfw::ElemInfo> card_img_in_battle(3);
     for(int i = 0; i < 3; i++) {
-        card_img_in_battle[i] =
-            sbfw::ElemInfo({0.45f, -0.4f + -0.4f * i + 0.4f}, "ic_launcher.png", 1.0);
+        card_img_in_battle[i] = sbfw::ElemInfo(
+            {0.45f, -0.4f + -0.4f * i + 0.4f}, "ic_launcher.png", 1.0);
     }
     vector<sbfw::ElemInfo> card_img_in_result(3);
     for(int i = 0; i < 3; i++) {
@@ -118,9 +118,8 @@ int main() {
     title->DefTranstionTo(elgo_select, select);
     title->DefTranstionTo(elgo_battle, game);
     select->DefTranstionTo(el_general.back_arrow, title);
-    select->AddButton(elgo_battle, [&]() { cs.registerStructure(); });
 
-        for(int i = 0; i < card_num; i++) {
+    for(int i = 0; i < card_num; i++) {
         switch(i / each_scene_num) {
         case 0:
             sub[0]->AddButton(elcards[i], functor(i));
