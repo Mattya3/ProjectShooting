@@ -50,12 +50,11 @@ int main() {
                                "title/goBattle.png", 0.3);
     sbfw::ElemInfo elgo_select({0, -0.5}, "title/goSelectCard.png", 0.3);
     sbfw::ElemInfo elgo_title({0, -0.7}, "test_img/go_title.png", 0.2);
-    // vector<sbfw::ElemInfo> card_img_in_battle(3);
-    // for(int i = 0; i < 3; i++) {
-    //     card_img_in_battle[i] =
-    //         sbfw::ElemInfo({0.35f, -0.4f + -0.2f * i}, "ic_launcher.png",
-    //         0.5);
-    // }
+    vector<sbfw::ElemInfo> card_img_in_battle(3);
+    for(int i = 0; i < 3; i++) {
+        card_img_in_battle[i] =
+            sbfw::ElemInfo({0.45f, -0.4f + -0.4f * i + 0.4f}, "ic_launcher.png", 1.0);
+    }
     vector<sbfw::ElemInfo> card_img_in_result(3);
     for(int i = 0; i < 3; i++) {
         card_img_in_result[i] =
