@@ -20,7 +20,7 @@ class BattleScene : public sbfw::scene::SimpleScene {
     sbfw::texture::DynamicUnit all;
 
     PngTexture testboss{"ic_launcher.png", Location(-0.5, -0.5, 1.0, 1.0)};
-    sbfw::ext::NumberDisplay numdisplay1, numdisplay2;
+    sbfw::ext::NumberDisplay numdisplay;
     double prev_time;
     double start_time;
     bool go_Title_by_GameOver = false;
@@ -55,8 +55,8 @@ class BattleScene : public sbfw::scene::SimpleScene {
         } else {
             render_dynamic_view();
             life.Draw(bt.viewer.callHp());//
-            numdisplay1.Draw(bt.viewer.callExp(), {0.3f, 0.6f}, 1.0,5);
-            numdisplay2.Draw(bt.viewer.callNeedExp(), {0.7f, -0.1f}, 1.0,3);
+            numdisplay.Draw(bt.viewer.callExp(), {0.3f, 0.6f}, 1.0,5);
+            numdisplay.Draw(bt.viewer.callNeedExp(), {0.7f, -0.1f}, 1.0,3);
         }
     }
     void layer_back() override { filled_view___(g, 0.2, 0.2, 0.2); }
