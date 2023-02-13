@@ -1,7 +1,7 @@
 #include "SimpleScene.hpp"
 #include <GLFW/glfw3.h>
 namespace sbfw {
-texture::ImageManager scene::SimpleScene::img_manager;
+
 namespace scene {
 
 void SimpleScene::mouse_button_callback(GLFWwindow *pwin, int button,

@@ -3,6 +3,8 @@
 
 #include "../sbfw.hpp"
 #include "../unit.hpp"
+extern sbfw::texture::ImageManager img_manager;
+
 namespace sbfw::ext {
 
 /// @brief 数字を指定した位置に表示するクラス
@@ -66,7 +68,7 @@ class NumberDisplay {
 
   private:
     std::tuple<int, DataOf2D, int, int> atlas =
-        sbfw::scene::SimpleScene::img_manager.ProvideImageGetWH("atlasv2.png");
+        img_manager.ProvideImageGetWH("atlasv2.png");
     vector<Tex> nums = vector<Tex>(10);
     Tex minus, dark_zero;
     const float num_interval = 0.0065;

@@ -2,6 +2,9 @@
 #include <app_sbfw/BattleScene.hpp>
 
 #include <DataOf2D.hpp>
+namespace sbfw {
+sbfw::texture::ImageManager img_manager;
+} // namespace sbfw
 
 void filled_view(Location l, float r, float g, float b) {
     glBegin(GL_POLYGON);

@@ -13,10 +13,14 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+namespace sbfw {
+extern sbfw::texture::ImageManager img_manager;
+} // namespace sbfw
+
 class BattleScene : public sbfw::scene::SimpleScene {
   public:
     RemainingStatus life{
-        5, {0.3, 0.8}, img_manager.ProvideImage("status/redheart.png")};
+        5, {0.3, 0.8}, sbfw::img_manager.ProvideImage("status/redheart.png")};
     shared_ptr<sbfw::scene::SimpleScene> result_scene = nullptr;
     sbfw::texture::DynamicUnit all;
 

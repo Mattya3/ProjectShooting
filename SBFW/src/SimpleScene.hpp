@@ -10,8 +10,9 @@
 #include "detail.hpp"
 
 namespace sbfw {
+extern texture::ImageManager img_manager;
 
-template <class T> using sp = shared_ptr<T>;
+// template <class T> using sp = shared_ptr<T>;
 namespace scene {
 using std::tuple;
 using std::vector;
@@ -78,9 +79,6 @@ class SimpleScene : public SceneBase {
   protected:
     vector<Button> btns;
     vector<texture::ImgUnit> texs;
-
-  public:
-    static texture::ImageManager img_manager;
 };
 
 } // namespace scene
