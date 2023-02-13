@@ -77,7 +77,7 @@ class BattleScene : public sbfw::scene::SimpleScene {
         for(int i = 0; i < 3; i++) {
             auto const &e = card_img[i];
             this->AddImage("card/" + card_img[i].cardName + ".png",
-                           {0.35f, -0.4f + -0.2f * i});
+                           {0.45f, -0.4f + -0.4f * i + 0.4f});
         }
     }
 
