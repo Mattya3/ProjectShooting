@@ -1,10 +1,10 @@
 #pragma once
+#include "Location.hpp"
 #include <DataOf2D.hpp>
 #include <GLFW/glfw3.h>
-#include "Location.hpp"
 #include <string>
 typedef unsigned char ubyte_t;
-//  SBFWで等価な機能が存在するが、internal側の複雑な座標系に対応するための関数群が
+/// @brief  SBFWに等価な機能が存在するが、internal側の複雑な座標系に対応するための関数群が
 // このクラスに準じて作られているため存続させる
 // imgディレクトリであることは前提とする
 class PngTexture {

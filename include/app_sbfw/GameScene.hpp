@@ -26,16 +26,27 @@ class GameScene : public sbfw::scene::SimpleScene {
     GameScene() = default;
 
   private:
+    /// @brief 毎回の描画ループで呼び出される関数
+    /// @details
+    /// これをオーバーライドしておけば、親クラス側でGLFWの設定を行い描画される
+    /// なので適当なクラスのDrawメソッドをここで呼べばよい
     void layer_front() override;
+
+    /// @brief このシーンに遷移した時に初期化する
+    /// これが呼ばれるタイミングはシーン遷移時に毎回であって、コンストラクタのような変数定義時に一回だけとは違う
     void InitAfterTransition() override;
 
-    void CombineInternalBattle();
-    void DrawRotatedMyfighter(GamePointMono x);
-
+    /// @brief キーボード入力を受け付ける関数
     void key_callback(GLFWwindow *window, int key, int scancode, int action,
                       int mods) override;
 
+    /// @brief 結合作業
+    void CombineInternalBattle();
+    void DrawRotatedMyfighter(GamePointMono x);
+
   public:
+    /// @brief
+    /// ゲームオーバ時の遷移先画面を指定する(ボタン遷移(=DefTransition())ではない場合は個別に対応する)
     std::shared_ptr<sbfw::scene::SimpleScene> result_scene = nullptr;
 
   private:
