@@ -6,8 +6,12 @@
 #include <bits/stdc++.h>
 namespace sbfw {
 using std::shared_ptr;
+
+} // namespace sbfw
+
 /// @brief GLFWのWindow制御を隠蔽するクラス コールバック登録も行う
-namespace scene {
+namespace sbfw::scene {
+
 class SceneBase {
   public:
     SceneBase() {}
@@ -60,5 +64,4 @@ class SceneBase {
     }
     static void register_callbackfunc(SceneBase &sb, GLFWwindow *w);
 };
-} // namespace scene
-} // namespace sbfw
+} // namespace sbfw::scene

@@ -1,7 +1,8 @@
 #pragma once
-#include <setting.hpp>
+
 #include <bits/stdc++.h>
 #include <internal/battle/GamePointMono.hpp>
+#include "setting.hpp"
 using namespace std;
 
 class Location {

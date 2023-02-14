@@ -38,8 +38,8 @@ ImageManager::ProvideImageGetWH(string const &fname) {
         len_data_un_reg.emplace_back(w, h);
         DataOf2D t = GetRegularLen(w, h);
         len_data.emplace_back(t);
-        // printf("%s is loading as %d, (w, h) = (%f, %f)\n", fname.c_str(), id,
-        // t.x, t.y);
+        printf("%s is loading as %d, (w, h) = (%f, %f)\n", fname.c_str(), id,
+        t.x, t.y);
         return {id, t, w, h};
     }
 }

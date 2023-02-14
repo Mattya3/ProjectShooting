@@ -62,9 +62,9 @@ class Button {
     inline bool valid_push_location(float x, float y) {
         return (left <= x && x <= right && low <= y && y <= up);
     }
-    inline void Reset() { btn_enable = false; }
 
     // ボタンを表示する
     void draw();
+    inline void Reset() { btn_enable = false; }
 };
 } // namespace sbfw

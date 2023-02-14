@@ -1,9 +1,11 @@
+#include <app_sbfw/PngTexture.hpp>
+
 #include <GLFW/glfw3.h>
 #include <bits/stdc++.h>
-#include <Image.hpp>
 #include <filesystem>
-#include <DataOf2D.hpp>
 #include <stdexcept>
+
+#include <DataOf2D.hpp>
 
 using namespace std;
 using std::filesystem::current_path;

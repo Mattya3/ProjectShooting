@@ -6,8 +6,10 @@
 int sbfw::window_width = 800, sbfw::window_height = 700;
 
 GLFWwindow *sbfw::detail::window = nullptr;
+sbfw::texture::ImageManager sbfw::img_manager = sbfw::texture::ImageManager();
 
 void sbfw::InitSBFW(int width, int height) {
+
     if(!glfwInit()) {
         exit(1);
     }

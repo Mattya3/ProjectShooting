@@ -1,24 +1,14 @@
 #pragma once
-#include <DataOf2D.hpp>
-#include <Image.hpp>
 #include <bits/stdc++.h>
+
+#include <DataOf2D.hpp>
 #include <sbfw.hpp>
 #include <unit.hpp>
 using namespace std;
 
-static void filled_view___(Location l, float r, float g, float b) {
-    glBegin(GL_POLYGON);
-    glColor3d(r, g, b);
-    glVertex2d(l.sx, l.sy);
-    glVertex2d(l.sx + l.xlen, l.sy);
-    glVertex2d(l.sx + l.xlen, l.sy + l.ylen);
-    glVertex2d(l.sx, l.sy + l.ylen);
-    glEnd();
-}
 /// @brief 残機やボム数を表示するための同一画像を複数設置するクラス
 class RemainingStatus {
   private:
-    PngTexture valid_tex, invalid_tex;
     sbfw::texture::DynamicUnit img;
 
     int object_num = 5;

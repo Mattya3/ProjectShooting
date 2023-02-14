@@ -11,8 +11,7 @@
 
 namespace sbfw {
 extern texture::ImageManager img_manager;
-
-// template <class T> using sp = shared_ptr<T>;
+template <class T> using sp = shared_ptr<T>;
 namespace scene {
 using std::tuple;
 using std::vector;
@@ -70,11 +69,7 @@ class SimpleScene : public SceneBase {
         layer_front();
     }
 
-    void InitAfterTransition() override {
-        for(auto &&btn : btns) {
-            btn.Reset();
-        }
-    }
+    void InitAfterTransition() override { ResetAllButton(); }
     void mouse_button_callback(GLFWwindow *pwin, int button, int action,
                                int mods) override;
     void key_callback(GLFWwindow *window, int key, int scancode, int action,
@@ -83,6 +78,13 @@ class SimpleScene : public SceneBase {
   protected:
     vector<Button> btns;
     vector<texture::ImgUnit> texs;
+
+  private:
+    void ResetAllButton() {
+        for(auto &&e : btns) {
+            e.Reset();
+        }
+    }
 };
 
 } // namespace scene

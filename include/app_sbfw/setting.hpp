@@ -2,8 +2,7 @@
 class Setting {
   private:
   public:
-    Setting(/* args */);
-    ~Setting();
+    Setting(/* args */){}
     static const int WINDOW_width = 800, WINDOW_height = 700;
     static inline void to_canonical_xy(double &x, double &y) {
         x /= WINDOW_width / 2;

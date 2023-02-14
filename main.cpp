@@ -1,14 +1,12 @@
 #include "SBFW/sbfw.hpp"
-#include <setting.hpp>
-
-#include "filename.hpp"
-
-#include <app_sbfw/BattleScene.hpp>
-#include <app_sbfw/ResultScene.hpp>
-#include <internal/card/ChangeStructure.hpp>
-
 #include <DataOf2D.hpp>
 
+#include <app_sbfw/GameScene.hpp>
+#include <app_sbfw/ResultScene.hpp>
+
+#include <internal/card/ChangeStructure.hpp>
+
+#include "filename.hpp"
 using namespace std;
 class functor {
   private:
@@ -84,7 +82,7 @@ int main() {
     int columns = 4, sub_scene_num = 3, each_scene_num = 12;
     printf("%d, %d\n", each_scene_num, card_fnames.size());
     float sx = -0.7, sy = 0.7; // 31 = 12 + 12 + 7;
-    auto x=cs.callHasAllCards();
+    auto x = cs.callHasAllCards();
     for(int i = 0; i < card_num; i++) {
         int one_scene_idx = i % each_scene_num;
         DataOf2D d = {sx + one_scene_idx % columns * 0.4f,
@@ -100,8 +98,9 @@ int main() {
     auto [title, select, score] =
         sbfw::scene::prepare_scenes<3>();        // 構造化束縛で1つずつ
     auto sub = sbfw::scene::prepare_scenes<3>(); // 配列arrayで受け取る
-    auto [game] = sbfw::scene::prepare_scenes<BattleScene, 1>();
+    // auto [game] = sbfw::scene::prepare_scenes<BattleScene, 1>();
     auto [result] = sbfw::scene::prepare_scenes<ResultScene, 1>();
+    auto [game] = sbfw::scene::prepare_scenes<GameScene, 1>();
 
     title->SetWindowName("title");
     select->SetWindowName("select");
@@ -186,6 +185,6 @@ int main() {
     // シーンの処理をスタートさせる。最初に表示したいシーンのstart()を呼び出すこと
     title->Start();
 
-    glfwTerminate();
+    sbfw::TerminateSBFW();
     return 0;
 }

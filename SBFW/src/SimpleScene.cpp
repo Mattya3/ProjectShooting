@@ -1,5 +1,7 @@
 #include "SimpleScene.hpp"
 #include <GLFW/glfw3.h>
+
+
 namespace sbfw {
 
 namespace scene {

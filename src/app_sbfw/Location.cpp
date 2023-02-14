@@ -1,4 +1,5 @@
-#include <Location.hpp>
+#include <app_sbfw/Location.hpp>
+
 Location::Location(int sx, int sy, int xlen, int ylen) {
     double x = sx;
     double y = sy + ylen;
@@ -7,3 +8,4 @@ Location::Location(int sx, int sy, int xlen, int ylen) {
     this->xlen = double(xlen) / double(Setting::WINDOW_width) * 2;
     this->ylen = double(ylen) / double(Setting::WINDOW_height) * 2;
 }
+
