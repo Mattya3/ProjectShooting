@@ -8,7 +8,7 @@ void EnemyPoint::setPattern(vector<PatternPoint> move){
 void EnemyPoint::timer(vector<pair<double, double>> points, vector<BulletPoint> &bullets){
     if(hitTime > 0) hitTime -= 20;
     times += 20;
-    if(moving.at(0).changeLine() > nowHP / maxHP){
+    if(moving.at(0).changeLine() > (double)nowHP / (double)maxHP){
         moving.erase(moving.begin());
         prepareMoving = true;
         directionFlag = true;
