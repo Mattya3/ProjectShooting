@@ -5,6 +5,7 @@
 
 #include <GLFW/glfw3.h>
 
+#include "AudioPlayer.hpp"
 #include "Location.hpp"
 #include "PngTexture.hpp"
 #include "RemainingStatus.hpp"
@@ -51,6 +52,7 @@ class GameScene : public sbfw::scene::SimpleScene {
 
   private:
     Battle bt;
+    AudioPlayer shot_audio{440};
     bool wp = false, ap = false, sp = false, dp = false, spacep = false;
     bool is_gameover = false;
     const DataOf2D leftup = ToRegularXYpos(20, 20);
