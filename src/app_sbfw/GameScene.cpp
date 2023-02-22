@@ -1,7 +1,6 @@
 #include <app_sbfw/GameScene.hpp>
 
 #include <SBFW/unit.hpp>
-#include <app_sbfw/DrawRowImg.hpp>
 
 #include <bits/stdc++.h>
 using namespace std;

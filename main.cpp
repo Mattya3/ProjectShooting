@@ -68,7 +68,6 @@ int main() {
         sbfw::ElemInfo fighter{{0.2, 0.2}, "battle/me.png", 5};
         sbfw::ElemInfo back_arrow{{-0.7, -0.7}, "test_img/back.png", 0.2};
         sbfw::ElemInfo OK{{0.8, -0.8}, "select_card_sub/OK.png", 0.3};
-
     } el_general;
     struct ElementDefnitionForSelectSubScene {
         sbfw::ElemInfo left_arrow{
@@ -83,6 +82,7 @@ int main() {
     printf("%d, %d\n", each_scene_num, card_fnames.size());
     float sx = -0.7, sy = 0.7; // 31 = 12 + 12 + 7;
     auto x = cs.callHasAllCards();
+    
     for(int i = 0; i < card_num; i++) {
         int one_scene_idx = i % each_scene_num;
         DataOf2D d = {sx + one_scene_idx % columns * 0.4f,
