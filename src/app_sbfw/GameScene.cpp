@@ -66,9 +66,6 @@ void GameScene::key_callback(GLFWwindow *window, int key, int scancode,
     control_key_flag(GLFW_KEY_D, dp);
     control_key_flag(GLFW_KEY_SPACE, spacep);
     bt.inputShooting(spacep);
-    if(spacep) {
-        shot_audio.Play();
-    }
 
     if(key == GLFW_KEY_J && action == GLFW_PRESS) {
         bt.inputLevelUp(0);
