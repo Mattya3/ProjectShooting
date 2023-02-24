@@ -1,8 +1,8 @@
 #include "SBFW/sbfw.hpp"
 #include <DataOf2D.hpp>
 
-#include <app_sbfw/GameScene.hpp>
-#include <app_sbfw/ResultScene.hpp>
+#include <stgview/GameScene.hpp>
+#include <stgview/ResultScene.hpp>
 
 #include <internal/card/ChangeStructure.hpp>
 
@@ -32,7 +32,13 @@ class allocator_btn_pos {
 };
 int functor::selected_key = 0;
 int allocator_btn_pos::selected_key = 0;
-
+struct ResultSceneElemInfos {
+    sbfw::ElemInfo retry{{-0.75, -0.75}, "DarkBlue/Button/retry.png", 0.9f};
+    sbfw::ElemInfo set{{-0.25, -0.75}, "DarkBlue/Button/set.png", 0.9f};
+    sbfw::ElemInfo home{{0.25, -0.75}, "DarkBlue/Button/home.png", 0.9f};
+    sbfw::ElemInfo end{{0.75, -0.75}, "DarkBlue/Button/end.png", 0.9f};
+ 
+} res_ei;
 int main() {
     sbfw::InitSBFW(800, 700);
     // internalとの結合を行う
@@ -82,7 +88,7 @@ int main() {
     printf("%d, %d\n", each_scene_num, card_fnames.size());
     float sx = -0.7, sy = 0.7; // 31 = 12 + 12 + 7;
     auto x = cs.callHasAllCards();
-    
+
     for(int i = 0; i < card_num; i++) {
         int one_scene_idx = i % each_scene_num;
         DataOf2D d = {sx + one_scene_idx % columns * 0.4f,
@@ -99,8 +105,8 @@ int main() {
         sbfw::scene::prepare_scenes<3>();        // 構造化束縛で1つずつ
     auto sub = sbfw::scene::prepare_scenes<3>(); // 配列arrayで受け取る
     // auto [game] = sbfw::scene::prepare_scenes<BattleScene, 1>();
-    auto [result] = sbfw::scene::prepare_scenes<ResultScene, 1>();
-    auto [game] = sbfw::scene::prepare_scenes<GameScene, 1>();
+    auto [result] = sbfw::scene::prepare_scenes<stgview::ResultScene, 1>();
+    auto [game] = sbfw::scene::prepare_scenes<stgview::GameScene, 1>();
 
     title->SetWindowName("title");
     select->SetWindowName("select");
@@ -175,15 +181,15 @@ int main() {
 
     game->result_scene = result;
 
-    vector<sbfw::ElemKey> alloc_key_in_result(3);
+    result->DefTranstionTo(res_ei.home, title);
+    result->DefTranstionTo(res_ei.retry, game);
+    result->DefTranstionTo(res_ei.set, select);
+    result->DefTranstionTo(res_ei.end, title);
 
-    result->DefTranstionTo(elgo_title, title);
-    for(int i = 0; i < 3; i++) {
-        alloc_key_in_result[i] = result->AddImage(card_img_in_result[i]);
-    }
 
     // シーンの処理をスタートさせる。最初に表示したいシーンのstart()を呼び出すこと
-    title->Start();
+    // title->Start();
+    result->Start();
 
     sbfw::TerminateSBFW();
     return 0;
