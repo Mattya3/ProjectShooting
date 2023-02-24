@@ -1,4 +1,4 @@
-#include <app_sbfw/Location.hpp>
+#include <stgview/Location.hpp>
 
 Location::Location(int sx, int sy, int xlen, int ylen) {
     double x = sx;

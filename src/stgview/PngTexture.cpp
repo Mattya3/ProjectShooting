@@ -1,4 +1,4 @@
-#include <app_sbfw/PngTexture.hpp>
+#include <stgview/PngTexture.hpp>
 
 #include <GLFW/glfw3.h>
 #include <bits/stdc++.h>

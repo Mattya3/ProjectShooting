@@ -6,7 +6,7 @@
 using namespace std;
 /// @brief internal側の複雑な座標系に対応するための関数群が
 // このクラスに準じて作られているため存続させる
-// これは非推奨なクラスなので、今後はDataOf2Dを2つ使うことで同様でわかりやすいコードを実現できる
+// これは非推奨なクラスなので、今後はDataOf2Dを2つ使うことで同様のわかりやすいコードを実現できる
 class Location {
   public:
     double sx, sy;
