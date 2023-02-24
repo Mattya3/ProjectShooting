@@ -18,10 +18,8 @@ namespace sbfw {
 extern int window_height, window_width;
 } // namespace sbfw
 
+namespace stgview {
 class GameScene : public sbfw::scene::SimpleScene {
-  private:
-    using Pdu = sbfw::texture::PartialDynamicUnit;
-
   public:
     GameScene() = default;
 
@@ -71,6 +69,9 @@ class GameScene : public sbfw::scene::SimpleScene {
     PngTexture enemy_tex = PngTexture("battle/enemy.png");
     PngTexture myfighter = PngTexture("battle/me.png");
     PngTexture mybullet = PngTexture("battle/bulletMe.png");
+
+  private:
+    using Pdu = sbfw::texture::PartialDynamicUnit;
 
     struct ImageDefinitions {
 
@@ -141,3 +142,4 @@ class GameScene : public sbfw::scene::SimpleScene {
         return {x, y};
     }
 };
+} // namespace view

@@ -1,4 +1,6 @@
-#include <app_sbfw/RemainingStatus.hpp>
+#include <stgview/RemainingStatus.hpp>
+
+namespace stgview {
 
 void RemainingStatus::Draw(int now_stock) {
     DataOf2D p = view_start_point;
@@ -17,3 +19,4 @@ void RemainingStatus::Draw(int now_stock) {
     draw::RectFilled(begin_hide_x, right, view_start_point.y + img.len.y / 2,
                      view_start_point.y - img.len.y / 2, {0.0, 1.0, 0.0});
 }
+} // namespace stgview

@@ -5,6 +5,7 @@
 #include <sbfw.hpp>
 #include <unit.hpp>
 using namespace std;
+namespace stgview {
 
 /// @brief 残機やボム数を表示するための同一画像を複数設置するクラス
 class RemainingStatus {
@@ -24,3 +25,4 @@ class RemainingStatus {
           view_start_point(drawstart) {}
     RemainingStatus() {}
 };
+} // namespace stgview

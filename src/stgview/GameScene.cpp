@@ -1,9 +1,10 @@
-#include <app_sbfw/GameScene.hpp>
+#include <stgview/GameScene.hpp>
 
 #include <SBFW/unit.hpp>
 
 #include <bits/stdc++.h>
 using namespace std;
+namespace stgview {
 void GameScene::layer_front() {
     // 戦闘画面の背景 灰色
     draw::RectFilled(leftup.x, rightdown.x, leftup.y, rightdown.y,
@@ -104,3 +105,4 @@ void GameScene::DrawRotatedMyfighter(GamePointMono x) {
     myfighter.view_clone(l);
     glPopMatrix();
 }
+} // namespace stgview
