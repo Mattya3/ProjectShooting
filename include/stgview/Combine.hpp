@@ -1,9 +1,5 @@
 #include <bits/stdc++.h>
-/*
-#include <internal/***.hpp>
-...
-*/
-
+#include <internal/battle/Battle.hpp>
 
 namespace stgview {
 using std::pair;
@@ -16,13 +12,17 @@ class Combine {
     explicit Combine() = default;
 
   private:
+    int score;//現在のスコアを保管する
     /// ここで適当なinternalの変数を定義する
     // Battle bt; ChangeCardStructure ccs; など
 
   public:
     /// 実装は任せる
-    inline int GetScoreToShowInResult() { return 500; }
-    inline int GetBestScore() { return 777; }
+    inline int GetScoreToShowInResult() { return 500;/*採取的にはscoreを返すよう直したい*/ }
+    inline int GetBestScore() {
+      int best = battle.callBestScore();
+      if(score > best) battle.writeBestScore();
+    }
 
     /// @brief リザルト画面で見せるためのカードのファイル名と新規取得情報を取得
     /// @return ファイル名(=*.png)と新規取得かどうかを表すboolのvector

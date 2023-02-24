@@ -47,7 +47,7 @@ public:
 
     void inputSpeed();
 
-    int callBestScore();
+    static int callBestScore();
 
-    int writeBestScore(int score);
+    static void writeBestScore(int score);
 };

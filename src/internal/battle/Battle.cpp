@@ -177,7 +177,7 @@ int Battle::callBestScore(){
     return stoi(line);
 }
 
-int Battle::writeBestScore(int score){
+void Battle::writeBestScore(int score){
     string line1;//変更しない所持カードリストの保持用
     string line2;
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
