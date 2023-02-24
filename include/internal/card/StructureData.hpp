@@ -14,4 +14,8 @@ public:
     vector<short> readCardSets(void);
 
     void writeCardSets(vector<short> list);
+
+    int StructureData::callBestScore();
+
+    int StructureData::writeBestScore(int score);
 };

@@ -58,12 +58,6 @@ C++GUI選定 : active, task_select, 2022-10-15,2022-10-20
 7. 完成(終了)
 ・必要に応じてルールブックの作成
 
-## 検討GUI
-* Qt: Javaで言うSwingみたいなGUIライブラリ、フレームワーク。C++だけで作ることができる。
-* JS + WASM: WebAssemblyによりC++コードをWeb上で実行できるようになる。描画はJavaScriptが担当する。
-* openGLが良いと思う(採用)
-多分非Unix環境ではQtとWASMはインストールが難しそう。WSLがWindowsに入りそうなら良いんだけど
-
 ## ブックマーク
 **各種図はdiagrams.mdに移行しました。[ここ](/diagrams.md)**
 [https://onlinegdb.com/kGYo98t65](スラッシュ変換プログラム)
@@ -74,17 +68,3 @@ C++GUI選定 : active, task_select, 2022-10-15,2022-10-20
 サンプル1が画面遷移図
 データフローダイアグラム
 
-
-
-g++ -std=c++17 -c ext_math/*.cpp src/element/ViewContent.cpp \
-src/element/texture/ImageManager.cpp \
-src/scene/*.cpp \
-lodepng/*.cpp \
--I./include \
--I./include/ext_math \
--I./lodepng \
--DGL_SILENCE_DEPRECATION=1 \
--I/Users/itihiotu/Documents/Develop/cpp/ProjectShooting/include/ \
--I/opt/homebrew/Cellar/glfw/3.3.8/include/ \
--L/opt/homebrew/Cellar/glfw/3.3.8/lib -lglfw \
-& ar rc libsbfw.a *.o
