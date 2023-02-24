@@ -46,12 +46,14 @@ vector<bool> CardHas::readHasCard(void){//カードを所持しているかの�
 void CardHas::writeHasCard(short ID){//所持カードをSaveDataに反映する関数
     string line1;//変更する所持カードリストの保持用
     string line2;//変更しないセットカードの保持用
+    string line3;
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(file1.fail()){
         cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(file1, line1);
     getline(file1, line2);
+    getline(file1, line3);
     vector<string> cards = split(line1, ' ');
     line1 = cards.at(0);
     for(int i = 1; i < cards.size(); i++){//全カードに対して所持状況を記録するループ処理
@@ -64,5 +66,6 @@ void CardHas::writeHasCard(short ID){//所持カードをSaveDataに反映する
     }
     file2 << line1 << endl;
     file2 << line2 << endl;
+    file2 << line3 << endl;
     file2.close();
 }

@@ -48,16 +48,20 @@ vector<short> StructureData::readCardSets(void){//セットカードのIDのリ�
 void StructureData::writeCardSets(vector<short> list){//新たなセットカードをファイルに書き込む関数
     string line1;//変更しない所持カードリストの保持用
     string line2 = to_string(list.at(0)) + " " + to_string(list.at(1)) + " " + to_string(list.at(2));//変更後のセットカードリスト
+    string line3;
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(file1.fail()){
         cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     getline(file1, line1);
+    getline(file1, line3);
+    getline(file1, line3);
     ofstream file2((current_path() / filesystem::path("data/SaveData")).c_str(), ios::out);//ファイル読み込み
     if(file2.fail()){
         cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
     }
     file2 << line1 << endl;
     file2 << line2 << endl;
+    file2 << line3 << endl;
     file2.close();
 }
