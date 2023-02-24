@@ -46,4 +46,8 @@ public:
     void inputBomb();
 
     void inputSpeed();
+
+    int callBestScore();
+
+    int writeBestScore(int score);
 };
