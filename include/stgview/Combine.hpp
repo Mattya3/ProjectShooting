@@ -17,8 +17,11 @@ class Combine {
     // Battle bt; ChangeCardStructure ccs; など
 
   public:
+    Combine(int nowScore){
+        score = nowScore;
+    }
     /// 実装は任せる
-    inline int GetScoreToShowInResult() { return 500;/*採取的にはscoreを返すよう直したい*/ }
+    inline int GetScoreToShowInResult() { return score;}
     inline int GetBestScore() {
       int best = battle.callBestScore();
       if(score > best) battle.writeBestScore();
