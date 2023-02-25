@@ -7,3 +7,4 @@ vector<string> split(string str, char separator){//strをseparatorで分割す�
     while(getline(getString, x, separator)) output.push_back(x);
     return output;
 }
+

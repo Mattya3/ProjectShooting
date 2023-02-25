@@ -1,4 +1,6 @@
+#pragma once
 #include <bits/stdc++.h>
+#include <internal/BestScore.hpp>
 #include <internal/battle/Battle.hpp>
 #include <internal/card/CardHas.hpp>
 
@@ -24,8 +26,8 @@ class Combine {
     /// 実装は任せる
     inline int GetScoreToShowInResult() { return score;}
     inline int GetBestScore() {
-      int best = Battle.callBestScore();
-      if(score > best) Battle.writeBestScore();
+      int best = callBestScore();
+      if(score > best) writeBestScore(score);
       return best;
     }
 

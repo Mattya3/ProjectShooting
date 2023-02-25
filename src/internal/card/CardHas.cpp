@@ -70,7 +70,7 @@ void CardHas::writeHasCard(short ID){//所持カードをSaveDataに反映する
     file2.close();
 }
 
-string CardHas::getNewCard(short ID){
+string CardHas::getCardName(short ID){
     string line;
     ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
     if(file1.fail()){
@@ -86,7 +86,7 @@ vector<pair<string, bool>> CardHas::getNewCard(short score){
     string token;
     vector<short> gets;
     vector<bool> has;
-    vector<string> output;
+    vector<pair<string, bool>> output;
     pair<string, bool> point;
     ifstream files((current_path() / filesystem::path("data/CardData")).c_str());//ファイル読み込み
     if(files.fail()){
@@ -98,7 +98,7 @@ vector<pair<string, bool>> CardHas::getNewCard(short score){
         gets.push_back(rand() % cardNum);
         score -= 500;
     }
-    has = readCardHas();
+    has = readHasCard();
     for(short i = 0; i < gets.size(); i++){
         point.first = getCardName(gets.at(i));
         point.second = has.at(gets.at(i));

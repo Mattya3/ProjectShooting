@@ -16,5 +16,5 @@ public:
 
     string getCardName(short ID);
 
-    vector<pair<string,bool>> getNewCard(int score); 
+    vector<pair<string, bool>> getNewCard(short score); 
 };

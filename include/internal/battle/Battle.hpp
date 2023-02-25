@@ -3,6 +3,7 @@
 #include <thread>
 #include <chrono>
 #include <stgview/Combine.hpp>
+#include <internal/BestScore.hpp>
 #include <internal/card/StructureData.hpp>
 #include <internal/battle/HeroPoint.hpp>
 #include <internal/battle/EnemyPoint.hpp>
@@ -50,8 +51,4 @@ public:
     void inputBomb();
 
     void inputSpeed();
-
-    static int callBestScore();
-
-    static void writeBestScore(int score);
 };
