@@ -1,5 +1,20 @@
 #include <internal/battle/Battle.hpp>
 
+bool Battle::isContinue(){
+    if(hero.nowHP == 0){
+        stgview::Combine.putScore(score);
+        return false;
+    }
+    if(appear.size() == 0){
+        clearLossTime -= 20;
+        if(clearLossTime < 0){
+            Combine.putScore(score);
+            return false;
+        }
+    }
+    return true;
+}
+
 void Battle::start(short stage) {//初期設定用のメソッド, 引数はステージ番号
     StructureData sets;
     vector<Card> list = sets.callCardSets();

@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <internal/battle/Battle.hpp>
+#include <internal/card/CardHas.hpp>
 
 namespace stgview {
 using std::pair;
@@ -17,39 +18,23 @@ class Combine {
     // Battle bt; ChangeCardStructure ccs; など
 
   public:
-    Combine(int nowScore){
-        score = nowScore;
+    void putScore(int now){
+      score = now;
     }
     /// 実装は任せる
     inline int GetScoreToShowInResult() { return score;}
     inline int GetBestScore() {
-      int best = battle.callBestScore();
-      if(score > best) battle.writeBestScore();
+      int best = Battle.callBestScore();
+      if(score > best) Battle.writeBestScore();
+      return best;
     }
 
     /// @brief リザルト画面で見せるためのカードのファイル名と新規取得情報を取得
     /// @return ファイル名(=*.png)と新規取得かどうかを表すboolのvector
     inline vector<pair<string, bool>> GetCardsAcquiredToShowInResult() {
-        return {{
-                    "ansicard/card2.png",
-                    true,
-                },
-                {
-                    "ansicard/card2.png",
-                    true,
-                },
-                {
-                    "ansicard/card2.png",
-                    false,
-                },
-                {
-                    "ansicard/card2.png",
-                    true,
-                },
-                {
-                    "ansicard/card2.png",
-                    false,
-                }};
+      CardHas newCard;
+      vector<pair<string, bool>> output = newCard.getNewCard(score);
+      return output;
     }
 };
 extern Combine combine;

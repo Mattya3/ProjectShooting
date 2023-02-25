@@ -69,3 +69,40 @@ void CardHas::writeHasCard(short ID){//所持カードをSaveDataに反映する
     file2 << line3 << endl;
     file2.close();
 }
+
+string CardHas::getNewCard(short ID){
+    string line;
+    ifstream file1((current_path() / filesystem::path("data/SaveData")).c_str());//ファイル読み込み
+    if(file1.fail()){
+        cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
+    }
+    getline(file1, line);
+    for(short i = 0; i <= ID; i++) getline(file1, line);
+    return split(line, ' ').at(0);
+}
+
+vector<pair<string, bool>> CardHas::getNewCard(short score){
+    short cardNum;
+    string token;
+    vector<short> gets;
+    vector<bool> has;
+    vector<string> output;
+    pair<string, bool> point;
+    ifstream files((current_path() / filesystem::path("data/CardData")).c_str());//ファイル読み込み
+    if(files.fail()){
+        cerr << "Error: not open SaveData" << endl;//ファイル読み込みエラー発生時の処理
+    }
+    getline(files, token);
+    cardNum = stoi(token);
+    while(score > 0 && gets.size() < 7){
+        gets.push_back(rand() % cardNum);
+        score -= 500;
+    }
+    has = readCardHas();
+    for(short i = 0; i < gets.size(); i++){
+        point.first = getCardName(gets.at(i));
+        point.second = has.at(gets.at(i));
+        output.push_back(point);
+    }
+    return output;
+}

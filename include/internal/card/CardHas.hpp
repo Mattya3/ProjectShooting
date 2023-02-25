@@ -13,4 +13,8 @@ public:
     vector<bool> readHasCard(void);
 
     void writeHasCard(short ID);
+
+    string getCardName(short ID);
+
+    vector<pair<string,bool>> getNewCard(int score); 
 };

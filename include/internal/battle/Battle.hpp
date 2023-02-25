@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 #include <thread>
 #include <chrono>
+#include <stgview/Combine.hpp>
 #include <internal/card/StructureData.hpp>
 #include <internal/battle/HeroPoint.hpp>
 #include <internal/battle/EnemyPoint.hpp>
@@ -23,9 +24,12 @@ private:
     vector<EmergePoint> appear;
     short score = 0;
     int time = 0;
+    int clearLossTime = 3000;
 
 public:
     GamePointView viewer;
+
+    bool isContinue();
 
     void start(short stage);
 
