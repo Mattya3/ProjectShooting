@@ -2,13 +2,13 @@
 
 bool Battle::isContinue(){
     if(hero.nowHP == 0){
-        stgview::Combine.putScore(score);
+        stgview::Combine::putScore(score);
         return false;
     }
     if(appear.size() == 0){
         clearLossTime -= 20;
         if(clearLossTime < 0){
-            stgview::Combine.putScore(score);
+            stgview::Combine::putScore(score);
             return false;
         }
     }

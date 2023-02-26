@@ -20,7 +20,7 @@ class Combine {
     // Battle bt; ChangeCardStructure ccs; など
 
   public:
-    void putScore(int now){
+    inline void putScore(int now){
       score = now;
     }
     /// 実装は任せる
