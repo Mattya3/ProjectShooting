@@ -20,7 +20,7 @@ class ChangeStructure {
 
     void registerNewCard(int id);
 
-    void registerStructure(void);
+    bool registerStructure(void);
 
     vector<int> get_having_card_id();
 };

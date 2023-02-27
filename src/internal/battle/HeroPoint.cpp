@@ -32,6 +32,9 @@ short HeroPoint::levelUp(short target){
                 setHitTime *= (double)changedNum / (double)size;
                 size = changedNum;
                 break;
+            case 2:
+                bomb.push_back(changedNum);
+                break;
         }
     }else{
         switch (list.at(target).typeB){
@@ -57,9 +60,6 @@ short HeroPoint::levelUp(short target){
             case 6:
                 bullet.changeSearch((changedNum / 10) * 10);
                 bullet.changeHorming((changedNum % 10) * 0.05);
-                break;
-            case 7:
-                bomb.push_back(changedNum);
                 break;
         }
     }

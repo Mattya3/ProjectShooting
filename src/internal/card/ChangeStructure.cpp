@@ -27,12 +27,20 @@ void ChangeStructure::registerNewCard(int id){//新たな入手カードを反�
     has.writeHasCard(id);
 }
 
-void ChangeStructure::registerStructure(void){//セットカードを反映する関数
+bool ChangeStructure::registerStructure(void){//セットカードを反映する関数
+    vector<pair<short, short>> check(3);
     vector<short> no(3);
-    for(int i = 0; i < 3; i++)
+    for(short i = 0; i < 3; i++){
         no.at(i) = this->set3Cards.at(i).id;
+        check.at(i).first = this->set3Cards.at(i).typeA;
+        check.at(i).second = this->set3Cards.at(i).typeB;
+    }
+    for(short i = 0; i < 3; i++){
+        if(check.at(i % 3) == check.at((i + 1) % 3) && (check.at(i % 3).first == 0 || check.at(i % 3).first == 1)) return false;
+    }
     StructureData card;
     card.writeCardSets(no);
+    return true;
 }
 vector<int> ChangeStructure::get_having_card_id(){//所持カードidを返す関数
     vector<int> ret;
