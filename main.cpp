@@ -84,18 +84,20 @@ int main() {
     } el_sub_select;
 
     vector<sbfw::ElemInfo> elcards(card_fnames.size());
-    int card_num = elcards.size();
     int columns = 4, sub_scene_num = 3, each_scene_num = 12;
     printf("%d, %d\n", each_scene_num, card_fnames.size());
     float sx = -0.7, sy = 0.7; // 31 = 12 + 12 + 7;
     auto x = cs.callHasAllCards();
+    int card_num = x.size();
 
-    for(int i = 0; i < card_num; i++) {
+    for(int i = 0; i < x.size(); i++) {
         int one_scene_idx = i % each_scene_num;
         DataOf2D d = {sx + one_scene_idx % columns * 0.4f,
                       sy - one_scene_idx / columns * 0.4f};
-        string card_fname =
-            "ansicard/" + true_card_fname[japanese_card_fnames[i]];
+        // string card_fname =
+        //     "ansicard/" + true_card_fname[japanese_card_fnames[i]];
+        string card_fname = "card/" + x[i].cardName + ".png";
+        cout << "this is call all cards" << x[i].cardName << endl;
         elcards[i] = sbfw::ElemInfo(d, card_fname, 0.6);
     }
 

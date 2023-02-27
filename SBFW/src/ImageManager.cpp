@@ -39,7 +39,7 @@ ImageManager::ProvideImageGetWH(string const &fname) {
         DataOf2D t = GetRegularLen(w, h);
         len_data.emplace_back(t);
         printf("%s is loading as %d, (w, h) = (%f, %f)\n", fname.c_str(), id,
-        t.x, t.y);
+               t.x, t.y);
         return {id, t, w, h};
     }
 }
@@ -65,6 +65,7 @@ std::pair<int, int> ImageManager::LoadPng(std::string const &fullpath_fname,
     unsigned error = lodepng::decode(data, width, height, fullpath_fname);
 
     if(error != 0) {
+        std::cout << fullpath_fname << std::endl;
         std::cout << "Deconding PNG, error " << error << ": "
                   << lodepng_error_text(error) << std::endl;
         exit(1);
