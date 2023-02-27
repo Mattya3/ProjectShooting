@@ -192,12 +192,13 @@ int main() {
     CardHas ch;
 
     sub[0]->AddButton(el_general.OK, [&]() {
+        
         select->ChangeImage(
             alloc_key[allocator_btn_pos::selected_key],
             sbfw::ElemInfo({1, 1}, "card/" +
                                        ch.getCardName(functor::selected_key) +
                                        ".png"));
-        cs.ChangeStructureCard(0, functor::selected_key);
+        cs.ChangeStructureCard(allocator_btn_pos::selected_key, functor::selected_key);
     });
     sub[1]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(
@@ -205,7 +206,7 @@ int main() {
             sbfw::ElemInfo({1, 1}, "card/" +
                                        ch.getCardName(functor::selected_key) +
                                        ".png"));
-        cs.ChangeStructureCard(1, functor::selected_key);
+        cs.ChangeStructureCard(allocator_btn_pos::selected_key, functor::selected_key);
     });
     sub[2]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(
@@ -213,7 +214,7 @@ int main() {
             sbfw::ElemInfo({1, 1}, "card/" +
                                        ch.getCardName(functor::selected_key) +
                                        ".png"));
-        cs.ChangeStructureCard(2, functor::selected_key);
+        cs.ChangeStructureCard(allocator_btn_pos::selected_key, functor::selected_key);
     });
 
     game->result_scene = result;
