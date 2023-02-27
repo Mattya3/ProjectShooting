@@ -101,7 +101,8 @@ vector<pair<string, bool>> CardHas::getNewCard(short score){
     has = readHasCard();
     for(short i = 0; i < gets.size(); i++){
         point.first = getCardName(gets.at(i)) + ".png";
-        point.second = has.at(gets.at(i));
+        point.second = !has.at(gets.at(i));
+        if(point.second) writeHasCard(gets.at(i));
         output.push_back(point);
     }
     return output;

@@ -26,8 +26,7 @@ class Combine {
 
     inline int GetBestScore() {
         int best = callBestScore();
-        if(score > best)
-            writeBestScore(score);
+        if(score > best) writeBestScore(score);
         return best;
     }
 
