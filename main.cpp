@@ -37,7 +37,7 @@ struct ResultSceneElemInfos {
     sbfw::ElemInfo set{{-0.25, -0.75}, "DarkBlue/Button/set.png", 0.9f};
     sbfw::ElemInfo home{{0.25, -0.75}, "DarkBlue/Button/home.png", 0.9f};
     sbfw::ElemInfo end{{0.75, -0.75}, "DarkBlue/Button/end.png", 0.9f};
- 
+
 } res_ei;
 int main() {
     sbfw::InitSBFW(800, 700);
@@ -51,8 +51,9 @@ int main() {
     // 画像ファイル名はimgにあること前提
     // 設置位置は中心を0,0とし、左端をx=-1, 右端をx=1とする
     sbfw::ElemInfo elgo_battle(sbfw::ToRegularXYpos(400, 350),
-                               "title/goBattle.png", 0.3);
-    sbfw::ElemInfo elgo_select({0, -0.5}, "title/goSelectCard.png", 0.3);
+                               "DarkBlue/Button/GoGame.png", 0.8);
+    sbfw::ElemInfo elgo_select({0, -0.5}, "DarkBlue/Button/GoSelectCard.png",
+                               0.8);
     sbfw::ElemInfo elgo_title({0, -0.7}, "test_img/go_title.png", 0.2);
     vector<sbfw::ElemInfo> card_img_in_battle(3);
     for(int i = 0; i < 3; i++) {
@@ -72,14 +73,14 @@ int main() {
     struct ElementDefnition {
         sbfw::ElemInfo boss{{0, 0.5}, "status/redstar.png", 3};
         sbfw::ElemInfo fighter{{0.2, 0.2}, "battle/me.png", 5};
-        sbfw::ElemInfo back_arrow{{-0.7, -0.7}, "test_img/back.png", 0.2};
-        sbfw::ElemInfo OK{{0.8, -0.8}, "select_card_sub/OK.png", 0.3};
+        sbfw::ElemInfo back_arrow{{-0.7, -0.8}, "DarkBlue/Button/back.png"};
+        sbfw::ElemInfo OK{{0.7, -0.8}, "DarkBlue/Button/ok.png"};
     } el_general;
     struct ElementDefnitionForSelectSubScene {
         sbfw::ElemInfo left_arrow{
-            {-0.2, -0.8}, "select_card_sub/leftarrow.png", 0.4};
+            {-0.2, -0.8}, "DarkBlue/arrows/left.png", 0.8};
         sbfw::ElemInfo right_arrow{
-            {0.2, -0.8}, "select_card_sub/rightarrow.png", 0.4};
+            {0.2, -0.8}, "DarkBlue/arrows/right.png", 0.8};
     } el_sub_select;
 
     vector<sbfw::ElemInfo> elcards(card_fnames.size());
@@ -185,7 +186,6 @@ int main() {
     result->DefTranstionTo(res_ei.retry, game);
     result->DefTranstionTo(res_ei.set, select);
     result->DefTranstionTo(res_ei.end, title);
-
 
     // シーンの処理をスタートさせる。最初に表示したいシーンのstart()を呼び出すこと
     // title->Start();

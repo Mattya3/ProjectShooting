@@ -19,7 +19,7 @@ void Button::draw() {
         glColor3d(1.0, 1.0, 0);
     }
 
-    float ratio = 1.2;
+    float ratio = 1.001;
     glVertex3d(pos.x - len.x / 2 * tex.scale * ratio,
                pos.y - len.y / 2 * tex.scale * ratio, 0);
     glVertex3d(pos.x + len.x / 2 * tex.scale * ratio,
