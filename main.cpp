@@ -192,16 +192,12 @@ int main() {
     CardHas ch;
 
     sub[0]->AddButton(el_general.OK, [&]() {
-        // select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
         select->ChangeImage(
             alloc_key[allocator_btn_pos::selected_key],
             sbfw::ElemInfo({1, 1}, "card/" +
                                        ch.getCardName(functor::selected_key) +
                                        ".png"));
-        //                     elcards[functor::selected_key]);
-        cout << "registered bb " << functor::selected_key << endl;
         cs.ChangeStructureCard(0, functor::selected_key);
-        cout << "registered aa" << functor::selected_key << endl;
     });
     sub[1]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(
@@ -209,22 +205,15 @@ int main() {
             sbfw::ElemInfo({1, 1}, "card/" +
                                        ch.getCardName(functor::selected_key) +
                                        ".png"));
-        cout << "registered bb " << functor::selected_key << endl;
-
         cs.ChangeStructureCard(1, functor::selected_key);
-        cout << "registered aa" << functor::selected_key << endl;
     });
     sub[2]->AddButton(el_general.OK, [&]() {
-        // select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
-        //                     elcards[functor::selected_key]);
         select->ChangeImage(
             alloc_key[allocator_btn_pos::selected_key],
             sbfw::ElemInfo({1, 1}, "card/" +
                                        ch.getCardName(functor::selected_key) +
                                        ".png"));
-        cout << "registered bb " << functor::selected_key << endl;
         cs.ChangeStructureCard(2, functor::selected_key);
-        cout << "registered aa" << functor::selected_key << endl;
     });
 
     game->result_scene = result;
