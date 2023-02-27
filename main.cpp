@@ -158,10 +158,6 @@ int main() {
      * シーンに要素=button or imageを貼り付ける
      *******************/
 
-    title->DefTranstionTo(elgo_select, select);
-    title->DefTranstionTo(elgo_battle, game);
-    select->DefTranstionTo(el_general.back_arrow, title);
-
     for(int i = 0; i < card_num; i++) {
         switch(i / each_scene_num) {
         case 0:
@@ -195,9 +191,6 @@ int main() {
     });
     CardHas ch;
 
-    sub[0]->DefTranstionTo(el_general.back_arrow, select);
-    sub[0]->DefTranstionTo(el_general.OK, select);
-    sub[0]->DefTranstionTo(el_sub_select.right_arrow, sub[1]);
     sub[0]->AddButton(el_general.OK, [&]() {
         // select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
         select->ChangeImage(
@@ -209,12 +202,7 @@ int main() {
         cout << "registered bb " << functor::selected_key << endl;
         cs.ChangeStructureCard(0, functor::selected_key);
         cout << "registered aa" << functor::selected_key << endl;
-        cs.registerStructure();
     });
-    sub[1]->DefTranstionTo(el_general.back_arrow, select);
-    sub[1]->DefTranstionTo(el_general.OK, select);
-    sub[1]->DefTranstionTo(el_sub_select.right_arrow, sub[2]);
-    sub[1]->DefTranstionTo(el_sub_select.left_arrow, sub[0]);
     sub[1]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(
             alloc_key[allocator_btn_pos::selected_key],
@@ -225,13 +213,7 @@ int main() {
 
         cs.ChangeStructureCard(1, functor::selected_key);
         cout << "registered aa" << functor::selected_key << endl;
-
-        cs.registerStructure();
     });
-
-    sub[2]->DefTranstionTo(el_general.back_arrow, select);
-    sub[2]->DefTranstionTo(el_general.OK, select);
-    sub[2]->DefTranstionTo(el_sub_select.left_arrow, sub[1]);
     sub[2]->AddButton(el_general.OK, [&]() {
         // select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
         //                     elcards[functor::selected_key]);
@@ -243,11 +225,26 @@ int main() {
         cout << "registered bb " << functor::selected_key << endl;
         cs.ChangeStructureCard(2, functor::selected_key);
         cout << "registered aa" << functor::selected_key << endl;
-
-        cs.registerStructure();
     });
 
     game->result_scene = result;
+
+    title->DefTranstionTo(elgo_select, select);
+    title->DefTranstionTo(elgo_battle, game);
+    select->DefTranstionTo(el_general.back_arrow, title);
+
+    sub[0]->DefTranstionTo(el_general.back_arrow, select);
+    sub[0]->DefTranstionTo(el_general.OK, select);
+    sub[0]->DefTranstionTo(el_sub_select.right_arrow, sub[1]);
+
+    sub[1]->DefTranstionTo(el_general.back_arrow, select);
+    sub[1]->DefTranstionTo(el_general.OK, select);
+    sub[1]->DefTranstionTo(el_sub_select.right_arrow, sub[2]);
+    sub[1]->DefTranstionTo(el_sub_select.left_arrow, sub[0]);
+
+    sub[2]->DefTranstionTo(el_general.back_arrow, select);
+    sub[2]->DefTranstionTo(el_general.OK, select);
+    sub[2]->DefTranstionTo(el_sub_select.left_arrow, sub[1]);
 
     result->DefTranstionTo(res_ei.home, title);
     result->DefTranstionTo(res_ei.retry, game);
