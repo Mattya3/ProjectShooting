@@ -23,6 +23,11 @@ void GameScene::layer_front() {
         this_thread::sleep_for(chrono::milliseconds(1500));
         GoNextScene(result_scene);
     }
+    if(/*bt.IsGameClear()*/false){
+        // clear_img.Draw();
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        GoNextScene(result_scene);
+    }
 }
 void GameScene::CombineInternalBattle() {
     bt.timer();
