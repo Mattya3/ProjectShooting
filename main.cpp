@@ -189,8 +189,8 @@ int main() {
         alloc_key[i] = select->AddButton(el_allocate[i], allocator_btn_pos(i));
     }
     select->AddButton(el_general.OK, [&]() {
-        if(cs.registerStructure()) {
-            
+        if(!cs.registerStructure()) {
+            cout << "this combination is not ok" << endl;
         }
     });
     CardHas ch;
