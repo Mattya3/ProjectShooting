@@ -34,9 +34,13 @@ class SimpleScene : public SceneBase {
     void ChangeImage(ElemKey i, ElemInfo e);
     ElemKey DefTranstionTo(ElemInfo ei, shared_ptr<SceneBase> next_scene);
     void SetWindowName(std::string window_name_);
+    void SetInitFunc(std::function<void(void)> f);
 
   private:
     bool is1_clicked = false;
+    std::function<void(void)> init_func;
+    bool has_init_func = false;
+
     inline void judege_btn_pushed(float x, float y) {
         try {
             for(auto &&btn : btns) {
@@ -69,7 +73,11 @@ class SimpleScene : public SceneBase {
         layer_front();
     }
 
-    void InitAfterTransition() override { ResetAllButton(); }
+    void InitAfterTransition() override {
+        ResetAllButton();
+        if(has_init_func)
+            init_func();
+    }
     void mouse_button_callback(GLFWwindow *pwin, int button, int action,
                                int mods) override;
     void key_callback(GLFWwindow *window, int key, int scancode, int action,

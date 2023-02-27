@@ -20,7 +20,6 @@ void SceneBase::Start() {
     register_callbackfunc(*this, detail::window);
     next_scene = nullptr;
     InitAfterTransition();
-    std::cout << "come new scene" << std::endl;
     // PNG画像が正しく表示される設定と透過される設定
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

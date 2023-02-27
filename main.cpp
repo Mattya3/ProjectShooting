@@ -120,6 +120,43 @@ int main() {
     result->SetWindowName("Result");
     score->SetWindowName("score");
 
+    auto select_sub_init_func = [&]() {
+        ChangeStructure cs;
+
+        auto x = cs.callHasAllCards();
+        int card_num = x.size();
+
+        for(int i = 0; i < x.size(); i++) {
+            int one_scene_idx = i % each_scene_num;
+            DataOf2D d = {sx + one_scene_idx % columns * 0.4f,
+                          sy - one_scene_idx / columns * 0.4f};
+            // string card_fname =
+            //     "ansicard/" + true_card_fname[japanese_card_fnames[i]];
+            string card_fname = "card/" + x[i].cardName + ".png";
+            cout << "this is call all cards" << x[i].cardName << endl;
+            elcards[i] = sbfw::ElemInfo(d, card_fname, 0.6);
+        }
+
+        for(int i = 0; i < card_num; i++) {
+            switch(i / each_scene_num) {
+            case 0:
+                sub[0]->AddButton(elcards[i], functor(i));
+                break;
+            case 1:
+                sub[1]->AddButton(elcards[i], functor(i));
+                break;
+            case 2:
+                sub[2]->AddButton(elcards[i], functor(i));
+                break;
+            default:
+                break;
+            }
+        }
+    };
+    sub[0]->SetInitFunc(select_sub_init_func);
+    sub[1]->SetInitFunc(select_sub_init_func);
+    sub[2]->SetInitFunc(select_sub_init_func);
+
     /******************
      * シーンに要素=button or imageを貼り付ける
      *******************/
@@ -162,6 +199,7 @@ int main() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                             elcards[functor::selected_key]);
         cs.ChangeStructureCard(0, functor::selected_key);
+        cs.registerStructure();
     });
     sub[1]->DefTranstionTo(el_general.back_arrow, select);
     sub[1]->DefTranstionTo(el_general.OK, select);
@@ -171,6 +209,7 @@ int main() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                             elcards[functor::selected_key]);
         cs.ChangeStructureCard(1, functor::selected_key);
+        cs.registerStructure();
     });
 
     sub[2]->DefTranstionTo(el_general.back_arrow, select);
@@ -180,6 +219,7 @@ int main() {
         select->ChangeImage(alloc_key[allocator_btn_pos::selected_key],
                             elcards[functor::selected_key]);
         cs.ChangeStructureCard(2, functor::selected_key);
+        cs.registerStructure();
     });
 
     game->result_scene = result;

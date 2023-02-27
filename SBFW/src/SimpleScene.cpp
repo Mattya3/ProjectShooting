@@ -1,7 +1,6 @@
 #include "SimpleScene.hpp"
 #include <GLFW/glfw3.h>
 
-
 namespace sbfw {
 
 namespace scene {
@@ -60,6 +59,10 @@ ElemKey SimpleScene::DefTranstionTo(ElemInfo ei,
 }
 void SimpleScene::SetWindowName(std::string window_name_) {
     window_name = window_name_;
+}
+void SimpleScene::SetInitFunc(std::function<void(void)> f) {
+    has_init_func = true;
+    init_func = f;
 }
 
 } // namespace scene
