@@ -188,8 +188,8 @@ int main() {
     result->DefTranstionTo(res_ei.end, title);
 
     // シーンの処理をスタートさせる。最初に表示したいシーンのstart()を呼び出すこと
-    // title->Start();
-    result->Start();
+    title->Start();
+    // result->Start();
 
     sbfw::TerminateSBFW();
     return 0;

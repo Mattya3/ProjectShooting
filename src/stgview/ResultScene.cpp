@@ -53,7 +53,8 @@ void ResultScene::InitAfterTransition() {
 
     int cnt = 0;
     for(auto &&[fname, is_new] : cardfnames) {
-        this->AddImage(fname, p, 0.8);
+        cout << "!!in result init,  card file name is " << fname << endl;
+        // this->AddImage(fname, p, 0.8);
         if(is_new) {
             this->AddImage("DarkBlue/ResultString/new.png",
                            p + DataOf2D(0.125, 0.125), 0.8f);

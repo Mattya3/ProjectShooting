@@ -23,8 +23,7 @@ void GameScene::layer_front() {
         this_thread::sleep_for(chrono::milliseconds(1500));
         GoNextScene(result_scene);
     }
-    if(/*bt.IsGameClear()*/false){
-        // clear_img.Draw();
+    if(!bt.isContinue()) {
         this_thread::sleep_for(chrono::milliseconds(1500));
         GoNextScene(result_scene);
     }
