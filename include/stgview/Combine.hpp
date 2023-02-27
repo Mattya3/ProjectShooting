@@ -15,7 +15,7 @@ class Combine {
     explicit Combine() = default;
 
   private:
-    int score;//現在のスコアを保管する
+    int score = 0;//現在のスコアを保管する
     /// ここで適当なinternalの変数を定義する
     // Battle bt; ChangeCardStructure ccs; など
 
@@ -24,7 +24,10 @@ class Combine {
       score = now;
     }
     /// 実装は任せる
-    inline int GetScoreToShowInResult() { return score;}
+    inline int GetScoreToShowInResult() { 
+      return score;
+    }
+    
     inline int GetBestScore() {
       int best = callBestScore();
       if(score > best) writeBestScore(score);
