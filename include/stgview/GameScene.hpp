@@ -1,7 +1,7 @@
 #include <DataOf2D.hpp>
 
-#include <SBFW/extension/NumberDisplay.hpp>
-#include <SBFW/unit.hpp>
+#include <extension/NumberDisplay.hpp>
+#include <unit.hpp>
 
 #include <GLFW/glfw3.h>
 
