@@ -17,6 +17,6 @@ void RemainingStatus::Draw(int now_stock) {
         left + float(now_stock) / float(max_stock) * lenx_drawing;
     // 右側から隠す
     draw::RectFilled(begin_hide_x, right, view_start_point.y + img.len.y / 2,
-                     view_start_point.y - img.len.y / 2, {0.0, 1.0, 0.0});
+                     view_start_point.y - img.len.y / 2, {0.0, 0.0, 0.0});
 }
 } // namespace stgview
