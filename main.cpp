@@ -63,9 +63,10 @@ int main() {
             sbfw::ElemInfo({-0.8f + 0.2f * i, -0.4f}, "ic_launcher.png", 0.7);
     }
     vector<sbfw::ElemInfo> el_allocate(3);
-    for(int i = 0; i < 3; i++)
-        el_allocate[i] =
-            sbfw::ElemInfo({-0.6f + i * 0.6f, 0.3f}, "card/NoCard.png");
+    auto ToFileName = [](string s) { return "card/" + s + ".png"; };
+    auto yy = cs.callSet3Cards();
+    for(int i = 0; i < 3; i++) el_allocate[i] =
+        sbfw::ElemInfo({-0.6f + i * 0.6f, 0.3f}, ToFileName(yy[i].cardName));
 
     struct ElementDefnition {
         sbfw::ElemInfo boss{{0, 0.5}, "status/redstar.png", 3};
@@ -192,13 +193,13 @@ int main() {
     CardHas ch;
 
     sub[0]->AddButton(el_general.OK, [&]() {
-        
         select->ChangeImage(
             alloc_key[allocator_btn_pos::selected_key],
             sbfw::ElemInfo({1, 1}, "card/" +
                                        ch.getCardName(functor::selected_key) +
                                        ".png"));
-        cs.ChangeStructureCard(allocator_btn_pos::selected_key, functor::selected_key);
+        cs.ChangeStructureCard(allocator_btn_pos::selected_key,
+                               functor::selected_key);
     });
     sub[1]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(
@@ -206,7 +207,8 @@ int main() {
             sbfw::ElemInfo({1, 1}, "card/" +
                                        ch.getCardName(functor::selected_key) +
                                        ".png"));
-        cs.ChangeStructureCard(allocator_btn_pos::selected_key, functor::selected_key);
+        cs.ChangeStructureCard(allocator_btn_pos::selected_key,
+                               functor::selected_key);
     });
     sub[2]->AddButton(el_general.OK, [&]() {
         select->ChangeImage(
@@ -214,7 +216,8 @@ int main() {
             sbfw::ElemInfo({1, 1}, "card/" +
                                        ch.getCardName(functor::selected_key) +
                                        ".png"));
-        cs.ChangeStructureCard(allocator_btn_pos::selected_key, functor::selected_key);
+        cs.ChangeStructureCard(allocator_btn_pos::selected_key,
+                               functor::selected_key);
     });
 
     game->result_scene = result;
