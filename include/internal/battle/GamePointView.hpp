@@ -13,7 +13,7 @@ class GamePointView{//カードデータを保存する関数
 private:
     short heroHasHp;
     short exp;
-    short needLevelUpEXP = 0;
+    short needLevelUpEXP;
     GamePointMono hero;
     vector<GamePointMono> enemies;
     vector<GamePointMono> heroBullets;

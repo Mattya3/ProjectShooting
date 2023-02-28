@@ -74,6 +74,7 @@ void GamePointView::putEnemy(vector<EnemyPoint> e, vector<BulletPoint> b){
 
 void GamePointView::putCard(vector<Card> l){
     GameCardMono card;
+    cards.clear();
     for(int i = 0; i < l.size(); i++){
         card.cardName = l.at(i).cardName;
         card.cardLevel = 1;

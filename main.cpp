@@ -40,7 +40,7 @@ int main() {
     sbfw::InitSBFW(800, 700);
     // internalとの結合を行う
     ChangeStructure cs;
-
+    cs.setting();
     /******************
      * 画面に登場する要素の定義
      *******************/
@@ -120,7 +120,8 @@ int main() {
     score->SetWindowName("score");
 
     auto select_sub_init_func = [&]() {
-        cs = ChangeStructure();
+        ChangeStructure cs;
+        cs.setting();
 
         auto x = cs.callHasAllCards();
         int card_num = x.size();

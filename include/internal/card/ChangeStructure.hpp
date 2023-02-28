@@ -10,7 +10,7 @@ class ChangeStructure {
     vector<Card> set3Cards;
 
   public:
-    ChangeStructure(void);
+    void setting();
 
     vector<Card> callHasAllCards();
 

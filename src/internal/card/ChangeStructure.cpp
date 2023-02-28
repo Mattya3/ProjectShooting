@@ -1,7 +1,7 @@
 #include <internal/card/ChangeStructure.hpp>
 
 using namespace std;
-ChangeStructure::ChangeStructure(void) {//カード情報を保管するコンストラクタ
+void ChangeStructure::setting() {//カード情報を保管するコンストラクタ
     CardHas has;
     hasAllCards = has.callCardLineup();
     StructureData sets;
@@ -9,15 +9,21 @@ ChangeStructure::ChangeStructure(void) {//カード情報を保管するコン�
 }
 
 vector<Card> ChangeStructure::callHasAllCards(){//所持カードをvectorで返す関数
+    CardHas has;
+    hasAllCards = has.callCardLineup();
     return hasAllCards;
 }
 
 vector<Card> ChangeStructure::callSet3Cards(){//セットカードをvectorで返す関数
+    StructureData sets;
+    set3Cards = sets.callCardSets();
     return set3Cards;
 }
 
 void ChangeStructure::ChangeStructureCard(short point, short id){//セットカードを一カ所変更する関数
     short i;
+    CardHas has;
+    hasAllCards = has.callCardLineup();
     for(i = 0; i < hasAllCards.size(); i++) if(hasAllCards.at(i).id == id) break;//変更先カードの特定
     set3Cards.at(point) = hasAllCards.at(i);
 }
