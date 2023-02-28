@@ -4,7 +4,8 @@
 namespace sbfw {
 
 namespace scene {
-
+shared_ptr<SimpleScene> program_terminate =
+    SimpleScene::__ProgramTerminateScene();
 void SimpleScene::mouse_button_callback(GLFWwindow *pwin, int button,
                                         int action, int mods) {
     double mousex, mousey;

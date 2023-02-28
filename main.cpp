@@ -65,8 +65,9 @@ int main() {
     vector<sbfw::ElemInfo> el_allocate(3);
     auto ToFileName = [](string s) { return "card/" + s + ".png"; };
     auto yy = cs.callSet3Cards();
-    for(int i = 0; i < 3; i++) el_allocate[i] =
-        sbfw::ElemInfo({-0.6f + i * 0.6f, 0.3f}, ToFileName(yy[i].cardName));
+    for(int i = 0; i < 3; i++)
+        el_allocate[i] = sbfw::ElemInfo({-0.6f + i * 0.6f, 0.3f},
+                                        ToFileName(yy[i].cardName));
 
     struct ElementDefnition {
         sbfw::ElemInfo boss{{0, 0.5}, "status/redstar.png", 3};
@@ -242,7 +243,7 @@ int main() {
     result->DefTranstionTo(res_ei.home, title);
     result->DefTranstionTo(res_ei.retry, game);
     result->DefTranstionTo(res_ei.set, select);
-    result->DefTranstionTo(res_ei.end, title);
+    result->DefTranstionTo(res_ei.end, sbfw::scene::program_terminate);
 
     // シーンの処理をスタートさせる。最初に表示したいシーンのstart()を呼び出すこと
     title->Start();

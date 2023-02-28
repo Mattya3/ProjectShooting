@@ -51,6 +51,8 @@ class SceneBase {
 
   private:
     shared_ptr<SceneBase> next_scene;
+
+  protected:
     bool is_terminate_scene = false;
 
   private:

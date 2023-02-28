@@ -93,8 +93,15 @@ class SimpleScene : public SceneBase {
             e.Reset();
         }
     }
-};
 
+  public:
+    static shared_ptr<SimpleScene> __ProgramTerminateScene() {
+        auto s = std::make_shared<SimpleScene>();
+        s->is_terminate_scene = true;
+        return s;
+    }
+};
+extern shared_ptr<SimpleScene> program_terminate;
 } // namespace scene
 
 } // namespace sbfw
