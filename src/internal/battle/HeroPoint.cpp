@@ -1,5 +1,16 @@
 #include <internal/battle/HeroPoint.hpp>
 
+void HeroPoint::settingFirst(){
+    speedMode = true;
+    shootFlag = false;
+    level.clear();
+    bomb.clear();
+    list.clear();
+    moveFlag = false;
+    stopShoot = 240;
+    shootpenalty = 0;
+}
+
 void HeroPoint::shooting(bool flag){
     shootFlag = flag;
 }

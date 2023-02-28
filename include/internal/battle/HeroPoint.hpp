@@ -9,16 +9,18 @@ using namespace std;
 
 class HeroPoint : public NormalPoint{
 private:
-    bool speedMode = true;
-    bool shootFlag = false;
+    bool speedMode;
+    bool shootFlag;
     vector<short> level;
     vector<short> bomb;
     vector<Card> list;
-    bool moveFlag = false;
-    short stopShoot = 240;
-    short shootpenalty = 0;
+    bool moveFlag;
+    short stopShoot;
+    short shootpenalty;
 
 public:
+    void settingFirst();
+
     void shooting(bool flag);
     
     void moving(bool flag);

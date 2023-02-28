@@ -23,9 +23,9 @@ private:
     vector<BulletPoint> heroBullets;
     vector<BulletPoint> enemyBullets;
     vector<EmergePoint> appear;
-    short score = 0;
-    int time = 0;
-    int clearLossTime = 3000;
+    short score;
+    int time;
+    short clearLossTime;
 
 public:
     GamePointView viewer;

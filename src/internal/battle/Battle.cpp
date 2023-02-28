@@ -16,8 +16,16 @@ bool Battle::isContinue(){
 }
 
 void Battle::start(short stage) {//初期設定用のメソッド, 引数はステージ番号
+    score = 0;
+    time = 0;
+    clearLossTime = 3000;
+    enemy.clear();
+    heroBullets.clear();
+    enemyBullets.clear();
+    appear.clear();
     StructureData sets;
     vector<Card> list = sets.callCardSets();
+    hero.settingFirst();
     hero.setting(0);
     hero.setBullet(0);
     hero.setCardlist(list);
