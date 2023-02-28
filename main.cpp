@@ -120,7 +120,7 @@ int main() {
     score->SetWindowName("score");
 
     auto select_sub_init_func = [&]() {
-        ChangeStructure cs;
+        cs = ChangeStructure();
 
         auto x = cs.callHasAllCards();
         int card_num = x.size();
@@ -129,10 +129,7 @@ int main() {
             int one_scene_idx = i % each_scene_num;
             DataOf2D d = {sx + one_scene_idx % columns * 0.4f,
                           sy - one_scene_idx / columns * 0.4f};
-            // string card_fname =
-            //     "ansicard/" + true_card_fname[japanese_card_fnames[i]];
             string card_fname = "card/" + x[i].cardName + ".png";
-            // cout << "this is call all cards" << x[i].cardName << endl;
             elcards[i] = sbfw::ElemInfo(d, card_fname, 0.6);
         }
 
